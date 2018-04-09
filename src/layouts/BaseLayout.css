@@ -1,0 +1,77 @@
+
+/* 定义基本布局的css */
+
+#main-header {
+    line-height: 64px;
+}
+
+#main-header .content {
+    display: flex;
+    padding: 0 24px;
+}
+
+#main-header .logo {
+    color: #fff;
+    font-family: 'sans serif';
+    font-size: 2em;
+    text-shadow: 0 0 16px cyan;
+    padding-right: 24px;
+}
+
+#main-header .logo a {
+    color: #cef;
+    text-decoration-line: none;
+}
+
+#main-menu {
+    display: flex;
+    flex: 1;
+    line-height: 64px;
+}
+
+#main-profile {
+    color: #fff;
+}
+
+.main-content, #main-header .content {
+    width: 1600px;
+    margin: auto;
+}
+
+@media (max-width: 1696px) {
+    .main-content, #main-header .content {
+        width: 1400px;
+    }
+}
+@media (max-width: 1496px) {
+    .main-content, #main-header .content {
+        width: 1200px;
+    }
+}
+@media (max-width: 1296px) {
+    .main-content, #main-header .content {
+        width: 992px;
+    }
+}
+@media (max-width: 1096px) {
+    .main-content, #main-header .content {
+        width: 768px;
+    }
+}
+@media (max-width: 896px) {
+    .main-content, #main-header .content {
+        width: 576px;
+    }
+}
+@media (max-width: 696px) {
+    .main-content, #main-header .content {
+        width: 480px;
+    }
+}
+
+.main-content {
+    padding: 24px;
+    background-color: #fefefe;
+    margin-bottom:24px;
+    box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.1)
+}

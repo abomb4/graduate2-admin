@@ -15,7 +15,7 @@ class LinkUtils {
     var param;
     if (url.startsWith('?')) {
       param = url.substring(1, url.length);
-    } else {
+    } else { 
       param = url;
     }
     return queryString.parse(param);

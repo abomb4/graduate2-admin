@@ -1,8 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import { BrowserRouter } from 'react-router-dom';
+import BaseLayout from './layouts/BaseLayout';
 import registerServiceWorker from './registerServiceWorker';
+import './index.css';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render((
+  <div id="app">
+    <BrowserRouter>
+      <BaseLayout />
+    </BrowserRouter>
+  </div>
+), document.getElementById('root'));
+
 registerServiceWorker();
