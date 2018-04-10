@@ -48,16 +48,25 @@ class BaseLayout extends React.Component {
               id="main-menu"
             >
               <Menu.Item key="index"><Link to="/">首页</Link></Menu.Item>
-              <Menu.Item key="demand"><Link to="/demand">浏览职位</Link></Menu.Item>
+              <Menu.Item key="demand"><Link to="/demand">招聘岗位</Link></Menu.Item>
               <Menu.Item key="recommend"><Link to="/recommend">我的推荐</Link></Menu.Item>
             </Menu>
           </div>
         </Header>
         <Content id="main-content">
-          <Breadcrumb id="main-breadcrumb">
-            <Breadcrumb.Item>首页</Breadcrumb.Item>
-            <Breadcrumb.Item>浏览职位</Breadcrumb.Item>
-          </Breadcrumb>
+          <div className="page-content">
+            <Breadcrumb id="main-breadcrumb" style={{ marginBottom: '12px', marginTop: '12px' }}>
+              <Breadcrumb.Item>首页</Breadcrumb.Item>
+              <Switch>
+                <Route key='/demand' path='/demand' >
+                  <Breadcrumb.Item>招聘岗位</Breadcrumb.Item>
+                </Route>
+                <Route key='/recommend' path='/recommend' >
+                  <Breadcrumb.Item>我的推荐</Breadcrumb.Item>
+                </Route>
+              </Switch>
+            </Breadcrumb>
+          </div>
           <Switch>
             <Route key='/' path='/' exact component={ IndexPage } />
             <Route key='/index' path='/index' component={ IndexPage } />
@@ -66,9 +75,6 @@ class BaseLayout extends React.Component {
 
             <Route key='/' path='/' component={ NotFoundPage } />
           </Switch>
-        </Content>
-        <Content>
-          asdfasdf
         </Content>
         <Footer style={{ textAlign: 'center' }}>©2018 Created by wlyyy</Footer>
       </Layout>

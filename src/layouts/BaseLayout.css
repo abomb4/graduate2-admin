@@ -85,30 +85,37 @@
     font-weight: bold;
     font-size: 1.2em;
 }
-#main-content, #main-top, #main-header .content {
+/* header end */
+
+/* 这个东西代表页面的当前宽度 */
+.page-content {
+    padding: 0 24px;
+}
+
+#main-top, #main-header .content, .page-content {
     width: 1600px;
     margin: auto;
 }
 
 @media (max-width: 1696px) {
-    #main-content, #main-top, #main-header .content {
+    #main-top, #main-header .content, .page-content {
         width: 1400px;
     }
 }
 @media (max-width: 1496px) {
-    #main-content, #main-top, #main-header .content {
+    #main-top, #main-header .content, .page-content {
         width: 1200px;
     }
 }
 @media (max-width: 1296px) {
-    #main-content, #main-top, #main-header .content {
+    #main-top, #main-header .content, .page-content {
         width: 992px;
     }
 }
 
 #main-content {
-    padding: 24px;
-    background-color: #fefefe;
+    /* padding: 24px; */
+    background-color: transparent;
     margin-bottom:24px;
-    box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.1)
+    /* box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.1) */
 }

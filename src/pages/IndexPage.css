@@ -1,0 +1,96 @@
+
+.index-page {
+    position: relative;
+}
+
+.carousel {
+    position: absolute;
+    width: 100%;
+    top: 0;
+}
+
+/* 轮播图上面的元素 */
+.over-carousel {
+    position: relative;
+}
+
+/* 左边大瀑布 */
+.left-waterfall {
+    height: 500px;
+    width: 256px;
+    border-right: 1px solid #eee;
+    border-left: 1px solid #eee;
+}
+
+.left-waterfall .ant-menu {
+    border: 0;
+}
+
+.left-waterfall .ant-menu-submenu-title {
+    padding-left: 24px;
+}
+
+a.job-name-container {
+    color: inherit;
+}
+a.job-name-container:hover {
+    color: inherit;
+}
+
+.job-name-container .job-cn-name {
+    margin-right: 2em;
+}
+
+/* antd 菜单hover变蓝 时间 */
+.ant-menu-item, .ant-menu-submenu-title {
+    transition: color 0.01s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+/* 左边大瀑布 end */
+
+.left-waterfall .ant-menu, .left-waterfall .ant-menu-sub, .right-waterfall {
+    background: rgba(255, 255, 255, 0.98);
+    background-color: rgba(255, 255, 255, 0.98) !important;
+}
+
+/* 右边大瀑布 */
+.right-waterfall {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 292px;
+    border-right: 1px solid #eee;
+    border-left: 1px solid #eee;
+    padding-top: 12px;
+}
+
+.right-waterfall > h2 {
+    line-height: 48px;
+    color: #1799f5;
+    border-bottom: 3px solid #1799f5;
+    text-indent: 1em;
+}
+
+.right-waterfall .jobs {
+    line-height: 32px;
+    padding-left: 24px;;
+}
+
+.right-waterfall .jobs a {
+    color: rgba(0, 0, 0, 0.65);
+}
+.right-waterfall .jobs a:hover {
+    color: #1890ff;
+}
+
+.right-waterfall .jobs .job-description {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    padding-right: 12px;
+    list-style-position: inside;
+}
+
+
+/* 右边大瀑布 end */
