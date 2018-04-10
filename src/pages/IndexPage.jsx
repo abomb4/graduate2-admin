@@ -6,57 +6,82 @@ import './IndexPage.css';
 
 const { Component } = React;
 
-class IndexPage extends Component {
+class LeftWaterfall extends Component {
 
   state = {
-    data: {},
+    data: []
   }
 
   componentDidMount() {
-    ItrsApi.getUser(1,
+    ItrsApi.getPositions(
       (successResult) => {
         if (successResult.success) {
-          this.setState({ data: successResult.data });
+          const data = successResult.data;
+          this.setState({ data: data });
         } else {
-
+          console.error(successResult);
         }
-        console.log(successResult);
       },
-      (failResult) => {
-        console.log(failResult);
+      (error) => {
+        console.error(error);
       }
     );
   }
 
   handleMenuClick(item) {
-
   }
 
   render() {
+
+    const menuList = [];
     const data = this.state.data;
+    for (var i in data) {
+      const parentPosition = data[i];
+      const subTypes = parentPosition.subTypes;
+      const subMenus = [];
+
+      for (var j in subTypes) {
+        const subPosition = subTypes[j];
+        subMenus.push(<Menu.Item key={ subPosition.id }><Link to="#" className="job-name-container">{ subPosition.chineseName }</Link></Menu.Item>);
+      }
+
+      const parentMenu = (
+        <Menu.SubMenu key={ parentPosition.id } title={
+          <Link to="#" className="job-name-container"><span className="job-cn-name">{ parentPosition.chineseName }</span><span className="job-en-name">{ parentPosition.englishName }</span></Link>
+        }>
+          { subMenus }
+        </Menu.SubMenu>
+      );
+
+      menuList.push(parentMenu);
+    }
+  
+    return (
+      <div className="left-waterfall">
+        <Menu onClick={ this.handleMenuClick } subMenuOpenDelay={ 0.07 } style={{ width: '100%', height: '100%' }} mode="vertical" selectable={ false }>
+          { menuList }
+        </Menu>
+      </div>
+    );
+  }
+}
+class IndexPage extends Component {
+  
+  render() {
     return (
       <div className="index-page">
         <div className="carousel">
-          <Carousel autoplay>
-            <div style={{ background: 'url("/assets/bg.png")', height: '500px' }}>
+          <Carousel autoplay infinite >
+            <div className="picture" style={{ background: 'url("/assets/bg.png")' }}>
               <div className="page-content"><h3>1</h3></div>
             </div>
-            <div style={{ background: 'url("/assets/bg2.png")', height: '500px' }}>
+            <div className="picture" style={{ background: 'url("/assets/bg2.png")' }}>
               <div className="page-content"><h3>2</h3></div>
             </div>
           </Carousel>
         </div>
         <div className="over-carousel page-content">
-          <div className="left-waterfall">
-            <Menu onClick={ this.handleMenuClick } style={{ width: '100%', height: '100%' }} mode="vertical" selectable={ false }>
-              <Menu.SubMenu key="product" title={
-                <Link to="#" className="job-name-container"><span className="job-cn-name">产品</span><span className="job-en-name">Product</span></Link>
-              }>
-                <Menu.Item key="analyser"><Link to="#" className="job-name-container">需求分析</Link></Menu.Item>
-                <Menu.Item key="productManager">产品经理</Menu.Item>
-              </Menu.SubMenu>
-            </Menu>
-          </div>
+          <LeftWaterfall />
           <div className="right-waterfall">
             <h2>最热职位</h2>
             <div>
@@ -72,17 +97,6 @@ class IndexPage extends Component {
               </ul>
             </div>
           </div>
-        </div>
-        <div className="user">
-          <p className="id">{ data.id }</p>
-          <p className="userName">{ data.userName }</p>
-          <p className="email">{ data.email }</p>
-          <p className="gmtCreate">{ data.gmtCreate }</p>
-          <p className="gmtModify">{ data.gmtModify }</p>
-          <p className="realName">{ data.realName }</p>
-          <p className="departmentId">{ data.departmentId }</p>
-          <p className="sex">{ data.sex }</p>
-
         </div>
       </div>
     );

@@ -9,6 +9,10 @@
     top: 0;
 }
 
+.carousel .picture {
+    height: 550px;
+}
+
 /* 轮播图上面的元素 */
 .over-carousel {
     position: relative;
@@ -16,7 +20,7 @@
 
 /* 左边大瀑布 */
 .left-waterfall {
-    height: 500px;
+    height: 550px;
     width: 256px;
     border-right: 1px solid #eee;
     border-left: 1px solid #eee;
