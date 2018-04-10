@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router';
 import { withRouter, Link } from 'react-router-dom';
-import { Layout, Menu, Breadcrumb } from 'antd';
+import { Input, Layout, Menu, Breadcrumb } from 'antd';
 import Pages from '../pages';
 import './BaseLayout.css';
 
@@ -30,9 +30,17 @@ class BaseLayout extends React.Component {
   render() {
     return (
       <Layout className="layout">
+        <div id="main-top">
+          <div className="logo"><Link to="/">ｗｌｙ</Link></div>
+          <div id="main-search-container">
+            <div id="main-search-wrapper">
+              <Input.Search id="main-search" enterButton="搜索" placeholder="搜索职位关键字"/>
+            </div>
+          </div>
+          <div id="main-profile" >登录</div>
+        </div>
         <Header id="main-header">
           <div className="content">
-            <div className="logo"><Link to="/">ｗｌｙ</Link></div>
             <Menu
               theme="dark"
               mode="horizontal"
@@ -43,11 +51,10 @@ class BaseLayout extends React.Component {
               <Menu.Item key="demand"><Link to="/demand">浏览职位</Link></Menu.Item>
               <Menu.Item key="recommend"><Link to="/recommend">我的推荐</Link></Menu.Item>
             </Menu>
-            <div id="main-profile" >登录</div>
           </div>
         </Header>
-        <Content className="main-content">
-          <Breadcrumb className="main-breadcrumb">
+        <Content id="main-content">
+          <Breadcrumb id="main-breadcrumb">
             <Breadcrumb.Item>首页</Breadcrumb.Item>
             <Breadcrumb.Item>浏览职位</Breadcrumb.Item>
           </Breadcrumb>

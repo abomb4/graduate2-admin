@@ -1,8 +1,75 @@
 
 /* 定义基本布局的css */
 
+/* top */
+#main-top {
+    height: 96px;
+    display: flex;
+    font-size: 1.2em;
+}
+
+#main-top .logo {
+    color: #fff;
+    font-family: 'sans serif';
+    font-size: 64px;
+    text-shadow: 0 0 16px #389;
+    padding-right: 24px;
+    display: flex;
+    /* flex: 1; */
+}
+
+#main-top .logo a {
+    color: #145;
+    text-decoration-line: none;
+}
+
+#main-top #main-search-container {
+    display: flex;
+}
+
+/* search */
+#main-search-container {
+    height: 96px;
+    flex: 1;
+}
+
+#main-search-wrapper {
+    margin: 24px 48px;
+    height: 48px;
+    display: flex;
+    width: 100%;
+}
+
+#main-search-wrapper button {
+    height: 48px;
+    font-size: 1.2em;
+    padding: 0 24px;
+}
+
+#main-search {
+    border: 2px solid #299bff;
+}
+
+/* search end */
+
+#main-profile {
+    height: 96px;
+    line-height: 96px;
+    margin-left:24px;
+    display: flex;
+    padding-right: 24px;
+    /* flex: 1; */
+}
+
+/* top end */
+
+/* header */
 #main-header {
-    line-height: 64px;
+    line-height: 48px;
+    height: 48px;
+}
+#main-header, #main-menu {
+    background-color: #55aaff;
 }
 
 #main-header .content {
@@ -10,66 +77,36 @@
     padding: 0 24px;
 }
 
-#main-header .logo {
-    color: #fff;
-    font-family: 'sans serif';
-    font-size: 2em;
-    text-shadow: 0 0 16px cyan;
-    padding-right: 24px;
-}
-
-#main-header .logo a {
-    color: #cef;
-    text-decoration-line: none;
-}
-
 #main-menu {
     display: flex;
     flex: 1;
-    line-height: 64px;
+    line-height: 48px;
+    border: none;
+    font-weight: bold;
+    font-size: 1.2em;
 }
-
-#main-profile {
-    color: #fff;
-}
-
-.main-content, #main-header .content {
+#main-content, #main-top, #main-header .content {
     width: 1600px;
     margin: auto;
 }
 
 @media (max-width: 1696px) {
-    .main-content, #main-header .content {
+    #main-content, #main-top, #main-header .content {
         width: 1400px;
     }
 }
 @media (max-width: 1496px) {
-    .main-content, #main-header .content {
+    #main-content, #main-top, #main-header .content {
         width: 1200px;
     }
 }
 @media (max-width: 1296px) {
-    .main-content, #main-header .content {
+    #main-content, #main-top, #main-header .content {
         width: 992px;
     }
 }
-@media (max-width: 1096px) {
-    .main-content, #main-header .content {
-        width: 768px;
-    }
-}
-@media (max-width: 896px) {
-    .main-content, #main-header .content {
-        width: 576px;
-    }
-}
-@media (max-width: 696px) {
-    .main-content, #main-header .content {
-        width: 480px;
-    }
-}
 
-.main-content {
+#main-content {
     padding: 24px;
     background-color: #fefefe;
     margin-bottom:24px;

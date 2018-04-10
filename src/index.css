@@ -4,6 +4,10 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  background-color: #f0f2f5;
+  background-color: #fdfdfe;
   color: black;
+}
+
+#app > .ant-layout {
+  background-color: transparent;
 }
