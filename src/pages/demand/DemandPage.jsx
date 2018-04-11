@@ -21,7 +21,7 @@ class DemandQueryForm extends Component {
 
   render() {
     return (
-      <Form className="demand-search-form" onSubmit={this.handleSearch}>
+      <Form className="demand-search-formmm" onSubmit={this.handleSearch}>
         <Row gutter={24}>
           <Col span={6} order={1}>
             <Form.Item label="业委会： ">
