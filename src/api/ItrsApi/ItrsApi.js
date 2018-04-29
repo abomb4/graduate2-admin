@@ -23,12 +23,12 @@ function handlePromise(promise, success, fail) {
     });
 }
 
-const API_BASE_URL = process.env.ITRS_API_BASE_URL;
+const API_BASE_URL = 'http://localhost:8080';
 
 /**
  * Itrs系统Api封装
  */
-class ItrsApi {
+class ItrsDataApi {
 
   /**
    * 获取用户接口。
@@ -103,4 +103,4 @@ class ItrsApi {
   }
 }
 
-export default ItrsApi;
+export default ItrsDataApi;

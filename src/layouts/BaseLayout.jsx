@@ -1,8 +1,9 @@
 import React from 'react';
 import { Route, Switch } from 'react-router';
 import { withRouter, Link } from 'react-router-dom';
-import { Input, Layout, Menu, Breadcrumb } from 'antd';
+import { Layout, Menu, Breadcrumb } from 'antd';
 import Pages from '../pages';
+import MainHeader from './MainHeader';
 import './BaseLayout.css';
 
 const { IndexPage, DemandPage, RecommendPage, NotFoundPage } = Pages;
@@ -30,15 +31,7 @@ class BaseLayout extends React.Component {
   render() {
     return (
       <Layout className="layout">
-        <div id="main-top">
-          <div className="logo"><Link to="/">ｗｌｙ</Link></div>
-          <div id="main-search-container">
-            <div id="main-search-wrapper">
-              <Input.Search id="main-search" enterButton="搜索" placeholder="搜索职位关键字"/>
-            </div>
-          </div>
-          <div id="main-profile" >登录</div>
-        </div>
+        <MainHeader />
         <Header id="main-header">
           <div className="content">
             <Menu
