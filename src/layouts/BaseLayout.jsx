@@ -5,7 +5,7 @@ import { Input, Layout, Menu, Breadcrumb } from 'antd';
 import Pages from '../pages';
 import './BaseLayout.css';
 
-const { IndexPage, DemandPage, RecommendPage, NotFoundPage } = Pages;
+const { IndexPage, LoginPage, DemandPage, RecommendPage, NotFoundPage } = Pages;
 const { Header, Content, Footer } = Layout;
 
 /**
