@@ -94,7 +94,7 @@ class LoginForm extends Component {
 
 function mapStateToProps(state) {
   const { logging, error, user } = state.userReducer;
-  console.log(state);
+
   return {
     loginError: error,
     user,

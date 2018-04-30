@@ -10,7 +10,7 @@ export const userActions = {
 function login(username, password) {
   return dispatch => {
     dispatch(request({ username }));
-    ItrsLoginApi.login(
+    return ItrsLoginApi.login(
       { 
         username: username,
         password: password
@@ -32,7 +32,7 @@ function login(username, password) {
 function logout() {
   return dispatch => {
     localStorage.removeItem('user');
-    ItrsLoginApi.logout(
+    return ItrsLoginApi.logout(
       (successData) => { dispatch(logoutAction()); },
       (failData) => { dispatch(logoutAction()); }
     );
@@ -43,7 +43,7 @@ function logout() {
 function timeout() {
   return dispatch => {
     localStorage.removeItem('user');
-    ItrsLoginApi.logout(
+    return ItrsLoginApi.logout(
       (successData) => { dispatch(loginTimeoutAction()); },
       (failData) => { dispatch(loginTimeoutAction()); }
     );

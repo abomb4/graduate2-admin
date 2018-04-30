@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import LoginForm from './LoginForm';
+import LoginForm from '../../components/Login/LoginForm';
 import { MainLayout, MainHeader, MainMenu, MainFooter } from '../../layouts';
 import './LoginPage.css';
 
