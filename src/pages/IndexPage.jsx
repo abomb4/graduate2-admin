@@ -72,11 +72,15 @@ class IndexPage extends Component {
       <div className="index-page">
         <div className="carousel">
           <Carousel autoplay infinite >
-            <div className="picture" style={{ background: 'url("/assets/bg.png")' }}>
-              <div className="page-content"><h3>1</h3></div>
+            <div>
+              <div className="picture" style={{ background: 'url("/assets/bg.png")' }}>
+                <div className="page-content"><h3>1</h3></div>
+              </div>
             </div>
-            <div className="picture" style={{ background: 'url("/assets/bg2.png")' }}>
-              <div className="page-content"><h3>2</h3></div>
+            <div>
+              <div className="picture" style={{ background: 'url("/assets/bg2.png")' }}>
+                <div className="page-content"><h3>2</h3></div>
+              </div>
             </div>
           </Carousel>
         </div>
