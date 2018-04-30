@@ -3,7 +3,8 @@ import { ItrsLoginApi } from '../api/ItrsApi';
 
 export const userActions = {
   login,
-  logout
+  logout,
+  timeout
 };
 
 function login(username, password) {
@@ -37,4 +38,15 @@ function logout() {
     );
   };
   function logoutAction() { return { type: userConstants.LOGOUT }; }
+}
+
+function timeout() {
+  return dispatch => {
+    localStorage.removeItem('user');
+    ItrsLoginApi.logout(
+      (successData) => { dispatch(loginTimeoutAction()); },
+      (failData) => { dispatch(loginTimeoutAction()); }
+    );
+  };
+  function loginTimeoutAction() { return { type: userConstants.LOGIN_TIMEOUT }; }
 }

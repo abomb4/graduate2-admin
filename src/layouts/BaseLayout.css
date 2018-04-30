@@ -53,6 +53,7 @@
 /* search end */
 
 #main-profile {
+    min-width: 8em;
     height: 96px;
     line-height: 96px;
     margin-left:24px;
@@ -60,19 +61,22 @@
     padding-right: 24px;
     /* flex: 1; */
 }
+#main-profile .ant-spin-spinning {
+    padding: 36px 0;
+}
 
 /* top end */
 
 /* header */
-#main-header {
+#main-menu {
     line-height: 48px;
     height: 48px;
 }
-#main-header, #main-menu {
+#main-menu, #main-menu {
     background-color: #55aaff;
 }
 
-#main-header .content {
+#main-menu .content {
     display: flex;
     padding: 0 24px;
 }
@@ -92,23 +96,23 @@
     padding: 0 24px;
 }
 
-#main-top, #main-header .content, .page-content {
+#main-top, #main-menu .content, .page-content {
     width: 1600px;
     margin: auto;
 }
 
 @media (max-width: 1696px) {
-    #main-top, #main-header .content, .page-content {
+    #main-top, #main-menu .content, .page-content {
         width: 1400px;
     }
 }
 @media (max-width: 1496px) {
-    #main-top, #main-header .content, .page-content {
+    #main-top, #main-menu .content, .page-content {
         width: 1200px;
     }
 }
 @media (max-width: 1296px) {
-    #main-top, #main-header .content, .page-content {
+    #main-top, #main-menu .content, .page-content {
         width: 992px;
     }
 }

@@ -75,7 +75,8 @@ class ItrsLoginApi {
       params: {
         username: data.username,
         password: data.password
-      }
+      },
+      withCredentials: true
     });
 
     function wrappedSuccess(data) {
@@ -115,8 +116,54 @@ class ItrsLoginApi {
    * @param {Function} fail 失败回调
    */
   static logout(success, fail) {
-    const promise = axios(API_BASE_URL + '/auth/logout');
+    const promise = axios(API_BASE_URL + '/auth/logout', {
+      withCredentials: true
+    });
     handlePromise(promise, success, fail);
+  }
+
+  /**
+   * 检查登录状态。
+   * 成功返回：
+   * {
+   *     "success":true,
+   *     "message":"You are logged in.",
+   *     "data":{
+   *         "sessionKey":"3d19b6c7-99d0-4b9a-9e71-690d9ccb683f",
+   *         "id":37,
+   *         "userName":"x4x",
+   *         "email":"wlyyy@163.com",
+   *         "roles":[],
+   *         "sex":1,
+   *         "departmentId":1,
+   *         "realName":"姓名",
+   *         "loginTime":"2018-04-02 11:11:11",
+   *         "refreshTime":"2018-04-02 11:11:11"
+   *     }
+   * }
+   * 
+   * 失败返回：
+   * {
+   ×     "success": false,
+   ×     "message": "You are NOT logged in."
+   × }
+   * 
+   * @param {Function} success 成功回调
+   * @param {Function} fail 失败回调
+   */
+  static checkStatus(success, fail) {
+    const promise = axios(API_BASE_URL + '/auth/check-status', {
+      withCredentials: true
+    });
+    
+    function wrappedSuccess(successData) {
+      if (successData.success) {
+        success(successData.data);
+      } else {
+        fail(successData);
+      }
+    }
+    handlePromise(promise, wrappedSuccess, fail);
   }
 }
 

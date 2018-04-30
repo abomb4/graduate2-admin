@@ -1,22 +1,25 @@
 import { userConstants } from '../_constants';
 
 let user = JSON.parse(localStorage.getItem('user'));
-const initialState = user ? { loggedIn: true, user } : {};
+const initialState = user ? { user } : {};
 
 export function userReducer(state = initialState, action) {
   switch (action.type) {
   case userConstants.LOGIN_REQUEST:
     return {
-      loggingIn: false
+      logging: true
     };
   case userConstants.LOGIN_SUCCESS:
     return {
-      loggedIn: true,
       user: action.user
     };
   case userConstants.LOGIN_FAILURE:
-    return {};
+    return {
+      error: action.error
+    };
   case userConstants.LOGOUT:
+    return {};
+  case userConstants.LOGIN_TIMEOUT:
     return {};
   default:
     return state;

@@ -8,4 +8,5 @@ export const userConstants = {
   LOGIN_FAILURE: 'USERS_LOGIN_FAILURE',
   
   LOGOUT: 'USERS_LOGOUT',
+  LOGIN_TIMEOUT: 'USERS_LOGIN_TIMEOUT',
 };
