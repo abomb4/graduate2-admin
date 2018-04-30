@@ -19,8 +19,10 @@ export function userReducer(state = initialState, action) {
     };
   case userConstants.LOGOUT:
     return {};
-  case userConstants.LOGIN_TIMEOUT:
-    return {};
+  case userConstants.LOGIN_CANCELED:
+    return {
+      canceled: true
+    };
   default:
     return state;
   }

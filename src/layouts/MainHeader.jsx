@@ -7,20 +7,25 @@ import { userActions } from '../_actions';
 import './BaseLayout.css';
 
 class MainHeader extends React.Component {
-
+  
   state = {
     inited: false,
     showLogin: false,
   }
 
   handleCancel = () => {
+    const { dispatch } = this.props;
+    userActions.cancel()(dispatch);
     this.setState({ showLogin: false });
+  }
+
+  handleLogoutOk() {
+    const { dispatch } = this.props;
+    return userActions.logout()(dispatch);
   }
 
   render() {
     var currentUserElement = null;
-
-    const { dispatch } = this.props;
 
     currentUserElement = this.props.user
       ? <span>
@@ -30,16 +35,11 @@ class MainHeader extends React.Component {
           content: '确定要登出吗？',
           okText: '登出',
           cancelText: '取消',
-          onOk() {
-            return userActions.logout()(dispatch);
-          }
+          onOk: () => this.handleLogoutOk()
         }) }>登出</a>
       </span>
       : <a onClick={ () => this.setState({ showLogin: true }) }>登录</a>;
 
-    if (this.props.user && this.state.showLogin) {
-      this.setState({ showLogin: false });
-    }
     return (
       <div id="main-top">
 
@@ -48,7 +48,7 @@ class MainHeader extends React.Component {
           title="登录"
           onCancel={ this.handleCancel }
           footer={[
-            <Button key="back" onClick={ this.handleCancel }>取消</Button>
+            <Button key="back" onClick={ () => this.handleCancel() } >取消</Button>
           ]}
         >
           <div className="main-login-form-container">

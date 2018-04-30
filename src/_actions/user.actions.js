@@ -4,7 +4,7 @@ import { ItrsLoginApi } from '../api/ItrsApi';
 export const userActions = {
   login,
   logout,
-  timeout
+  cancel
 };
 
 function login(username, password) {
@@ -40,13 +40,9 @@ function logout() {
   function logoutAction() { return { type: userConstants.LOGOUT }; }
 }
 
-function timeout() {
-  return dispatch => {
-    localStorage.removeItem('user');
-    return ItrsLoginApi.logout(
-      (successData) => { dispatch(loginTimeoutAction()); },
-      (failData) => { dispatch(loginTimeoutAction()); }
-    );
+function cancel() {
+  return (dispatch) => {
+    return dispatch(canceled());
   };
-  function loginTimeoutAction() { return { type: userConstants.LOGIN_TIMEOUT }; }
+  function canceled() { return { type: userConstants.LOGIN_CANCELED }; }
 }
