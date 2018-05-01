@@ -32,12 +32,12 @@ function login(username, password, successCall, failCall) {
   function failure(error) { return { type: userConstants.LOGIN_FAILURE, error }; }
 }
 
-function logout() {
+function logout(successCall, failCall) {
   return dispatch => {
     localStorage.removeItem('user');
     return ItrsLoginApi.logout(
-      (successData) => { dispatch(logoutAction()); },
-      (failData) => { dispatch(logoutAction()); }
+      (successData) => { dispatch(logoutAction()); if (successCall) successCall(); },
+      (failData) => { dispatch(logoutAction()); if (failCall) failCall(); }
     );
   };
   function logoutAction() { return { type: userConstants.LOGOUT }; }

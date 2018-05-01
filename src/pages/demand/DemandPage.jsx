@@ -1,5 +1,6 @@
 import React from 'react';
-import { Form, Row, Col, Table, Input, Select, Button, Icon } from 'antd';
+import { Form, Row, Col, Table, Input, Select, Button, Icon, Radio } from 'antd';
+import
 import './DemandPage.css';
 
 const { Component } = React;
@@ -10,14 +11,16 @@ const { Component } = React;
 class DemandQueryForm extends Component {
 
   handleReset = () => {
-    console.log('dd');
     this.props.form.resetFields();
   }
 
   handleSearch = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
-      console.log('Received values of form: ', values);
+      if (!err) {
+        console.log('Received values of form: ', values);
+
+      }
     });
   }
 
@@ -39,8 +42,65 @@ class DemandQueryForm extends Component {
       <div className='demand-query-form'>
         <div className="page-content">
           <Form className="demand-search-form" onSubmit={ this.handleSearch }>
-            <Form.Item> { getFieldDecorator('pageNo', { initialValue: 1 })(<Input style={{ display: 'none' }} />)} </Form.Item>
-            <Form.Item> { getFieldDecorator('pageSize', { initialValue: this.props.pageSize })(<Input style={{ display: 'none' }} />)} </Form.Item>
+            <Row gutter={24}>
+              <Col span={18}>
+                <div className="position-type radio-container">
+                  <span className="label">职位：</span>
+                  <Radio.Group defaultValue="a">
+                    <Radio.Button value="a">Hangzhou</Radio.Button>
+                    <Radio.Button value="b">Shanghai</Radio.Button>
+                    <Radio.Button value="c">Beijing</Radio.Button>
+                    <Radio.Button value="d">Chengdu</Radio.Button>
+                  </Radio.Group>
+                </div>
+              </Col>
+            </Row>
+            <Row gutter={24}>
+              <Col span={18}>
+                <div className="position-sub-type radio-container">
+                  <span className="label">职位子类：</span>
+                  <Radio.Group defaultValue="a">
+                    <Radio.Button value="a">Hangzhou</Radio.Button>
+                    <Radio.Button value="b">Shanghai</Radio.Button>
+                    <Radio.Button value="c">Beijing</Radio.Button>
+                    <Radio.Button value="d">Chengdu</Radio.Button>
+                    <Radio.Button value="1">职位1</Radio.Button>
+                    <Radio.Button value="2">职位2</Radio.Button>
+                    <Radio.Button value="3">职位3</Radio.Button>
+                    <Radio.Button value="4">职位4</Radio.Button>
+                    <Radio.Button value="5">职位5</Radio.Button>
+                    <Radio.Button value="6">职位6</Radio.Button>
+                    <Radio.Button value="7">职位7</Radio.Button>
+                    <Radio.Button value="8">职位8</Radio.Button>
+                    <Radio.Button value="9">职位9</Radio.Button>
+                    <Radio.Button value="10">职位10</Radio.Button>
+                    <Radio.Button value="11">职位11</Radio.Button>
+                    <Radio.Button value="12">职位12</Radio.Button>
+                    <Radio.Button value="13">职位13</Radio.Button>
+                    <Radio.Button value="14">职位14</Radio.Button>
+                    <Radio.Button value="15">职位15</Radio.Button>
+                    <Radio.Button value="16">职位16</Radio.Button>
+                    <Radio.Button value="17">职位17</Radio.Button>
+                    <Radio.Button value="18">职位18</Radio.Button>
+                    <Radio.Button value="19">职位19</Radio.Button>
+                    <Radio.Button value="20">职位20</Radio.Button>
+                    <Radio.Button value="21">职位21</Radio.Button>
+                    <Radio.Button value="22">职位22</Radio.Button>
+                    <Radio.Button value="23">职位23</Radio.Button>
+                    <Radio.Button value="24">职位24</Radio.Button>
+                    <Radio.Button value="25">职位25</Radio.Button>
+                    <Radio.Button value="26">职位26</Radio.Button>
+                    <Radio.Button value="27">职位27</Radio.Button>
+                    <Radio.Button value="28">职位28</Radio.Button>
+                    <Radio.Button value="29">职位29</Radio.Button>
+                    <Radio.Button value="30">职位30</Radio.Button>
+                    <Radio.Button value="31">职位31</Radio.Button>
+                  </Radio.Group>
+                </div>
+              </Col>
+            </Row>
+            { getFieldDecorator('pageNo', { initialValue: 1 })(<Input style={{ display: 'none' }} />)}
+            { getFieldDecorator('pageSize', { initialValue: this.props.pageSize })(<Input style={{ display: 'none' }} />)}
             <Row gutter={24}>
               <Col span={6}>
                 <Form.Item label="业委会： " {...formItemLayout}>

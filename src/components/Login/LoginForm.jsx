@@ -39,6 +39,7 @@ class LoginForm extends Component {
           const { username, password } = values;
           const { dispatch } = this.props;
           if (username && password) {
+            // FIXME remove callback
             userActions.login(username, password, onSuccess)(dispatch);
           }
         }

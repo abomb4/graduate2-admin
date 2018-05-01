@@ -16,7 +16,8 @@ class MainHeader extends React.Component {
 
   handleLogoutOk() {
     const { dispatch } = this.props;
-    return userActions.logout()(dispatch);
+    // FIXME remove callback
+    return userActions.logout(() => { message.success('登出成功', 2); })(dispatch);
   }
 
   onLoginSuccess() {
