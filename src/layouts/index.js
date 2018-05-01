@@ -5,5 +5,6 @@ export { default as MainMenu } from './MainMenu';
 export { default as MainContent } from './MainContent';
 export { default as MainRoute } from './MainRoute';
 export { default as MainFooter } from './MainFooter';
+export { default as CheckLoginStatus } from './CheckLoginStatus';
 
 export { default as BaseLayout } from './BaseLayout';

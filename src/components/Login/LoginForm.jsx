@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import { Form, Icon, Input, Button, Checkbox, Spin, Alert } from 'antd';
 import { userActions } from '../../_actions';
@@ -27,6 +26,8 @@ class LoginForm extends Component {
   handleSubmit(e) {
     e.preventDefault();
 
+    const onSuccess = this.props.onSuccess;
+
     this.props.form.validateFields(
       (err) => {
         if (!err) {
@@ -38,7 +39,7 @@ class LoginForm extends Component {
           const { username, password } = values;
           const { dispatch } = this.props;
           if (username && password) {
-            userActions.login(username, password)(dispatch);
+            userActions.login(username, password, onSuccess)(dispatch);
           }
         }
       },
@@ -49,15 +50,21 @@ class LoginForm extends Component {
   render() {
     const { getFieldDecorator } = this.props.form;
 
-    if (this.state.submitted && this.props.user) {
-      console.log(this.props);
-      return (<Redirect to="/" />);
+    var message = null;
+    if (this.props.loginError) {
+      console.log(this.props.loginError);
+      if (this.props.loginError.status) {
+        message = this.props.loginError.status === 401 ? '用户名或密码错误' : '登录异常';
+      } else {
+        message = '网络异常';
+      }
     }
+    const alert = this.props.loginError ? <Alert closable message={ message } type="error"/> : null;
 
     return (
       <div className="login-form-container">
         <div className="message-wrapper">
-          { this.props.loginError ? <Alert closable message={ this.props.loginError.status ? '用户名或密码错误' : '网络异常' } type="error"/> : null }
+          { alert }
         </div>
         <Form onSubmit={ this.handleSubmit } className="login-form" style={{ marginTop: '24px'}}>
           <Spin spinning={ this.props.logging === true }>

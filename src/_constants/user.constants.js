@@ -8,5 +8,6 @@ export const userConstants = {
   LOGIN_FAILURE: 'USERS_LOGIN_FAILURE',
   
   LOGOUT: 'USERS_LOGOUT',
-  LOGIN_CANCELED: 'LOGIN_CANCELED',
+  LOGIN_CANCELED: 'LOGIN_CANCELED', // 取消登录，隐藏登录框
+  LOGIN_TIMEOUT: 'LOGIN_TIMEOUT', // 登录状态已超时
 };

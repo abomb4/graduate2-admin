@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, Carousel } from 'antd';
-import { ItrsDataApi } from '../api/ItrsApi';
+import { ItrsDataApi } from '../../api/ItrsApi';
 import './IndexPage.css';
 
 const { Component } = React;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import { MainLayout, MainHeader, MainMenu, MainContent, MainRoute, MainFooter } from '.';
+import { CheckLoginStatus, MainLayout, MainHeader, MainMenu, MainContent, MainRoute, MainFooter } from '.';
 import './BaseLayout.css';
 
 /**
@@ -25,6 +25,7 @@ class BaseLayout extends React.Component {
   render() {
     return (
       <MainLayout>
+        <CheckLoginStatus />
         <MainHeader />
         <MainMenu />
         <MainContent>
