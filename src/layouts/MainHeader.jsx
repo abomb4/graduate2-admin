@@ -1,17 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Input, Modal, Button } from 'antd';
+import { Input, Modal, Button, message } from 'antd';
 import { LoginForm } from '../components/Login';
-import { userActions } from '../_actions';
+import { userActions, loginActions } from '../_actions';
 import './BaseLayout.css';
 
 class MainHeader extends React.Component {
-  
-  state = {
-    inited: false,
-    showLogin: false,
-  }
 
   handleCancel = () => {
     const { dispatch } = this.props;
@@ -21,15 +16,25 @@ class MainHeader extends React.Component {
 
   handleLogoutOk() {
     const { dispatch } = this.props;
-    return userActions.logout()(dispatch);
+    // FIXME remove callback
+    return userActions.logout(() => { message.success('登出成功', 2); })(dispatch);
+  }
+
+  onLoginSuccess() {
+    const { dispatch } = this.props;
+    message.success('登录成功', 2);
+    loginActions.hide()(dispatch);
   }
 
   render() {
+    const { dispatch } = this.props;
+
     var currentUserElement = null;
 
-    currentUserElement = this.props.user
+    // 当前用户信息
+    currentUserElement = this.props.loginUser
       ? <span>
-          欢迎您，{ this.props.user.realName }。
+          欢迎您，{ this.props.loginUser.realName }。
         <a onClick={ () => Modal.confirm({
           title: '确定登出？',
           content: '确定要登出吗？',
@@ -38,13 +43,13 @@ class MainHeader extends React.Component {
           onOk: () => this.handleLogoutOk()
         }) }>登出</a>
       </span>
-      : <a onClick={ () => this.setState({ showLogin: true }) }>登录</a>;
+      : <a onClick={ () => loginActions.show()(dispatch) }>登录</a>;
 
     return (
       <div id="main-top">
 
         <Modal
-          visible={ this.state.showLogin }
+          visible={ this.props.showLogin }
           title="登录"
           onCancel={ this.handleCancel }
           footer={[
@@ -52,7 +57,7 @@ class MainHeader extends React.Component {
           ]}
         >
           <div className="main-login-form-container">
-            <LoginForm />
+            <LoginForm onSuccess={() => { this.onLoginSuccess(); }}/>
           </div>
         </Modal>
         <div className="logo"><Link to="/">ｗｌｙ</Link></div>
@@ -69,8 +74,11 @@ class MainHeader extends React.Component {
 
 function mapStateToProps(state) {
   const { user } = state.userReducer;
+  const { show } = state.loginReducer;
+
   return {
-    user
+    loginUser: user,
+    showLogin: show
   };
 }
 const connectedMainHeader = connect(mapStateToProps)(MainHeader);
