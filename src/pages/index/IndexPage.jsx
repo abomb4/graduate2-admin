@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, Carousel } from 'antd';
-import ItrsApi from '../api/ItrsApi';
+import { ItrsDataApi } from '../../api/ItrsApi';
+import { urlFunctions } from '../../helpers';
 import './IndexPage.css';
 
 const { Component } = React;
@@ -13,7 +14,7 @@ class LeftWaterfall extends Component {
   }
 
   componentDidMount() {
-    ItrsApi.getPositions(
+    ItrsDataApi.getPositions(
       (successResult) => {
         if (successResult.success) {
           const data = successResult.data;
@@ -32,7 +33,6 @@ class LeftWaterfall extends Component {
   }
 
   render() {
-
     const menuList = [];
     const data = this.state.data;
     for (var i in data) {
@@ -42,12 +42,19 @@ class LeftWaterfall extends Component {
 
       for (var j in subTypes) {
         const subPosition = subTypes[j];
-        subMenus.push(<Menu.Item key={ subPosition.id }><Link to="#" className="job-name-container">{ subPosition.chineseName }</Link></Menu.Item>);
+        subMenus.push(
+          <Menu.Item key={ subPosition.id }>
+            <Link to={ urlFunctions.queryDemandUrl({ positionType: subPosition.id }) } className="job-name-container">{ subPosition.chineseName }</Link>
+          </Menu.Item>
+        );
       }
 
       const parentMenu = (
         <Menu.SubMenu key={ parentPosition.id } title={
-          <Link to="#" className="job-name-container"><span className="job-cn-name">{ parentPosition.chineseName }</span><span className="job-en-name">{ parentPosition.englishName }</span></Link>
+          <Link to={ urlFunctions.queryDemandUrl({ positionType: parentPosition.id }) } className="job-name-container">
+            <span className="job-cn-name">{ parentPosition.chineseName }</span>
+            <span className="job-en-name">{ parentPosition.englishName }</span>
+          </Link>
         }>
           { subMenus }
         </Menu.SubMenu>
@@ -72,11 +79,15 @@ class IndexPage extends Component {
       <div className="index-page">
         <div className="carousel">
           <Carousel autoplay infinite >
-            <div className="picture" style={{ background: 'url("/assets/bg.png")' }}>
-              <div className="page-content"><h3>1</h3></div>
+            <div>
+              <div className="picture" style={{ background: 'url("/assets/bg.png")' }}>
+                <div className="page-content"><h3>1</h3></div>
+              </div>
             </div>
-            <div className="picture" style={{ background: 'url("/assets/bg2.png")' }}>
-              <div className="page-content"><h3>2</h3></div>
+            <div>
+              <div className="picture" style={{ background: 'url("/assets/bg2.png")' }}>
+                <div className="page-content"><h3>2</h3></div>
+              </div>
             </div>
           </Carousel>
         </div>

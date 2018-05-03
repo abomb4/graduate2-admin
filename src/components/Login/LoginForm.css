@@ -1,0 +1,17 @@
+@media all and (min-width: 480px) {
+
+    .login-form-container {
+        max-width: 300px;
+    }
+
+    .login-form form {
+        margin: 0 auto;
+        max-width: 320px;
+    }
+    .login-form .login-form-forgot {
+        float: right;
+    }
+    .login-form .login-form-button {
+        width: 100%;
+    }
+}

@@ -1,0 +1,9 @@
+@media all and (min-width: 480px) {
+    .login-page {
+        padding-top: 80px;
+        padding-bottom: 120px;
+    }
+    .login-page .login-form-container {
+        margin: auto;
+    }
+}
