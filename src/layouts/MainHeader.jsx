@@ -11,7 +11,6 @@ class MainHeader extends React.Component {
   handleCancel = () => {
     const { dispatch } = this.props;
     userActions.cancel()(dispatch);
-    this.setState({ showLogin: false });
   }
 
   handleLogoutOk() {

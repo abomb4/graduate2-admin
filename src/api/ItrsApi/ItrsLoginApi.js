@@ -1,32 +1,10 @@
 // eslint-disable-next-line
 import objectToFormData from 'object-to-formdata';
 import axios from 'axios';
+import { API_BASE_URL, handlePromise } from './common.js';
 
 /**
- * 通用处理axios promise，方便回调
- * 
- * @param {Promise} promise axios promise
- * @param {Function} success 成功回调，会塞入服务端返回的信息
- * @param {Function} fail 失败回调，会塞入axios原始错误对象
- */
-function handlePromise(promise, success, fail) {
-  promise
-    .then((result) => {
-      if (success) {
-        success(result.data);
-      }
-    })
-    .catch((result) => {
-      if (fail) {
-        fail(result);
-      }
-    });
-}
-
-const API_BASE_URL = 'http://localhost:8080';
-
-/**
- * Itrs系统Api封装
+ * Itrs登陆认证Api封装
  */
 class ItrsLoginApi {
 

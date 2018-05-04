@@ -1,4 +1,6 @@
 export { default as ItrsLoginApi } from './ItrsLoginApi';
-export { default as ItrsDataApi } from './ItrsDataApi';
+export { default as ItrsDictionaryApi } from './ItrsDictionaryApi';
+export { default as ItrsCandidateApi } from './ItrsCandidateApi';
 
-export default {};
+export default {
+};

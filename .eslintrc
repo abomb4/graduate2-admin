@@ -21,7 +21,6 @@
     "rules": {
         "indent": ["error", 2],
         "no-unused-vars": ["error", { "args": "none" }],
-        "linebreak-style": ["error", "windows"],
         "quotes": ["error", "single"],
         "semi": ["error", "always"],
         "globals": ["React"],

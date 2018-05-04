@@ -1,6 +1,5 @@
 import React from 'react';
 import { Form, Row, Col, Table, Input, Select, Button, Icon, Radio } from 'antd';
-import
 import './DemandPage.css';
 
 const { Component } = React;

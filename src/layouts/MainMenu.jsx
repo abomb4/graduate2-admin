@@ -18,6 +18,8 @@ class MainMenu extends React.Component {
       return 'recommend';
     } else if (currentPath.startsWith('/demand')) {
       return 'demand';
+    } else if (currentPath.startsWith('/myProfile')) {
+      return 'myProfile';
     } else {
       return null;
     }
@@ -35,7 +37,7 @@ class MainMenu extends React.Component {
           >
             <Menu.Item key="index"><Link to="/">首页</Link></Menu.Item>
             <Menu.Item key="demand"><Link to="/demand">招聘岗位</Link></Menu.Item>
-            <Menu.Item key="myProfile"><Link to="/myProfile">我的推荐</Link></Menu.Item>
+            <Menu.Item key="myProfile"><Link to="/myProfile">个人中心</Link></Menu.Item>
           </Menu>
         </div>
       </Header>
