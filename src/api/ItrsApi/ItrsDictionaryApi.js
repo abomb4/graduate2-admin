@@ -25,7 +25,7 @@ class ItrsDataApi {
    *     sex: 2
    *   }
    * }
-   * 
+   *
    * @param {Number} id id
    * @param {Function} success 成功回调，会塞入服务端返回的信息
    * @param {Function} fail 失败回调，会塞入axios原始错误对象
@@ -67,13 +67,13 @@ class ItrsDataApi {
    *    },
    * }
 
-   * 
+   *
    * @param {Function} success 成功回调，会塞入服务端返回的信息
    * @param {Function} fail 失败回调，会塞入axios原始错误对象
    */
   static getPositions(success, fail) {
     const promise = axios({
-      url: API_BASE_URL + '/positions',
+      url: API_BASE_URL + '/dict/positionTypeTree',
       method: 'get'
     });
     handlePromise(promise, success, fail);

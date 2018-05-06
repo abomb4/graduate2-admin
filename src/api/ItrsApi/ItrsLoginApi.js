@@ -25,7 +25,7 @@ class ItrsLoginApi {
    *     "realName": "realName",
    *     "sex": "1"
    * }
-   * 
+   *
    * 登录失败：
    * {
    *     "timestamp": 1524990088495,
@@ -41,7 +41,7 @@ class ItrsLoginApi {
    *     "error": "Unauthorized",
    *     "message": "Authentication Failed: Cannot authenticate x4x"
    * }
-   * 
+   *
    * @param {Object} data 目前必须包含username和password字段
    * @param {Function} success 成功回调
    * @param {Function} fail 失败回调
@@ -68,7 +68,7 @@ class ItrsLoginApi {
     }
 
     function wrappedFail(error) {
-      
+
       if (error.response) {
         var data = error.response.data;
         var info = {
@@ -88,7 +88,7 @@ class ItrsLoginApi {
 
   /**
    * 登出。没有返回数据，通过HTTP Code判断是否成功
-   * 
+   *
    * @param {Object} data 参数
    * @param {Function} success 成功回调
    * @param {Function} fail 失败回调
@@ -119,13 +119,13 @@ class ItrsLoginApi {
    *         "refreshTime":"2018-04-02 11:11:11"
    *     }
    * }
-   * 
+   *
    * 失败返回：
    * {
    ×     "success": false,
    ×     "message": "You are NOT logged in."
    × }
-   * 
+   *
    * @param {Function} success 成功回调
    * @param {Function} fail 失败回调
    */
@@ -133,7 +133,7 @@ class ItrsLoginApi {
     const promise = axios(API_BASE_URL + '/auth/check-status', {
       withCredentials: true
     });
-    
+
     function wrappedSuccess(successData) {
       if (successData.success) {
         success(successData.data);

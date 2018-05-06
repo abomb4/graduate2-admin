@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Input, Modal, Button, message } from 'antd';
+import { Input, Modal, Button, message, _default } from 'antd';
 import { LoginForm } from '../components/Login';
 import { userActions, loginActions } from '../_actions';
 import './BaseLayout.css';
@@ -11,6 +11,7 @@ class MainHeader extends React.Component {
   handleCancel = () => {
     const { dispatch } = this.props;
     userActions.cancel()(dispatch);
+    loginActions.hide()(dispatch);
   }
 
   handleLogoutOk() {

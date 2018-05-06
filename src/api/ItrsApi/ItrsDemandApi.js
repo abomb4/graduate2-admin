@@ -38,7 +38,7 @@ export default class ItrsDemandApi {
    *         }
    *     ]
    * }
-   * 
+   *
    * 请求参数：
    * | pageNo | 页码 | Number | - | Y
    * | pageSize | 分页大小 | Number | - | Y
@@ -54,7 +54,7 @@ export default class ItrsDemandApi {
    * | degreeRequest | 学位要求 | String | 匹配 | N
    * | gmtModifyStart | 需改时间起始 | String | yyyy-MM-dd HH:mm:ss | N
    * | gmtModifyEnd | 需改时间结束 | String | yyyy-MM-dd HH:mm:ss | N
-   * 
+   *
    * @param {Object} id id 见上面请求参数
    * @param {Function} success 成功回调，会塞入服务端返回的信息
    * @param {Function} fail 失败回调，会塞入axios原始错误对象
@@ -94,7 +94,7 @@ export default class ItrsDemandApi {
    *         "gmtModify": "gmtModify001"
    *     }
    * }
-   * 
+   *
    * @param {Number} id 需求 id
    * @param {Function} success 成功回调，会塞入服务端返回的信息
    * @param {Function} fail 失败回调，会塞入axios原始错误对象
@@ -110,8 +110,11 @@ export default class ItrsDemandApi {
 
   /**
    * 查询最新需求
+   * 
+   * @param {Function} success 成功回调，会塞入服务端返回的信息
+   * @param {Function} fail 失败回调，会塞入axios原始错误对象
    */
-  static getNew() {
+  static getNew(success, fail) {
     const promise = axios({
       url: API_BASE_URL + '/demand/new',
       method: 'get'
@@ -122,7 +125,7 @@ export default class ItrsDemandApi {
 
   /**
    * HR发布需求
-   * 
+   *
    * @param {Object} data 需求数据
    * @param {Function} success 成功回调，会塞入服务端返回的信息
    * @param {Function} fail 失败回调，会塞入axios原始错误对象
@@ -139,7 +142,7 @@ export default class ItrsDemandApi {
 
   /**
    * HR修改需求
-   * 
+   *
    * @param {Object} data 需求数据
    * @param {Function} success 成功回调，会塞入服务端返回的信息
    * @param {Function} fail 失败回调，会塞入axios原始错误对象

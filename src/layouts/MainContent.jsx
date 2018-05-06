@@ -40,7 +40,7 @@ class MainContent extends React.Component {
             </Switch>
           </Breadcrumb>
         </div>
-        { this.props.children } 
+        { this.props.children }
       </Content>
     );
   }

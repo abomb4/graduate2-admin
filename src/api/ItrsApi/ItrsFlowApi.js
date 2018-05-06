@@ -8,9 +8,11 @@ import { API_BASE_URL, handlePromise } from './common.js';
  */
 export default class ItrsFlowApi {
 
+  static UPLOAD_PATH = API_BASE_URL + '/upload';
+
   /**
    * 员工推荐。
-   * 
+   *
    * | 字段 | 说明 | 类型 | 备注 | 是否必填
    * | demandId | 需求id | Number | - | Y
    * | name | 推荐人姓名 | String | - | Y
@@ -22,7 +24,7 @@ export default class ItrsFlowApi {
    * | workingPlace | 期望工作地点 | String | - | N
    * | memo | 备注 | String | - | N
    * | attachment | 附件标记 | String | - | N
-   * 
+   *
    * @param {Object} id id 见上面请求参数
    * @param {Function} success 成功回调，会塞入服务端返回的信息
    * @param {Function} fail 失败回调，会塞入axios原始错误对象
@@ -39,7 +41,7 @@ export default class ItrsFlowApi {
 
   /**
    * 查询最新职位需求。
-   * 
+   *
    * @param {Object} data 必须包含demandId，可选pageNo, pageSize
    * @param {Function} success 成功回调，会塞入服务端返回的信息
    * @param {Function} fail 失败回调，会塞入axios原始错误对象
@@ -56,7 +58,7 @@ export default class ItrsFlowApi {
 
   /**
    * 查询需要面试的流程，提供给普通员工使用
-   * 
+   *
    * @param {Object} data 可选pageNo, pageSize
    * @param {Function} success 成功回调，会塞入服务端返回的信息
    * @param {Function} fail 失败回调，会塞入axios原始错误对象
@@ -73,7 +75,7 @@ export default class ItrsFlowApi {
 
   /**
    * 查询该用户下的所有流程信息
-   * 
+   *
    * @param {Object} data 可选pageNo, pageSize
    * @param {Function} success 成功回调，会塞入服务端返回的信息
    * @param {Function} fail 失败回调，会塞入axios原始错误对象
@@ -90,7 +92,7 @@ export default class ItrsFlowApi {
 
   /**
    * 查询当前用户的历史处理记录
-   * 
+   *
    * @param {Object} data 可选pageNo, pageSize
    * @param {Function} success 成功回调，会塞入服务端返回的信息
    * @param {Function} fail 失败回调，会塞入axios原始错误对象
@@ -107,23 +109,23 @@ export default class ItrsFlowApi {
 
   /**
    * 处理流程任务
-   * 
+   *
    * ==== 请求参数
    * [options="header"]
    * |======
    * | 字段 | 说明 | 类型 | 备注 | 是否必填
    * | outcome | 连线名称（通过or不通过等） | String | 连线名称（通过or不通过等） | Y
    * | nextUserId | 下一任务的完成人 | String | 除最后一个节点外，必须，且只能有一个 | N
-   * | result | 当前流程结果 | String | 中文结果 | Y
+   * | result | 当前流程结果 | String | 流程名 + 操作名 | Y
    * | taskId | 任务id | String | 必须 | Y
    * | id | 招聘流程id | Number | 对应applyFlowId | Y
    * |======
-   * 
+   *
    * @param {Object} data 请求参数
    * @param {Function} success 成功回调，会塞入服务端返回的信息
    * @param {Function} fail 失败回调，会塞入axios原始错误对象
    */
-  static listHistoricFlow(data, success, fail) {
+  static deal(data, success, fail) {
     const promise = axios({
       url: API_BASE_URL + '/myProfile/flow/deal',
       method: 'post',

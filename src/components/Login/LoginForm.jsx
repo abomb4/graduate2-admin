@@ -45,7 +45,7 @@ class LoginForm extends Component {
         }
       },
     );
-    
+
   }
 
   render() {
