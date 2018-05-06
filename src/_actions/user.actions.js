@@ -7,14 +7,21 @@ export const userActions = {
   cancel,
   checkTimeout,
 };
+function timeout() { return { type: userConstants.LOGIN_TIMEOUT }; }
+function request() { return { type: userConstants.LOGIN_REQUEST }; }
+function success(user) { return { type: userConstants.LOGIN_SUCCESS, user }; }
+function failure(error) { return { type: userConstants.LOGIN_FAILURE, error }; }
+function logoutAction() { return { type: userConstants.LOGOUT }; }
+function canceled() { return { type: userConstants.LOGIN_CANCELED }; }
 
-function login(username, password, successCall, failCall) {
+function login(username, password, remember, successCall, failCall) {
   return dispatch => {
     dispatch(request({ username }));
     return ItrsLoginApi.login(
       {
         username: username,
-        password: password
+        password: password,
+        'remember-me': remember
       },
       (successData) => {
         localStorage.setItem('user', JSON.stringify(successData));
@@ -27,9 +34,6 @@ function login(username, password, successCall, failCall) {
       }
     );
   };
-  function request() { return { type: userConstants.LOGIN_REQUEST }; }
-  function success(user) { return { type: userConstants.LOGIN_SUCCESS, user }; }
-  function failure(error) { return { type: userConstants.LOGIN_FAILURE, error }; }
 }
 
 function logout(successCall, failCall) {
@@ -40,14 +44,12 @@ function logout(successCall, failCall) {
       (failData) => { dispatch(logoutAction()); if (failCall) failCall(); }
     );
   };
-  function logoutAction() { return { type: userConstants.LOGOUT }; }
 }
 
 function cancel() {
   return (dispatch) => {
     return dispatch(canceled());
   };
-  function canceled() { return { type: userConstants.LOGIN_CANCELED }; }
 }
 
 /**
@@ -57,12 +59,14 @@ function checkTimeout() {
 
   return (dispatch) => {
     ItrsLoginApi.checkStatus(
-      (success) => {},
+      (successData) => {
+        localStorage.setItem('user', JSON.stringify(successData));
+        dispatch(success(successData));
+      },
       (fail) => {
         localStorage.removeItem('user');
         return dispatch(timeout());
       }
     );
   };
-  function timeout() { return { type: userConstants.LOGIN_TIMEOUT }; }
 }

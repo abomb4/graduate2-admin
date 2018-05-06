@@ -50,10 +50,8 @@ class ItrsLoginApi {
     const promise = axios({
       url: API_BASE_URL + '/auth/login',
       method: 'post',
-      params: {
-        username: data.username,
-        password: data.password
-      },
+      data: objectToFormData(data),
+      config: { headers: {'Content-Type': 'multipart/form-data' }},
       withCredentials: true
     });
 

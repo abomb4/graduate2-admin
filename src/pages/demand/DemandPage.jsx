@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import {
   Form, Row, Col,
@@ -9,6 +10,7 @@ import {
 } from 'antd';
 import './DemandPage.css';
 import { ItrsDictionaryApi, ItrsDemandApi, ItrsFlowApi } from '../../api/ItrsApi';
+import { loginActions } from '../../_actions';
 
 const { Component } = React;
 
@@ -194,13 +196,21 @@ class DemandRecommendForm extends Component {
         console.log('Received values of form: ', values);
         const request = Object.assign({}, values);
         request.graduateTime = values.graduateTime.format('YYYY-MM-DD');
-        request.attachment = values.attachment.fileList.filter(f => f.response)
-          .map(f => f.response.fileName).join(',');
+        request.attachment = values.attachment 
+          ? values.attachment.fileList.filter(f => f.response).map(f => f.response.fileName).join(',')
+          : null
+        ;
+        request.demandId = this.props.currentDemand.id;
         console.log('PackagedRequest: ', request);
-        // ItrsFlowApi.recommend(values,
-        //   (success) => {},
-        //   (fail) => {}
-        // );
+
+        ItrsFlowApi.recommend(request,
+          (success) => {
+            message.success('推荐成功');
+          },
+          (fail) => {
+            message.error('推荐提交失败，请稍后再试');
+          }
+        );
       }
     });
   }
@@ -549,10 +559,17 @@ class DemandPage extends Component {
   }
 
   onRecommendDialogOpen(demand) {
-    this.setState({
-      showRecommend: true,
-      currentDemand: demand
-    });
+    const { dispatch } = this.props;
+
+    if (!this.props.loginUser) {
+      message.info('您需要先登陆才能进行推荐', 3);
+      loginActions.show()(dispatch);
+    } else {
+      this.setState({
+        showRecommend: true,
+        currentDemand: demand
+      });
+    }
   }
 
   onRecommendDialogClose() {
@@ -610,4 +627,11 @@ class DemandPage extends Component {
   }
 }
 
-export default withRouter(Form.create({})(DemandPage));
+function mapStateToProps(state) {
+  const { user } = state.userReducer;
+
+  return {
+    loginUser: user
+  };
+}
+export default connect(mapStateToProps)(withRouter(Form.create({})(DemandPage)));
