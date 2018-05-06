@@ -9,7 +9,7 @@ class CheckLoginStatus extends React.PureComponent {
     const { dispatch } = this.props;
     userActions.checkTimeout()(dispatch);
   }
-  
+
   render() {
     return null;
   }

@@ -12,7 +12,7 @@ function login(username, password, successCall, failCall) {
   return dispatch => {
     dispatch(request({ username }));
     return ItrsLoginApi.login(
-      { 
+      {
         username: username,
         password: password
       },

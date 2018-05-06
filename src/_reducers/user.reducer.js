@@ -11,6 +11,7 @@ export function userReducer(state = initialState, action) {
     };
   case userConstants.LOGIN_SUCCESS:
     return {
+      logging: false,
       user: action.user
     };
   case userConstants.LOGIN_FAILURE:
@@ -18,7 +19,9 @@ export function userReducer(state = initialState, action) {
       error: action.error
     };
   case userConstants.LOGOUT:
-    return {};
+    return {
+      logout: true
+    };
   case userConstants.LOGIN_TIMEOUT:
     return {};
   case userConstants.LOGIN_CANCELED:

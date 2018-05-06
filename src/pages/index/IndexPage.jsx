@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, Carousel } from 'antd';
-import { ItrsDataApi } from '../../api/ItrsApi';
+import { ItrsDictionaryApi } from '../../api/ItrsApi';
 import { urlFunctions } from '../../helpers';
 import './IndexPage.css';
 
@@ -14,7 +14,7 @@ class LeftWaterfall extends Component {
   }
 
   componentDidMount() {
-    ItrsDataApi.getPositions(
+    ItrsDictionaryApi.getPositions(
       (successResult) => {
         if (successResult.success) {
           const data = successResult.data;

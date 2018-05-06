@@ -2,4 +2,5 @@
     "eslint.enable": true,
     "files.eol": "\r\n",
     "editor.tabSize": 2,
+    "svn.ignoreMissingSvnWarning": true,
 }
