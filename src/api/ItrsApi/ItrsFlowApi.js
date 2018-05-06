@@ -33,7 +33,9 @@ export default class ItrsFlowApi {
     const promise = axios({
       url: API_BASE_URL + '/myProfile/flow/recommendTalent',
       method: 'POST',
-      params: data
+      data: objectToFormData(data),
+      config: { headers: {'Content-Type': 'multipart/form-data' }},
+      withCredentials: true
     });
     handlePromise(promise, success, fail);
     return promise;
@@ -50,7 +52,8 @@ export default class ItrsFlowApi {
     const promise = axios({
       url: API_BASE_URL + '/myProfile/flow/listApplyFlowHr',
       method: 'get',
-      params: data
+      params: data,
+      withCredentials: true
     });
     handlePromise(promise, success, fail);
     return promise;
@@ -67,7 +70,8 @@ export default class ItrsFlowApi {
     const promise = axios({
       url: API_BASE_URL + '/myProfile/flow/listApplyFlowInterviewee',
       method: 'get',
-      params: data
+      params: data,
+      withCredentials: true
     });
     handlePromise(promise, success, fail);
     return promise;
@@ -84,7 +88,8 @@ export default class ItrsFlowApi {
     const promise = axios({
       url: API_BASE_URL + '/myProfile/flow/listApplyFlowRecommender',
       method: 'get',
-      params: data
+      params: data,
+      withCredentials: true
     });
     handlePromise(promise, success, fail);
     return promise;
@@ -101,7 +106,8 @@ export default class ItrsFlowApi {
     const promise = axios({
       url: API_BASE_URL + '/myProfile/flow/listHistoricFlow',
       method: 'get',
-      params: data
+      params: data,
+      withCredentials: true
     });
     handlePromise(promise, success, fail);
     return promise;
@@ -129,7 +135,8 @@ export default class ItrsFlowApi {
     const promise = axios({
       url: API_BASE_URL + '/myProfile/flow/deal',
       method: 'post',
-      params: data
+      data: data,
+      withCredentials: true
     });
     handlePromise(promise, success, fail);
     return promise;
