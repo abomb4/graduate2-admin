@@ -36,11 +36,11 @@ class LoginForm extends Component {
           const values = this.props.form.getFieldsValue();
           console.log(values);
 
-          const { username, password } = values;
+          const { username, password, remember } = values;
           const { dispatch } = this.props;
           if (username && password) {
             // FIXME remove callback
-            userActions.login(username, password, onSuccess)(dispatch);
+            userActions.login(username, password, remember, onSuccess)(dispatch);
           }
         }
       },
