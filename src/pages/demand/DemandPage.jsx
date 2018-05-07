@@ -11,6 +11,7 @@ import {
 import './DemandPage.css';
 import { ItrsDictionaryApi, ItrsDemandApi, ItrsFlowApi } from '../../api/ItrsApi';
 import { loginActions } from '../../_actions';
+import { LinkUtils } from '../../utils';
 
 const { Component } = React;
 
@@ -18,6 +19,10 @@ const { Component } = React;
  * 搜索框
  */
 class DemandQueryForm extends Component {
+
+  state = {
+    inited : false
+  }
 
   handleReset = () => {
     this.props.form.resetFields();
@@ -50,8 +55,7 @@ class DemandQueryForm extends Component {
     var currentSubPositionId;
     var rootList;
     var subList;
-
-
+    
     const positionType = getFieldValue('positionType');
 
     if (this.props.positionTypeRootList.length <= 0) {
@@ -62,6 +66,7 @@ class DemandQueryForm extends Component {
       subList = [];
     } else {
       // 列表有数据
+
       if (!positionType) {
         // 接口有返回职位列表，但没返回当前职位类型
         // 取跟职位类型第一个作为根类型
@@ -76,7 +81,7 @@ class DemandQueryForm extends Component {
           currentSubPositionId = currentRootPositionId;
         } else {
           // 有父节点，说明是子类型
-          const currentSubPositionElement = this.props.positionTypeMap[positionType];
+          const currentSubPositionElement = currentPositionElement;
           currentRootPositionId = currentSubPositionElement.parentId;
           currentSubPositionId = positionType;
         }
@@ -93,7 +98,7 @@ class DemandQueryForm extends Component {
       if (currentRootPositionId !== '') {
         const currentRootPositionElement = this.props.positionTypeMap[currentRootPositionId];
         currentRootPositionElement.subTypes.forEach(sub => {
-          subList.push(<Radio.Button key={ sub.id } value={ sub.id }>{ sub.chineseName }</Radio.Button>);
+          subList.push(<Radio.Button key={ sub.id + '' } value={ sub.id + '' }>{ sub.chineseName }</Radio.Button>);
         });
       }
     }
@@ -104,6 +109,16 @@ class DemandQueryForm extends Component {
       subList: subList,
     };
   }.bind(this);
+
+  componentDidMount() {
+    const urlParameters = LinkUtils.parseGetParameter(this.props.location.search);
+    const { positionType } = urlParameters;
+
+    if (!this.state.inited) {
+      this.props.form.setFieldsValue({ positionType: positionType });
+      this.setState({inited: true});
+    }
+  }
 
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -144,7 +159,7 @@ class DemandQueryForm extends Component {
               <Col span={18}>
                 <div className="position-sub-type radio-container">
                   <span className="label">职位子类：</span>
-                  { getFieldDecorator('positionType', { initialValue: currentSubPositionId })(
+                  { getFieldDecorator('positionType', { value: currentSubPositionId })(
                     <Radio.Group onChange={ (event) => this.handleRootPositionChange(event.target.value) }>{ subList }</Radio.Group>
                   )}
                 </div>
@@ -183,6 +198,8 @@ class DemandQueryForm extends Component {
     );
   }
 }
+
+const WrappedDemandQueryForm = withRouter(DemandQueryForm);
 
 class DemandRecommendForm extends Component {
   state = {
@@ -537,7 +554,7 @@ class DemandPage extends Component {
         });
       },
       (fail) => {
-        this.setState({ requesting: false });
+        this.setState({ requesting: false });DemandQueryForm
       }
     );
   }.bind(this);
@@ -592,7 +609,7 @@ class DemandPage extends Component {
 
     return (
       <div id='demand-page'>
-        {<DemandQueryForm
+        {<WrappedDemandQueryForm
           form={ this.props.form }
           pageSize={ pageSize }
           doSearch={ this.handleSearch }
