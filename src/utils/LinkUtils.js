@@ -10,6 +10,7 @@ class LinkUtils {
    * 解析Get参数为对象
    *
    * @param {String} url
+   * @return {Object} get参数map
    */
   static parseGetParameter(url) {
     var param;
