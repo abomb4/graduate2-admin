@@ -1,7 +1,6 @@
 import MyProfilePage from './MyProfilePage';
-import RecommendPage from './recommend'
 
-export default {
-  MyProfilePage: MyProfilePage,
-  RecommendPage: RecommendPage
-};
+export default MyProfilePage;
+
+export { default as RecommendPage } from './RecommendPage';
+export { default as IntervieweePage } from './IntervieweePage';

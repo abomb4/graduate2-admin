@@ -1,13 +1,12 @@
 import React from 'react';
 import { Route, Switch } from 'react-router';
 import { withRouter, Link } from 'react-router-dom';
-import { Layout, Menu, Breadcrumb, Icon } from 'antd';
-import Recommend from './recommend';
+import { Layout, Menu } from 'antd';
+import { RecommendPage, IntervieweePage } from '.';
 import './MyProfilePage.css';
 
 const { SubMenu } = Menu;
 const { Header, Content, Footer, Sider } = Layout;
-const { RecommendPage } = Recommend;
 
 const { Component } = React;
 
@@ -20,10 +19,10 @@ export default class MyProfilePage extends Component {
 
   render() {
 
-    console.log(this.props);
+    // console.log(this.props);
 
     return (
-      <Layout className="recommend-page page-content">
+      <Layout className="page-content">
         <Sider width={200} style={{ background: '#fff' }}>
           <Menu
             mode="inline"
@@ -43,7 +42,7 @@ export default class MyProfilePage extends Component {
             <Route key={ this.myProfileLinkMenu('/information') } path={ this.myProfileLinkMenu('/information') } component={ RecommendPage } />
             <Route key={ this.myProfileLinkMenu('/recommend') } path={ this.myProfileLinkMenu('/recommend') } component={ RecommendPage } />
             <Route key={ this.myProfileLinkMenu('/mydemand') } path={ this.myProfileLinkMenu('/mydemand') } component={ RecommendPage } />
-            <Route key={ this.myProfileLinkMenu('/interviewee') } path={ this.myProfileLinkMenu('/interviewee') } component={ RecommendPage } />
+            <Route key={ this.myProfileLinkMenu('/interviewee') } path={ this.myProfileLinkMenu('/interviewee') } component={ IntervieweePage } />
             <Route key={ this.myProfileLinkMenu('/score') } path={ this.myProfileLinkMenu('/score') } component={ RecommendPage } />
           </Switch>
         </Content>
