@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { Form, message } from 'antd';
 import { ItrsDictionaryApi, ItrsDemandApi } from '../../api/ItrsApi';
 import { loginActions } from '../../_actions';
-import { DemandQueryForm, DemandRecommendForm, DemandList } from '.';
+import { DemandQueryForm, DemandRecommendForm, DemandList, DemandSuggest } from '.';
 import './DemandPage.css';
 
 const { Component } = React;
@@ -166,8 +166,8 @@ class DemandPage extends Component {
             />
           </div>
           <div className="demand-suggest-container">
-            <div style={{ width: 300, height:340, background: 'red' }} >
-            </div>
+            <h2>最新职位</h2>
+            <DemandSuggest positionTypeMap={ this.state.positionTypeMap }/>
           </div>
         </div>
         <DemandRecommendForm

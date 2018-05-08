@@ -26,10 +26,43 @@
     flex: 1;
     padding:24px;
 }
-.demand-page-main .demand-suggest-container {
+.demand-page-main .demand-suggest-container{
     padding: 24px;
-    width: 400px;
+    width: 300px;
 }
+
+/* 右边最新职位 */
+.demand-suggest-container {
+    border: 1px solid #eee;
+}
+
+.demand-suggest-container > h2 {
+    line-height: 48px;
+    color: #1799f5;
+    border-bottom: 3px solid #1799f5;
+    text-indent: 1em;
+}
+
+.demand-suggest-container .new-demand-list {
+    line-height: 32px;
+    padding-left: 24px;;
+}
+
+.demand-suggest-container .new-demand-list a {
+    color: rgba(0, 0, 0, 0.65);
+}
+.demand-suggest-container .new-demand-list a:hover {
+    color: #1890ff;
+}
+
+.demand-suggest-container .new-demand-list .new-demand-description {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    padding-right: 12px;
+    list-style-position: inside;
+}
+/* 右边最新职位end */
 
 .demand-list-container .ant-table-thead {
     background-color: #4d9cd7;
