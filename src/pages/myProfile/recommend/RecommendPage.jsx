@@ -1,9 +1,10 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
+import './RecommendPage.css';
 
 const { Component } = React;
 
-class TestPage extends Component {
-
+class RecommendPage extends Component {
   render() {
     const obj = {
       a: 1,
@@ -13,13 +14,8 @@ class TestPage extends Component {
 
     const { a, b } = obj;
 
-    console.log(a);
-    return (
-      <div className="testpage">
-        { b }
-      </div>
-    );
+    return(a);
   }
 }
 
-export default TestPage;
+export default RecommendPage;

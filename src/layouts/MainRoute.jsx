@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import Pages from '../pages';
 import './BaseLayout.css';
 
-const { IndexPage, DemandPage, RecommendPage, NotFoundPage } = Pages;
+const { IndexPage, DemandPage, MyProfilePage, NotFoundPage } = Pages;
 
 /**
  * 基础URL，只管一级URL，下级URL由各大页面自行管理
@@ -30,7 +30,7 @@ class BaseLayout extends React.Component {
         <Route key='/' path='/' exact component={ IndexPage } />
         <Route key='/index' path='/index' component={ IndexPage } />
         <Route key='/demand' path='/demand' component={ DemandPage } />
-        <Route key='/myProfile' path='/myProfile' component={ RecommendPage } />
+        <Route key='/myProfile' path='/myProfile' component={ MyProfilePage } />
 
         <Route key='/' path='/' component={ NotFoundPage } />
       </Switch>
