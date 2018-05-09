@@ -1,0 +1,11 @@
+.profile-home-page {
+  /* display: flex; */
+}
+.profile-home-page .ant-card {
+  display: inline-block;
+  margin-right: 24px;
+  margin-bottom: 24px;
+  width: 20%;
+  min-width: 17em;
+  min-height: 13em;
+}
