@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { ItrsDemandApi } from '../../api/ItrsApi';
 
 class DemandSuggest extends React.Component {
@@ -23,6 +22,14 @@ class DemandSuggest extends React.Component {
     );
   }
 
+  // 根据最新职位的id进行查询
+  handleNewDemandClick(newDemandQuery) {
+    const { pageSize } = this.props.pagination;
+    const pageNo = 1;
+    const values = Object.assign({ pageNo, pageSize}, {id: newDemandQuery});
+    this.props.doDemandQuery(values);
+  }  
+
   render() {
     const newDemandList = [];
     const newDemandData = this.state.data;
@@ -31,7 +38,7 @@ class DemandSuggest extends React.Component {
       const newDemandTitle = newDemand.jobName + " - " + newDemand.departmentName;
       newDemandList.push(                
       <li className="new-demand-description" key={ newDemand.id }>
-        <Link to="#" title={ newDemandTitle }>{ newDemandTitle }</Link>
+        <a onClick={ ()=>this.handleNewDemandClick(newDemand.id) } title={ newDemandTitle }>{ newDemandTitle }</a>
       </li>)
     }
     return (

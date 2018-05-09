@@ -25,7 +25,7 @@ export default class ItrsFlowApi {
    * | memo | 备注 | String | - | N
    * | attachment | 附件标记 | String | - | N
    *
-   * @param {Object} id id 见上面请求参数
+   * @param {Object} data  见上面请求参数
    * @param {Function} success 成功回调，会塞入服务端返回的信息
    * @param {Function} fail 失败回调，会塞入axios原始错误对象
    */
@@ -135,7 +135,8 @@ export default class ItrsFlowApi {
     const promise = axios({
       url: API_BASE_URL + '/myProfile/flow/deal',
       method: 'post',
-      data: data,
+      data: objectToFormData(data),
+      config: { headers: {'Content-Type': 'multipart/form-data' }},
       withCredentials: true
     });
     handlePromise(promise, success, fail);

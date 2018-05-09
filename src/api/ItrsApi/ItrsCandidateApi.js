@@ -91,8 +91,9 @@ export default class ItrsCandidateApi {
    */
   static getById(id, success, fail) {
     const promise = axios({
-      url: API_BASE_URL + '/myProfile/get/' + id,
-      method: 'get'
+      url: API_BASE_URL + '/myProfile/candidate/get/' + id,
+      method: 'get',
+      withCredentials: true
     });
     handlePromise(promise, success, fail);
     return promise;

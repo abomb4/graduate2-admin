@@ -167,7 +167,7 @@ class DemandPage extends Component {
           </div>
           <div className="demand-suggest-container">
             <h2>最新职位</h2>
-            <DemandSuggest positionTypeMap={ this.state.positionTypeMap }/>
+            <DemandSuggest doDemandQuery={ this.doDemandQuery } pagination={ this.state.pagination }/>
           </div>
         </div>
         <DemandRecommendForm

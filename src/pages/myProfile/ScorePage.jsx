@@ -1,8 +1,8 @@
 import React from 'react';
 import { Spin, Table } from 'antd';
-import { ItrsFlowApi } from '../../api/ItrsApi';
+import { ItrsScoreApi } from '../../api/ItrsApi';
 
-class RecommendPage extends React.Component {
+class ScorePage extends React.Component {
 
   state = {
     pagination: {
@@ -19,10 +19,10 @@ class RecommendPage extends React.Component {
     this.handlePageChange(pageNo);
   }
 
-  doRecommendQuery = function(values) {
-    console.log("doRecommendQuery");
+  // 分页查询用户积分流水变动记录
+  doScoreListQuery = function(values) {
     this.setState({ requesting: true });
-    ItrsFlowApi.listRecommenders(values,
+    ItrsScoreApi.getScoreList(values,
       (success) => {
         this.setState({
           pagination: {
@@ -43,16 +43,12 @@ class RecommendPage extends React.Component {
   handlePageChange(pageNo) {
     const { pageSize } = this.state.pagination;
     const values = Object.assign({ pageNo, pageSize });
-    console.log("handlePageChange");
 
-    this.doRecommendQuery(values);
+    this.doScoreListQuery(values);
   }
 
   render() {
-    console.log("render");
-
     const data = this.state.datas;
-    console.log(data);
 
     const pagination = {
       pageSize: this.state.pagination.pageSize,
@@ -63,7 +59,7 @@ class RecommendPage extends React.Component {
 
     return (
       <div className="recommend-list-container">
-        <RecommendList requesting={ this.state.requesting }
+        <ScoreList requesting={ this.state.requesting }
           dataSource={ data }
           pagination={ pagination }
           onChange={ this.handlePageChange }
@@ -74,70 +70,42 @@ class RecommendPage extends React.Component {
 }
 
 /**
- * 被推荐人结果列表
+ * 用户积分变动流水记录列表
  */
-class RecommendList extends React.Component {
+class ScoreList extends React.Component {
   onPageChange = function(pagination) {
-    console.log("on list change");
     if (this.props.onPageChange) {
       this.props.onPageChange(pagination);
     }
   }.bind(this);
 
-  turnSex(text) {
-    if (text === 1) {
-      return '男';
-    } else if (text === 2) {
-      return '女';
-    } else {
-      return '未知';
-    }
-  }
-
   render() {
-    console.log("list render");
-    return (
+    return(
       <Spin spinning={ this.props.requesting } >
         <Table columns={ [{
-          title: '姓名',
-          dataIndex: 'candidateName',
-          key: 'candidateName',
-        }, {
-          title: '性别',
-          dataIndex: 'candidateSex',
-          key: 'candidateSex',
+          title: '积分变动',
+          dataIndex: 'score',
+          key: 'score',
           render: (text, record) => (
-            <span>{ this.turnSex(text) }</span>
+            <span>{ text + '分' }</span>
           ),
         }, {
-          title: '期望工作地点',
-          dataIndex: 'hopeWorkingPlace',
-          key: 'hopeWorkingPlace',
+          title: '变动原因',
+          dataIndex: 'memo',
+          key: 'memo',
         }, {
-          title: '当前流程节点',
-          dataIndex: 'currentFlowNode',
-          key: 'currentFlowNode',
-        }, {
-          title: '当前处理人',
-          dataIndex: 'currentDealer',
-          key: 'currentDealer',
-        }, {
-          title: '当前流程结果',
-          dataIndex: 'currentResult',
-          key: 'currentResult',
-        }, {
-          title: '流程状态',
-          dataIndex: 'flowStatusName',
-          key: 'flowStatusName',
+          title: '积分变动时间',
+          dataIndex: 'gmtCreate',
+          key: 'gmtCreate',
         }] }
         rowKey="id"
         dataSource={ this.props.dataSource }
         pagination={ this.props.pagination }
         onChange={ this.onPageChange }
         />
-    </Spin>
+      </Spin>
     );
   }
 }
 
-export default RecommendPage;
+export default ScorePage;
