@@ -45,7 +45,7 @@ class DemandQueryForm extends React.Component {
     var rootList;
     var subList;
     
-    const positionType = getFieldValue('positionType');
+    const positionType = getFieldValue('positionType') + ''; // convert to fucking string
 
     if (this.props.positionTypeRootList.length <= 0) {
       // 列表里没数据
@@ -56,7 +56,7 @@ class DemandQueryForm extends React.Component {
     } else {
       // 列表有数据
 
-      if (!positionType) {
+      if (!positionType && positionType !== '') {
         // 接口有返回职位列表，但没返回当前职位类型
         // 取跟职位类型第一个作为根类型
         currentRootPositionId = '';
@@ -75,11 +75,13 @@ class DemandQueryForm extends React.Component {
           currentSubPositionId = positionType;
         }
       }
+      currentRootPositionId = toFuckingString(currentRootPositionId); // convert to fucking string
+      currentSubPositionId = toFuckingString(currentSubPositionId); // convert to fucking string
 
       rootList = [];
       rootList.push(<Radio.Button key="all" value={ '' }>全部</Radio.Button>);
       this.props.positionTypeRootList.forEach(root =>
-        rootList.push(<Radio.Button key={ root.id } value={ root.id }>{ root.chineseName }</Radio.Button>)
+        rootList.push(<Radio.Button key={ toFuckingString(root.id) } value={ toFuckingString(root.id) }>{ root.chineseName }</Radio.Button>)
       );
 
       subList = [];
@@ -87,7 +89,7 @@ class DemandQueryForm extends React.Component {
       if (currentRootPositionId !== '') {
         const currentRootPositionElement = this.props.positionTypeMap[currentRootPositionId];
         currentRootPositionElement.subTypes.forEach(sub => {
-          subList.push(<Radio.Button key={ sub.id + '' } value={ sub.id + '' }>{ sub.chineseName }</Radio.Button>);
+          subList.push(<Radio.Button key={ toFuckingString(sub.id) } value={ toFuckingString(sub.id) }>{ sub.chineseName }</Radio.Button>);
         });
       }
     }
@@ -189,3 +191,8 @@ class DemandQueryForm extends React.Component {
 }
 
 export default withRouter(DemandQueryForm);
+
+function toFuckingString(e) {
+  return e + '';
+}
+
