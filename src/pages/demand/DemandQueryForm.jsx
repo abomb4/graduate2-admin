@@ -45,7 +45,8 @@ class DemandQueryForm extends React.Component {
     var rootList;
     var subList;
     
-    const positionType = getFieldValue('positionType') + ''; // convert to fucking string
+    const positionTypeField = getFieldValue('positionType'); // convert to fucking string
+    const positionType = positionTypeField ? positionTypeField + '' : positionTypeField;
 
     if (this.props.positionTypeRootList.length <= 0) {
       // 列表里没数据

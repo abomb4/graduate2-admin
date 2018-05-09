@@ -1,5 +1,5 @@
 import React from 'react';
-import { Spin, Table } from 'antd';
+import { Spin, Table, List, Row, Col } from 'antd';
 import { ItrsScoreApi } from '../../api/ItrsApi';
 
 class ScorePage extends React.Component {
@@ -11,12 +11,18 @@ class ScorePage extends React.Component {
       total: 0
     },
     requesting: false,
-    datas: []
+    listFlow: [],
+    listRule: [],
   }
 
   componentDidMount() {
     let pageNo = 1;
+    // 这里让规则全部显示出来
+    let pageSize = 100;
+    const ruleQuery = Object.assign({ pageNo, pageSize });
+
     this.handlePageChange(pageNo);
+    this.doRuleListQuery(ruleQuery);
   }
 
   // 分页查询用户积分流水变动记录
@@ -30,12 +36,33 @@ class ScorePage extends React.Component {
             pageSize: values.pageSize,
             total: success.total
           },
-          datas: success.datas,
+          listFlow: success.datas,
           requesting: false
         });
       },
       (fail) => {
         this.setState({ requesting: false });
+      }
+    );
+  }.bind(this);
+
+  // 查询积分规则
+  doRuleListQuery = function(values) {
+    ItrsScoreApi.getScoreRule(values,
+      (success) => {
+        const listRuleObject = success.datas;
+        const listRuleStr = [];
+        for (let i in listRuleObject) {
+          const ruleObject = listRuleObject[i];
+          const ruleStr = ruleObject.rule + " -> " + ruleObject.score + "分";
+          listRuleStr.push(ruleStr);
+        }
+        this.setState({
+          listRule: listRuleStr
+        });
+      }, 
+      (fail) => {
+        console.error(fail);
       }
     );
   }.bind(this);
@@ -48,7 +75,8 @@ class ScorePage extends React.Component {
   }
 
   render() {
-    const data = this.state.datas;
+    const listFlow = this.state.listFlow;
+    const listRule = this.state.listRule;
 
     const pagination = {
       pageSize: this.state.pagination.pageSize,
@@ -58,12 +86,23 @@ class ScorePage extends React.Component {
     };
 
     return (
-      <div className="recommend-list-container">
-        <ScoreList requesting={ this.state.requesting }
-          dataSource={ data }
-          pagination={ pagination }
-          onChange={ this.handlePageChange }
-        />
+      <div>
+        <Row>
+          <Col span={ 18 }>
+            <div className="score-list-container">
+            <ScoreList requesting={ this.state.requesting }
+              dataSource={ listFlow }
+              pagination={ pagination }
+              onChange={ this.handlePageChange }
+            />
+          </div>
+          </Col>
+          <Col span={ 6 }>
+            <ScoreRule
+              dataSource={ listRule }
+            />
+          </Col>
+        </Row>
       </div>
     );
   }
@@ -106,6 +145,26 @@ class ScoreList extends React.Component {
       </Spin>
     );
   }
+}
+
+class ScoreRule extends React.Component {
+  render() {
+    return (
+      <div className="score-rule-container">
+        <List
+          size="small"
+          header={< div>积分规则</div> }
+          bordered
+          dataSource={ this.props.dataSource }
+          renderItem={ item => (<List.Item>{ item }</List.Item>)}
+        />
+      </div>
+    );
+  }
+}
+
+class CurrentScore extends React.Component {
+
 }
 
 export default ScorePage;
