@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Input, Modal, Button, message } from 'antd';
+import { Input, Modal, Button, message, Popover } from 'antd';
 import { LoginForm } from '../components/Login';
 import { userActions, loginActions } from '../_actions';
 import './BaseLayout.css';
@@ -33,8 +33,10 @@ class MainHeader extends React.Component {
 
     // 当前用户信息
     currentUserElement = this.props.loginUser
-      ? <span>
-          欢迎您，{ this.props.loginUser.realName }。
+      ? <span>欢迎您，
+        <Popover content={ <Link to="/myProfile/modifyPassword">修改密码</Link> }>
+          <span style={{ cursor: 'pointer' }}>{ this.props.loginUser.realName }</span>
+        </Popover>。
         <a onClick={ () => Modal.confirm({
           title: '确定登出？',
           content: '确定要登出吗？',
@@ -43,6 +45,7 @@ class MainHeader extends React.Component {
           onOk: () => this.handleLogoutOk()
         }) }>登出</a>
       </span>
+
       : <a onClick={ () => loginActions.show()(dispatch) }>登录</a>;
 
     return (

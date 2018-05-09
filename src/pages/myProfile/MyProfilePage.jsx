@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch, Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
-import { RecommendPage, IntervieweePage, HomePage, ScorePage } from '.';
+import { RecommendPage, IntervieweePage, HomePage, ScorePage, ModifyPasswordPage } from '.';
 import './MyProfilePage.css';
 
 const { Content, Sider } = Layout;
@@ -45,6 +45,7 @@ export default class MyProfilePage extends Component {
             <Route key={ this.myProfileLinkMenu('/mydemand') } path={ this.myProfileLinkMenu('/mydemand') } component={ RecommendPage } />
             <Route key={ this.myProfileLinkMenu('/interviewee') } path={ this.myProfileLinkMenu('/interviewee') } component={ IntervieweePage } />
             <Route key={ this.myProfileLinkMenu('/score') } path={ this.myProfileLinkMenu('/score') } component={ ScorePage } />
+            <Route key={ this.myProfileLinkMenu('/modifyPassword') } path={ this.myProfileLinkMenu('/modifyPassword') } component={ ModifyPasswordPage } />
             <Redirect to={ this.myProfileLinkMenu('/home') } />
           </Switch>
         </Content>
