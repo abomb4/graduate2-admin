@@ -49,7 +49,6 @@ class MyProfilePage extends Component {
                 style={{ height: '100%' }}
               >
                 {/* <Menu.Item key="home"><Link to={ this.myProfileLinkMenu('/home') }>综合信息</Link></Menu.Item> */}
-                <Menu.Item key="/information"><Link to={ this.myProfileLinkMenu('/information') }>个人信息</Link></Menu.Item>
                 <Menu.Item key="/recommend"><Link to={ this.myProfileLinkMenu('/recommend') }>俺的推荐</Link></Menu.Item>
                 <Menu.Item key="/mydemand"><Link to={ this.myProfileLinkMenu('/mydemand') }>俺的招聘</Link></Menu.Item>
                 <Menu.Item key="/interviewee"><Link to={ this.myProfileLinkMenu('/interviewee') }>俺的面试</Link></Menu.Item>
@@ -59,7 +58,6 @@ class MyProfilePage extends Component {
             <Content style={{ padding: '0 24px', minHeight: 280 }}>
               <Switch>
                 <Route key={ this.myProfileLinkMenu('/home') } path={ this.myProfileLinkMenu('/home') } exact component={ HomePage } />
-                <Route key={ this.myProfileLinkMenu('/information') } path={ this.myProfileLinkMenu('/information') } component={ RecommendPage } />
                 <Route key={ this.myProfileLinkMenu('/recommend') } path={ this.myProfileLinkMenu('/recommend') } component={ RecommendPage } />
                 <Route key={ this.myProfileLinkMenu('/mydemand') } path={ this.myProfileLinkMenu('/mydemand') } component={ MydemandPage } />
                 <Route key={ this.myProfileLinkMenu('/interviewee') } path={ this.myProfileLinkMenu('/interviewee') } component={ IntervieweePage } />

@@ -170,6 +170,11 @@ class MydemandList extends React.Component {
         title: '招聘人数',
         dataIndex: 'total',
         key: 'total',
+        render: (text, recored) => (
+          <span>
+          { text + '人' }
+        </span>
+        ),
       }, {
         title: '工作地点',
         dataIndex: 'workingPlace',
