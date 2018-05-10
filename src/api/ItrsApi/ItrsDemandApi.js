@@ -55,7 +55,7 @@ export default class ItrsDemandApi {
    * | gmtModifyStart | 需改时间起始 | String | yyyy-MM-dd HH:mm:ss | N
    * | gmtModifyEnd | 需改时间结束 | String | yyyy-MM-dd HH:mm:ss | N
    *
-   * @param {Object} id id 见上面请求参数
+   * @param {Object} data 见上面请求参数
    * @param {Function} success 成功回调，会塞入服务端返回的信息
    * @param {Function} fail 失败回调，会塞入axios原始错误对象
    */
@@ -70,30 +70,7 @@ export default class ItrsDemandApi {
   }
 
   /**
-   * 查询最新职位需求。
-   * 成功返回格式：
-   * {
-   *     "success": true,
-   *     "message": "根据招聘需求id查找招聘需求成功",
-   *     "data": {
-   *         "id": 123,
-   *         "demandNo": "sdafhrgfgf433",
-   *         "publisherId": 123,
-   *         "publisherName": "publisherName001",
-   *         "positionType": 211,
-   *         "jobName": "position001",
-   *         "departmentId": 121,
-   *         "departmentName": "departmentName001",
-   *         "hrName": "hrName001",
-   *         "total": 3,
-   *         "workingPlace": "workingPlace001",
-   *         "degreeRequest": "degreeRequest001",
-   *         "status": 1,
-   *         "memo": "memo001",
-   *         "gmtCreate": "gmtCreate001",
-   *         "gmtModify": "gmtModify001"
-   *     }
-   * }
+   * 根据id查询招聘需求详细信息
    *
    * @param {Number} id 需求 id
    * @param {Function} success 成功回调，会塞入服务端返回的信息
@@ -109,15 +86,60 @@ export default class ItrsDemandApi {
   }
 
   /**
-   * 查询最新需求
-   * 
-   * @param {Function} success 成功回调，会塞入服务端返回的信息
-   * @param {Function} fail 失败回调，会塞入axios原始错误对象
-   */
+  * 查询最新职位需求。
+  * 成功返回格式：
+  * {
+  *     "success": true,
+  *     "message": "根据招聘需求id查找招聘需求成功",
+  *     "data": {
+  *         "id": 123,
+  *         "demandNo": "sdafhrgfgf433",
+  *         "publisherId": 123,
+  *         "publisherName": "publisherName001",
+  *         "positionType": 211,
+  *         "jobName": "position001",
+  *         "departmentId": 121,
+  *         "departmentName": "departmentName001",
+  *         "hrName": "hrName001",
+  *         "total": 3,
+  *         "workingPlace": "workingPlace001",
+  *         "degreeRequest": "degreeRequest001",
+  *         "status": 1,
+  *         "memo": "memo001",
+  *         "gmtCreate": "gmtCreate001",
+  *         "gmtModify": "gmtModify001"
+  *     }
+  * }
+  * 
+  * @param {Function} success 成功回调，会塞入服务端返回的信息
+  * @param {Function} fail 失败回调，会塞入axios原始错误对象
+  */
   static getNew(success, fail) {
     const promise = axios({
       url: API_BASE_URL + '/demand/new',
       method: 'get'
+    });
+    handlePromise(promise, success, fail);
+    return promise;
+  }
+
+  /**
+   * 分页查找当前用户发布的所有招聘需求
+   * 
+   * 请求参数：
+   * | pageNo | 页码 | Number | - | Y
+   * | pageSize | 分页大小 | Number | - | Y
+   * 
+   * @param {*} data 见上面请求参数
+   * @param {*} success 成功回调，会塞入服务端返回的信息
+   * @param {*} fail 失败回调，会塞入axios原始错误对象
+   */
+  static getMyDemand(data, success, fail) {
+    const promise = axios({
+      url: API_BASE_URL + '/myProfile/mydemand/list',
+      method: 'get',
+      params: data,
+      withCredentials: true
     });
     handlePromise(promise, success, fail);
     return promise;
@@ -134,7 +156,8 @@ export default class ItrsDemandApi {
     const promise = axios({
       url: API_BASE_URL + '/myProfile/demand',
       method: 'post',
-      params: data
+      params: data,
+      withCredentials: true
     });
     handlePromise(promise, success, fail);
     return promise;
@@ -151,7 +174,25 @@ export default class ItrsDemandApi {
     const promise = axios({
       url: API_BASE_URL + '/myProfile/demand',
       method: 'put',
-      params: data
+      params: data,
+      withCredentials: true
+    });
+    handlePromise(promise, success, fail);
+    return promise;
+  }
+
+  /**
+   * 逻辑删除招聘需求
+   * 
+   * @param {*} id 招聘需求id
+   * @param {*} success 成功回调，会塞入服务端返回的信息
+   * @param {*} fail 失败回调，会塞入axios原始错误对象
+   */
+  static deleteDemand(id, success, fail) {
+    const promise = axios({
+      url: API_BASE_URL + '/myProfile/demand/delete/' + id,
+      method: 'get',
+      withCredentials: true
     });
     handlePromise(promise, success, fail);
     return promise;

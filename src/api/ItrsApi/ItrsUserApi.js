@@ -17,7 +17,7 @@ class ItrsUserApi {
    */
   static modifyPassword(data, success, fail) {
     const promise = axios({
-      url: API_BASE_URL + '/user/modifyPassword',
+      url: API_BASE_URL + '/myProfile/user/modifyPassword',
       method: 'post',
       data: objectToFormData(data),
       config: { headers: {'Content-Type': 'multipart/form-data' }},

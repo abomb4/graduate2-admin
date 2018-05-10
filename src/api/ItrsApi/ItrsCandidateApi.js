@@ -57,7 +57,8 @@ export default class ItrsCandidateApi {
     const promise = axios({
       url: API_BASE_URL + '/myProfile/candidate/list',
       method: 'get',
-      params: data
+      params: data,
+      withCredentials: true
     });
     handlePromise(promise, success, fail);
     return promise;

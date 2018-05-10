@@ -11,6 +11,7 @@ class ScorePage extends React.Component {
       total: 0
     },
     requesting: false,
+    currentScore: '',
     listFlow: [],
     listRule: [],
   }
@@ -23,6 +24,7 @@ class ScorePage extends React.Component {
 
     this.handlePageChange(pageNo);
     this.doRuleListQuery(ruleQuery);
+    this.doCurrentScoreQuery();
   }
 
   // 分页查询用户积分流水变动记录
@@ -67,6 +69,20 @@ class ScorePage extends React.Component {
     );
   }.bind(this);
 
+  // 查询用户当前积分
+  doCurrentScoreQuery = function(values) {
+    ItrsScoreApi.getCurrentScore(
+      (success) => {
+        this.setState({
+          currentScore: success.data
+        });
+      },
+      (fail) => {
+        console.error(fail);
+      }
+    );
+  }.bind(this);
+
   handlePageChange(pageNo) {
     const { pageSize } = this.state.pagination;
     const values = Object.assign({ pageNo, pageSize });
@@ -77,6 +93,7 @@ class ScorePage extends React.Component {
   render() {
     const listFlow = this.state.listFlow;
     const listRule = this.state.listRule;
+    const currentScore = this.state.currentScore;
 
     const pagination = {
       pageSize: this.state.pagination.pageSize,
@@ -88,14 +105,18 @@ class ScorePage extends React.Component {
     return (
       <div>
         <Row>
+          <CurrentScore
+            currentScore={ currentScore }/>
+        </Row>
+        <Row>
           <Col span={ 18 }>
             <div className="score-list-container">
-            <ScoreList requesting={ this.state.requesting }
-              dataSource={ listFlow }
-              pagination={ pagination }
-              onChange={ this.handlePageChange }
-            />
-          </div>
+              <ScoreList requesting={ this.state.requesting }
+                dataSource={ listFlow }
+                pagination={ pagination }
+                onChange={ this.handlePageChange }
+              />
+            </div>
           </Col>
           <Col span={ 6 }>
             <ScoreRule
@@ -126,7 +147,7 @@ class ScoreList extends React.Component {
           dataIndex: 'score',
           key: 'score',
           render: (text, record) => (
-            <span>{ text + '分' }</span>
+            <span>{ (text >= 0? '增加 ' : '减少 ') + text + ' 分' }</span>
           ),
         }, {
           title: '变动原因',
@@ -164,7 +185,18 @@ class ScoreRule extends React.Component {
 }
 
 class CurrentScore extends React.Component {
-
+  render() {
+     return(
+      <div className="current-score-container">
+        <Col span={ 2 }>
+          我的当前积分:
+        </Col>
+        <Col span={ 22 }>
+          { this.props.currentScore + ' 分' }
+        </Col>
+      </div>
+     );
+  }
 }
 
 export default ScorePage;

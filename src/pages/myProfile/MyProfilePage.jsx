@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch, Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
-import { RecommendPage, IntervieweePage, HomePage, ScorePage, ModifyPasswordPage } from '.';
+import { RecommendPage, IntervieweePage, MydemandPage, HomePage, ScorePage, ModifyPasswordPage } from '.';
 import './MyProfilePage.css';
 
 const { Content, Sider } = Layout;
@@ -42,7 +42,7 @@ export default class MyProfilePage extends Component {
             <Route key={ this.myProfileLinkMenu('/home') } path={ this.myProfileLinkMenu('/home') } exact component={ HomePage } />
             <Route key={ this.myProfileLinkMenu('/information') } path={ this.myProfileLinkMenu('/information') } component={ RecommendPage } />
             <Route key={ this.myProfileLinkMenu('/recommend') } path={ this.myProfileLinkMenu('/recommend') } component={ RecommendPage } />
-            <Route key={ this.myProfileLinkMenu('/mydemand') } path={ this.myProfileLinkMenu('/mydemand') } component={ RecommendPage } />
+            <Route key={ this.myProfileLinkMenu('/mydemand') } path={ this.myProfileLinkMenu('/mydemand') } component={ MydemandPage } />
             <Route key={ this.myProfileLinkMenu('/interviewee') } path={ this.myProfileLinkMenu('/interviewee') } component={ IntervieweePage } />
             <Route key={ this.myProfileLinkMenu('/score') } path={ this.myProfileLinkMenu('/score') } component={ ScorePage } />
             <Route key={ this.myProfileLinkMenu('/modifyPassword') } path={ this.myProfileLinkMenu('/modifyPassword') } component={ ModifyPasswordPage } />

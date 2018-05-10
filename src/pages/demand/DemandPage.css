@@ -100,19 +100,3 @@
     display: none;
 }
 
-/* 积分规则 */
-.score-rule-container {
-    padding: 24px;
-    text-align: center;
-}
-.score-rule-container .ant-list-item-content {
-    justify-content: center;
-}
-
-.score-rule-container .ant-list-header {
-    background-color: #5af;
-    color: #fff;
-    font-weight: bold;
-    font-size: 16px;
-}
-/* 积分规则 end*/

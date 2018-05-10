@@ -35,8 +35,8 @@ export default class DemandList extends React.Component {
           key: 'workingPlace',
         }, {
           title: '招聘HR',
-          dataIndex: 'hrName',
-          key: 'hrName',
+          dataIndex: 'publisherName',
+          key: 'publisherName',
         }, {
           title: '操作',
           key: 'action',

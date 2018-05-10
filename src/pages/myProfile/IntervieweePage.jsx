@@ -89,19 +89,19 @@ class IntervieweePage extends React.Component {
     ItrsFlowApi.deal(values,
       (success) =>  {
         if (success.success) {
-          alert("给出面试结果成功!");
+          message.success("给出面试结果成功!");
           // 重新渲染列表
           this.handlePageChange(1);
         } else {
-          alert("给出面试结果失败!");
+          message.error("给出面试结果失败!");
           // 重新渲染列表
           this.handlePageChange(1);
         }
       },
       (fail) =>  {
+        message.error("给出面试结果失败!");
         // 重新渲染列表
         this.handlePageChange(1);
-        alert("给出面试结果失败!");
       }
     );
   }.bind(this);
@@ -181,7 +181,7 @@ class IntervieweeList extends React.Component {
       // 防止key不唯一报错
       // Popconfirm气泡确认框
       operateRes.push(
-      <Popconfirm title='确定给出该面试结果?' onConfirm={ () => this.props.confirm(text, record, i) } onCancel={ this.props.cancel } okText="确定" cancelText="取消" key={ 2*i }>
+      <Popconfirm title="确定给出该面试结果?" onConfirm={ () => this.props.confirm(text, record, i) } onCancel={ this.props.cancel } okText="确定" cancelText="取消" key={ 2*i }>
         <a key={ 2*i }>{ text[i] }</a>
       </Popconfirm>);
       operateRes.push(<span key={ 2*i+1 }>　</span>);
