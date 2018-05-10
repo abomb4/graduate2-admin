@@ -1,5 +1,7 @@
-.profile-home-page {
-  /* display: flex; */
+.profile-home-page:after {
+  content: "";
+  display: block;
+  clear: both;
 }
 .profile-home-page .ant-card {
   display: inline-block;
@@ -8,4 +10,26 @@
   width: 20%;
   min-width: 17em;
   min-height: 13em;
+  float: left;
+}
+
+.profile-home-page .hello {
+  padding: 12px;
+}
+.profile-home-page .hello .ant-avatar {
+  float: left;
+  height: 80px;
+  width: 80px;
+  margin-right: 12px;
+}
+.profile-home-page .hello .hi {
+  font-size: 1.6em;
+}
+.profile-home-page .hello .info {
+  font-size: 1.2em;
+}
+.profile-home-page .hello:after {
+  content: "";
+  display: table;
+  clear: both;
 }

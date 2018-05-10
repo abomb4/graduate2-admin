@@ -56,13 +56,7 @@ class ItrsLoginApi {
     });
 
     function wrappedSuccess(data) {
-      var info = {
-        sessionKey: data.sessionKey,
-        username: data.username,
-        realName: data.realName,
-        sex: data.sex
-      };
-      success(info);
+      success(data);
     }
 
     function wrappedFail(error) {
