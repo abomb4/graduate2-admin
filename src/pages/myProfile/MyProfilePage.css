@@ -5,6 +5,7 @@
 /* 积分规则 */
 .score-rule-container {
   padding: 24px;
+  padding-top: 0px;
   text-align: center;
 }
 .score-rule-container .ant-list-item-content {
