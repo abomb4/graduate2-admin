@@ -56,7 +56,7 @@ class ScorePage extends React.Component {
         const listRuleStr = [];
         for (let i in listRuleObject) {
           const ruleObject = listRuleObject[i];
-          const ruleStr = ruleObject.rule + " -> " + ruleObject.score + "分";
+          const ruleStr = ruleObject.rule + ' -> ' + ruleObject.score + '分';
           listRuleStr.push(ruleStr);
         }
         this.setState({
@@ -186,7 +186,7 @@ class ScoreRule extends React.Component {
 
 class CurrentScore extends React.Component {
   render() {
-     return(
+    return(
       <div className="current-score-container">
         <Col span={ 2 }>
           我的当前积分:
@@ -195,7 +195,7 @@ class CurrentScore extends React.Component {
           { this.props.currentScore + ' 分' }
         </Col>
       </div>
-     );
+    );
   }
 }
 

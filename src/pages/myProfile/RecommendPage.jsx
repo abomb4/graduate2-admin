@@ -20,7 +20,6 @@ class RecommendPage extends React.Component {
   }
 
   doRecommendQuery = function(values) {
-    console.log("doRecommendQuery");
     this.setState({ requesting: true });
     ItrsFlowApi.listRecommenders(values,
       (success) => {
@@ -43,13 +42,11 @@ class RecommendPage extends React.Component {
   handlePageChange(pageNo) {
     const { pageSize } = this.state.pagination;
     const values = Object.assign({ pageNo, pageSize });
-    console.log("handlePageChange");
 
     this.doRecommendQuery(values);
   }
 
   render() {
-    console.log("render");
 
     const data = this.state.datas;
     console.log(data);
@@ -78,7 +75,6 @@ class RecommendPage extends React.Component {
  */
 class RecommendList extends React.Component {
   onPageChange = function(pagination) {
-    console.log("on list change");
     if (this.props.onPageChange) {
       this.props.onPageChange(pagination);
     }
@@ -95,7 +91,6 @@ class RecommendList extends React.Component {
   }
 
   render() {
-    console.log("list render");
     return (
       <Spin spinning={ this.props.requesting } >
         <Table columns={ [{
@@ -143,7 +138,7 @@ class RecommendList extends React.Component {
         pagination={ this.props.pagination }
         onChange={ this.onPageChange }
         />
-    </Spin>
+      </Spin>
     );
   }
 }
