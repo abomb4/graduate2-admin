@@ -78,7 +78,7 @@ class IntervieweePage extends React.Component {
 
   // 处理流程，这里为给出面试结果
   dealInterview = function(text, record, i) {
-    const {id, publisherId, taskId, taskName} = record;
+    const { id, publisherId, taskId, taskName } = record;
     const nextUserId = publisherId;
     const outcome = text[i];
     const result = taskName + outcome;
@@ -181,9 +181,10 @@ class IntervieweeList extends React.Component {
       // 防止key不唯一报错
       // Popconfirm气泡确认框
       operateRes.push(
-      <Popconfirm title="确定给出该面试结果?" onConfirm={ () => this.props.confirm(text, record, i) } onCancel={ this.props.cancel } okText="确定" cancelText="取消" key={ 2*i }>
-        <a key={ 2*i }>{ text[i] }</a>
-      </Popconfirm>);
+        <Popconfirm title="确定给出该面试结果?" onConfirm={ () => this.props.confirm(text, record, i) } onCancel={ this.props.cancel } okText="确定" cancelText="取消" key={ 2*i }>
+          <a key={ 2*i }>{ text[i] }</a>
+        </Popconfirm>
+      );
       operateRes.push(<span key={ 2*i+1 }>　</span>);
     }
     return operateRes;
@@ -203,6 +204,14 @@ class IntervieweeList extends React.Component {
           render: (text, record) => (
             <span>{ this.turnSex(text) }</span>
           ),
+        }, {
+          title: '岗位',
+          dataIndex: 'jobName',
+          key: 'jobName',
+        }, {
+          title: '职位类别',
+          dataIndex: 'positionTypeCnName',
+          key: 'positionTypeCnName',
         }, {
           title: '期望工作地点',
           dataIndex: 'hopeWorkingPlace',

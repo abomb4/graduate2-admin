@@ -1,5 +1,5 @@
 import React from 'react';
-import { Spin, Table, Icon } from 'antd';
+import { Spin, Table } from 'antd';
 
 /**
  * 结果列表
@@ -43,11 +43,10 @@ export default class DemandList extends React.Component {
           render: (text, record) => (
             <span>
               <a onClick={ () => onRecommendDialogOpen(record) }>推荐</a>
-              <span>　　　</span>
-              <a href="" className="ant-dropdown-link"><Icon type="down" /></a>
             </span>
           ),
         }] }
+        expandedRowRender={ record => <p style={{ margin: 0 }}>{ record.memo }</p>}
         rowKey="id"
         dataSource={ this.props.dataSource }
         pagination={ this.props.pagination }

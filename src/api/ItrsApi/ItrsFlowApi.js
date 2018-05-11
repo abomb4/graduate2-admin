@@ -42,15 +42,32 @@ export default class ItrsFlowApi {
   }
 
   /**
-   * 查询最新职位需求。
+   * 根据招聘需求编号展示其下的展示层招聘流程信息表（给hr用）。
    *
-   * @param {Object} data 必须包含demandId，可选pageNo, pageSize
+   * @param {Object} demandId 招聘需求id
    * @param {Function} success 成功回调，会塞入服务端返回的信息
    * @param {Function} fail 失败回调，会塞入axios原始错误对象
    */
-  static getByDemandId(data, success, fail) {
+  static getByDemandId(demandId, success, fail) {
     const promise = axios({
-      url: API_BASE_URL + '/myProfile/flow/listApplyFlowHr',
+      url: API_BASE_URL + '/myProfile/flow/listApplyFlowHr/' + demandId,
+      method: 'get',
+      withCredentials: true
+    });
+    handlePromise(promise, success, fail);
+    return promise;
+  }
+
+  /**
+   * 分页查找当前用户发布的所有招聘需求以及其下的招聘流程们
+   * 
+   * @param {*} data 见上面请求参数(pageNo, pageSize)
+   * @param {*} success 成功回调，会塞入服务端返回的信息
+   * @param {*} fail 失败回调，会塞入axios原始错误对象
+   */
+  static getMyDemandListAllApplyFlow(data, success, fail) {
+    const promise = axios({
+      url: API_BASE_URL + '/myProfile/flow/listAllDemandApplyFlow',
       method: 'get',
       params: data,
       withCredentials: true
@@ -96,7 +113,7 @@ export default class ItrsFlowApi {
   }
 
   /**
-   * 查询当前用户的历史处理记录
+   * 查询c
    *
    * @param {Object} data 可选pageNo, pageSize
    * @param {Function} success 成功回调，会塞入服务端返回的信息

@@ -110,6 +110,14 @@ class RecommendList extends React.Component {
             <span>{ this.turnSex(text) }</span>
           ),
         }, {
+          title: '岗位',
+          dataIndex: 'jobName',
+          key: 'jobName',
+        }, {
+          title: '职位类别',
+          dataIndex: 'positionTypeCnName',
+          key: 'positionTypeCnName',
+        }, {
           title: '期望工作地点',
           dataIndex: 'hopeWorkingPlace',
           key: 'hopeWorkingPlace',

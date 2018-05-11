@@ -26,3 +26,11 @@
   padding-bottom: 40px;
 }
 /* 我的当前积分 end */
+
+/* 职位描述列 */
+.mydemand-list-memo {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* 职位描述列 */
