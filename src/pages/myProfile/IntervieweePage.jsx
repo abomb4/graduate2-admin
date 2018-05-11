@@ -94,14 +94,10 @@ class IntervieweePage extends React.Component {
           this.handlePageChange(1);
         } else {
           message.error('给出面试结果失败!');
-          // 重新渲染列表
-          this.handlePageChange(1);
         }
       },
       (fail) =>  {
         message.error('给出面试结果失败!');
-        // 重新渲染列表
-        this.handlePageChange(1);
       }
     );
   }.bind(this);

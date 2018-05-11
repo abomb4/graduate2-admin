@@ -1,5 +1,5 @@
 import React from 'react';
-import { Spin, Table, Form, Modal, Input, Popconfirm, message } from 'antd';
+import { Spin, Table, Form, Modal, Input, Popconfirm, message, Radio } from 'antd';
 import { ItrsFlowApi, ItrsDemandApi, ItrsCandidateApi } from '../../api/ItrsApi';
 
 class MydemandPage extends React.Component {
@@ -112,12 +112,59 @@ class MydemandList extends React.Component {
   }.bind(this);
 
   state = {
+    candidate: {},
     showCandidateDetail: false,
-    candidate: {}
+    InductionStateModalVisible: false,
+    InductionRecord: {},       // 录用上岗状态当行对应的数据
+    InductionState: '拒绝录用',
+    demandFlowListVersionMap: {},
   }
 
+  // 在父组件发生render时进行调用
+  // nextProps为新render过来的参数值
+  // this.props.dataSource为旧的参数值
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.dataSource !== this.props.dataSource) {
+      // 重建versionMap
+      const newMap = {};
+      // 对每一行进行version控制，通过version控制来更新数据
+      for (const i in nextProps.dataSource) {
+        const row = nextProps.dataSource[i];
+        newMap[row.id] = 1;
+      }
+      this.setState({ demandFlowListVersionMap: newMap });
+    }
+  }
+
+  dealInductionState = function(record, result) {
+    const { id, taskId, demandId } = record;
+    const values = Object.assign({id, taskId, result});
+    console.log(values);
+
+    // 调用流程处理API
+    ItrsFlowApi.deal(values,
+      (success) =>  {
+        if (success.success) {
+          message.success('录入上岗状态成功!');
+          // 重新渲染列表
+          const newMap = Object.assign({}, this.state.demandFlowListVersionMap);
+          newMap[demandId] = newMap[demandId] + 1;
+          this.setState({ demandFlowListVersionMap: newMap });
+          console.log("newMap:", newMap);
+          this.handleInductionStateModalCancel();
+        } else {
+          message.error('录入上岗状态成功失败!');
+        }
+      },
+      (fail) =>  {
+        message.error('录入上岗状态成功失败!');
+      }
+    );
+  }.bind(this);
+
+  /* 被推荐人详情框 start */ 
   // 弹出被推荐人详情框
-  onCandidateDialogOpen = function(record) {
+  onCandidateDialogOpen = function(record, result) {
     this.doCandidateQuery(record['candidateId']);
     this.setState({
       showCandidateDetail: true
@@ -128,6 +175,33 @@ class MydemandList extends React.Component {
   onCandidateDialogClose = function() {
     this.setState({ showCandidateDetail: false });
   }.bind(this);
+  /* 被推荐人详情框 end */ 
+
+  /* 录入上岗状态modal start */
+  onInductionStateModalOpen = (record) => {
+    this.setState({
+      InductionRecord: record
+    });
+  }
+
+  handleInductionStateModalOk = (e) => {
+    console.log(this.state.InductionState);
+    this.dealInductionState(this.state.InductionRecord, this.state.InductionState);
+  }
+
+  handleInductionStateModalCancel = (e) => {
+    this.setState({
+      InductionRecord: {}
+    });
+  }
+
+  // modal中的radio变动
+  onRadioChange = (e) => {
+    this.setState({
+      InductionState: e.target.value,
+    });
+  }
+  /* 录入上岗状态modal end */
 
   // 根据被推荐人id查其详情
   doCandidateQuery = function(candidateId) {
@@ -209,13 +283,24 @@ class MydemandList extends React.Component {
                 <div>
                   <MydemandFlowList
                     record={ record }
+                    // 对展开下的记录进行version控制
+                    version={ this.state.demandFlowListVersionMap[record.id] }
+                    needUpdate={ true }
                     onCandidateDialogOpen = { this.onCandidateDialogOpen }
+                    onInductionStateModalOpen = { this.onInductionStateModalOpen }
                   />
                   <CandidateDetailForm
                     title="被推荐人详情"
                     visible={ this.state.showCandidateDetail }
                     onCancel={ this.onCandidateDialogClose }
                     candidate = { this.state.candidate }
+                  />
+                  <InductionStateModal
+                    visible={ this.state.InductionRecord.demandId === record.id }
+                    handleOk={ this.handleInductionStateModalOk }
+                    handleCancel={ this.handleInductionStateModalCancel }
+                    onRadioChange={ this.onRadioChange }
+                    InductionState={ this.state.InductionState }
                   />
                 </div>
               }
@@ -242,6 +327,13 @@ class MydemandFlowList extends React.Component {
     this.handleChange(this.props.record['id']);
   }
 
+  // 检查版本号，若不一致，则重新进行渲染
+  componentWillReceiveProps(nextProps) {
+    if (this.props.version !== nextProps.version) {
+      this.handleChange(this.props.record['id']);
+    }
+  }
+
   // 查询该招聘需求id下的所有招聘流程列表
   doFlowListQuery = function(demandId) {
     this.setState({ requesting: true });
@@ -257,6 +349,10 @@ class MydemandFlowList extends React.Component {
       },
     );
   }.bind(this);
+
+  handleChange(demandId) {
+    this.doFlowListQuery(demandId);
+  }
 
   // 进行简历筛选通过or不通过操作
   dealPass = function(text, record, i) {
@@ -289,10 +385,6 @@ class MydemandFlowList extends React.Component {
     );
   }.bind(this);
 
-  handleChange(demandId) {
-    this.doFlowListQuery(demandId);
-  }
-
   // 通过or不通过
   confirmResult = function(text, record, i) {
     this.dealPass(text, record, i);
@@ -324,7 +416,9 @@ class MydemandFlowList extends React.Component {
             <a key={ 2*i }>{ text[i] }</a>
           </Popconfirm>);
       } else if (text[i] === '录入上岗状态') {
-        operateRes.push();
+        operateRes.push(
+          <a key={ 2*i } onClick={ () => this.props.onInductionStateModalOpen(record) }>{ text[i] }</a>
+        );
       } else {
         operateRes.push(
           <a key={ 2*i }>{ text[i] }</a>
@@ -478,6 +572,39 @@ class CandidateDetailForm extends React.Component {
             <Input disabled value={ candidate.attachment } />
           </Form.Item>
         </Form>
+      </Modal>
+    );
+  }
+}
+
+/**
+ * 录入上岗状态modal，由radio组成
+ */
+class InductionStateModal extends React.Component {
+
+  render() {
+    const radioStyle = {
+      display: 'block',
+      height: '30px',
+      lineHeight: '30px',
+    };
+
+    return (
+      <Modal
+        title="选择上岗状态"
+        maskClosable={ true }
+        visible={ this.props.visible }
+        onOk={ this.props.handleOk }
+        onCancel={ this.props.handleCancel }
+        okText="选择"
+        cancelText="取消"
+      >
+        <Radio.Group onChange={ this.props.onRadioChange } value={ this.props.InductionState }>
+          <Radio style={ radioStyle } value={ '拒绝录用' } >拒绝录用</Radio>
+          <Radio style={ radioStyle } value={ '已上岗' } >已上岗</Radio>
+          <Radio style={ radioStyle } value={ '拒绝上岗' } >拒绝上岗</Radio>
+          <Radio style={ radioStyle } value={ '因故未上岗' } >因故未上岗</Radio>
+        </Radio.Group>
       </Modal>
     );
   }
