@@ -260,8 +260,8 @@ class MydemandFlowList extends React.Component {
 
   // 进行简历筛选通过or不通过操作
   dealPass = function(text, record, i) {
-    const userAgent = localStorage.getItem('user');
-    const nextUserId = userAgent.id;
+    const userAgent = JSON.parse(localStorage.getItem('user'));
+    const nextUserId = userAgent['id'];
     const { id, taskId, taskName, demandId } = record;
     const outcome = text[i];
     const result = taskName + outcome;
