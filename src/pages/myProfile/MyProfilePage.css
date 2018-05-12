@@ -40,3 +40,12 @@
   padding-left: 6px;
   padding-top: 12px;
 }
+/* MydemandPage */
+.mydemand-list-container .button-container {
+  padding-bottom: 12px;
+  text-align: right;
+}
+.demand-form-page .title {
+  line-height: 3em;
+  text-indent: 1em;
+}

@@ -110,7 +110,7 @@ export default class ItrsDemandApi {
   *         "gmtModify": "gmtModify001"
   *     }
   * }
-  * 
+  *
   * @param {Function} success 成功回调，会塞入服务端返回的信息
   * @param {Function} fail 失败回调，会塞入axios原始错误对象
   */
@@ -125,11 +125,11 @@ export default class ItrsDemandApi {
 
   /**
    * 分页查找当前用户发布的所有招聘需求
-   * 
+   *
    * 请求参数：
    * | pageNo | 页码 | Number | - | Y
    * | pageSize | 分页大小 | Number | - | Y
-   * 
+   *
    * @param {*} data 见上面请求参数
    * @param {*} success 成功回调，会塞入服务端返回的信息
    * @param {*} fail 失败回调，会塞入axios原始错误对象
@@ -156,7 +156,7 @@ export default class ItrsDemandApi {
     const promise = axios({
       url: API_BASE_URL + '/myProfile/demand',
       method: 'post',
-      params: data,
+      data: objectToFormData(data),
       withCredentials: true
     });
     handlePromise(promise, success, fail);
@@ -183,7 +183,7 @@ export default class ItrsDemandApi {
 
   /**
    * 逻辑删除招聘需求
-   * 
+   *
    * @param {*} id 招聘需求id
    * @param {*} success 成功回调，会塞入服务端返回的信息
    * @param {*} fail 失败回调，会塞入axios原始错误对象

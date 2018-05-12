@@ -48,7 +48,7 @@ export default class ItrsCandidateApi {
    *   "pageSize": 10,
    *   "total": 2
    * }
-   * 
+   *
    * @param {Object} id id 要包含pageNo，pageSize
    * @param {Function} success 成功回调，会塞入服务端返回的信息
    * @param {Function} fail 失败回调，会塞入axios原始错误对象
@@ -85,7 +85,7 @@ export default class ItrsCandidateApi {
    *         "gmtModify": "2018-04-29"
    *     }
    * }
-   * 
+   *
    * @param {Number} id 候选人id
    * @param {Function} success 成功回调，会塞入服务端返回的信息
    * @param {Function} fail 失败回调，会塞入axios原始错误对象

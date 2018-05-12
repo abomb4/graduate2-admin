@@ -46,7 +46,13 @@ export default class DemandList extends React.Component {
             </span>
           ),
         }] }
-        expandedRowRender={ record => <p style={{ margin: 0 }}>{ record.memo }</p>}
+        expandedRowRender={ record => <p style={{ margin: 0 }}>{
+          record.memo.split('\n').map(function(item) {
+            return (
+              <span key={ item }>{ item } <br></br></span>
+            );
+          })
+        }</p>}
         rowKey="id"
         dataSource={ this.props.dataSource }
         pagination={ this.props.pagination }
