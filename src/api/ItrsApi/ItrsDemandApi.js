@@ -146,6 +146,28 @@ export default class ItrsDemandApi {
   }
 
   /**
+   * 分页查找当前用户同部门的所有招聘需求（给部门领导用）
+   * 
+   * 请求参数：
+   * | pageNo | 页码 | Number | - | Y
+   * | pageSize | 分页大小 | Number | - | Y
+   * 
+   * @param {*} data 见上面请求参数
+   * @param {*} success 成功回调，会塞入服务端返回的信息
+   * @param {*} fail 失败回调，会塞入axios原始错误对象
+   */
+  static getFollowingDemand(data, success, fail) {
+    const promise = axios({
+      url: API_BASE_URL + '/myProfile/mydemandFollowing/list',
+      method: 'get',
+      params: data,
+      withCredentials: true
+    });
+    handlePromise(promise, success, fail);
+    return promise;
+  }
+
+  /**
    * HR发布需求
    *
    * @param {Object} data 需求数据

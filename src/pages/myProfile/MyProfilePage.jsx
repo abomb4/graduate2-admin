@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Layout, Menu } from 'antd';
 import { loginActions } from '../../_actions';
-import { RecommendPage, IntervieweePage, MydemandPage, HomePage, ScorePage, HistoryPage, ModifyPasswordPage } from '.';
+import { RecommendPage, IntervieweePage, MydemandPage, HomePage, ScorePage, HistoryPage, ModifyPasswordPage, FollowingDemandPage } from '.';
 import './MyProfilePage.css';
 
 const { Content, Sider } = Layout;
@@ -12,11 +12,6 @@ const { Content, Sider } = Layout;
 const { Component } = React;
 
 class MyProfilePage extends Component {
-
-  state = {
-    positionTypeInited: false,
-    positionTypeMap: {},
-  }
 
   myProfileLinkMenu(path) {
     const currentPath = this.props.match.path;
@@ -63,6 +58,7 @@ class MyProfilePage extends Component {
                 {/* <Menu.Item key="home"><Link to={ this.myProfileLinkMenu('/home') }>综合信息</Link></Menu.Item> */}
                 <Menu.Item key="/recommend"><Link to={ this.myProfileLinkMenu('/recommend') }>俺的推荐</Link></Menu.Item>
                 <Menu.Item key="/mydemand"><Link to={ this.myProfileLinkMenu('/mydemand') }>俺的招聘</Link></Menu.Item>
+                <Menu.Item key="/followingDemand"><Link to={ this.myProfileLinkMenu('/followingDemand') }>部门招聘</Link></Menu.Item>
                 <Menu.Item key="/interviewee"><Link to={ this.myProfileLinkMenu('/interviewee') }>俺的面试</Link></Menu.Item>
                 <Menu.Item key="/score"><Link to={ this.myProfileLinkMenu('/score') }>俺的积分</Link></Menu.Item>
                 <Menu.Item key="/history"><Link to={ this.myProfileLinkMenu('/history') }>俺的历史</Link></Menu.Item>
@@ -72,7 +68,8 @@ class MyProfilePage extends Component {
               <Switch>
                 <Route key={ this.myProfileLinkMenu('/home') } path={ this.myProfileLinkMenu('/home') } exact component={ HomePage } />
                 <Route key={ this.myProfileLinkMenu('/recommend') } path={ this.myProfileLinkMenu('/recommend') } component={ RecommendPage } />
-                <Route key={ this.myProfileLinkMenu('/mydemand') } path={ this.myProfileLinkMenu('/mydemand') } positionTypeMap={ this.state.positionTypeMap } component={ MydemandPage } />
+                <Route key={ this.myProfileLinkMenu('/mydemand') } path={ this.myProfileLinkMenu('/mydemand') } component={ MydemandPage } />
+                <Route key={ this.myProfileLinkMenu('/followingDemand') } path={ this.myProfileLinkMenu('/followingDemand') } component={ FollowingDemandPage } />
                 <Route key={ this.myProfileLinkMenu('/interviewee') } path={ this.myProfileLinkMenu('/interviewee') } component={ IntervieweePage } />
                 <Route key={ this.myProfileLinkMenu('/score') } path={ this.myProfileLinkMenu('/score') } component={ ScorePage } />
                 <Route key={ this.myProfileLinkMenu('/history') } path={ this.myProfileLinkMenu('/history') } component={ HistoryPage } />

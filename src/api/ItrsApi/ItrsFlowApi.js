@@ -59,6 +59,23 @@ export default class ItrsFlowApi {
   }
 
   /**
+   * 根据招聘需求编号展示其下的展示层招聘流程信息表（给部门经理用）。
+   * 
+   * @param {*} demandId 招聘需求id
+   * @param {*} success 成功回调，会塞入服务端返回的信息
+   * @param {*} fail 失败回调，会塞入axios原始错误对象
+   */
+  static getByDemandIdForManager(demandId, success, fail) {
+    const promise = axios({
+      url: API_BASE_URL + '/myProfile/flow/listApplyFlowManager/' + demandId,
+      method: 'get',
+      withCredentials: true
+    });
+    handlePromise(promise, success, fail);
+    return promise;
+  }
+
+  /**
    * 查询需要面试的流程，提供给普通员工使用
    *
    * @param {Object} data 可选pageNo, pageSize
