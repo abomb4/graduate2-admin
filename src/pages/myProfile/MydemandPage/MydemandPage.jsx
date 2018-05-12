@@ -6,7 +6,7 @@ import {
   Modal, Input, Popconfirm,
   message, Button, Radio
 } from 'antd';
-import { ItrsFlowApi, ItrsDemandApi, ItrsCandidateApi, ItrsUserApi } from '../../../api/ItrsApi';
+import { ItrsFlowApi, ItrsDemandApi, ItrsCandidateApi, ItrsUserApi, makeDownloadUrl } from '../../../api/ItrsApi';
 import { CreateDemandPage } from '.';
 import './MydemandPage.css';
 
@@ -103,7 +103,15 @@ class MydemandPage extends React.Component {
     return(
       <Switch>
         <Route key="/new" path={ this.getLink('/new') } exact>
-          <CreateDemandPage onFinish={() => this.handlePageChange(1)} />
+          <CreateDemandPage
+            onFinish={() => this.handlePageChange(1)}
+          />
+        </Route>
+        <Route key="/edit" path={ this.getLink('/edit/:id') } exact>
+          <CreateDemandPage
+            isEdit={ true }
+            onFinish={() => this.handlePageChange(1)}
+          />
         </Route>
         <Route key="/" path={ this.getLink('/') } exact>
           <div className="mydemand-list-container">
@@ -395,7 +403,7 @@ class MydemandList extends React.Component {
                   <a>停招</a><span>&nbsp;&nbsp;&nbsp;</span>
                 </Popconfirm> : ''
               }
-              <a>修改</a><span>&nbsp;&nbsp;</span>
+              <Link to={ '/myProfile/mydemand/edit/' + record.id } >修改</Link><span>&nbsp;&nbsp;</span>
             </span>
           ),
         }] }
@@ -653,7 +661,7 @@ class CandidateDetailForm extends React.Component {
         okText="确定"
         cancelText="关闭"
       >
-        <Form>
+        <Form className="candidate-detail-form">
           <Form.Item
             {...formItemLayout}
             label="姓名"
@@ -706,7 +714,11 @@ class CandidateDetailForm extends React.Component {
             {...formItemLayout}
             label="附件"
           >
-            <Input disabled value={ candidate.attachment } />
+            {
+              candidate.attachment ?
+                candidate.attachment.split(',').map(fileName => <a className="link" key={ fileName } href={ makeDownloadUrl(fileName) } target="_blank">{ fileName }</a>)
+                : null
+            }
           </Form.Item>
         </Form>
       </Modal>

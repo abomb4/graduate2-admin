@@ -1,4 +1,5 @@
 
+export * from './common';
 export { default as ItrsCandidateApi } from './ItrsCandidateApi';
 export { default as ItrsDemandApi } from './ItrsDemandApi';
 export { default as ItrsDictionaryApi } from './ItrsDictionaryApi';

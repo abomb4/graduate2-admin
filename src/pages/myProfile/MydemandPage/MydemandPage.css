@@ -20,3 +20,12 @@
 .demand-form-page .header .ant-btn {
   margin-top: 14px;
 }
+
+/* 被推荐人信息弹窗 */
+.candidate-detail-form a {
+  display: block;
+}
+.candidate-detail-form a:hover {
+  color: #0a65d8;
+  text-decoration: underline;
+}
