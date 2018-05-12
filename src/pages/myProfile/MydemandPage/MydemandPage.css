@@ -1,0 +1,22 @@
+
+/* MydemandPage */
+.mydemand-list-container .button-container {
+  padding-bottom: 12px;
+  text-align: right;
+}
+.demand-form-page .title {
+  line-height: 3em;
+  text-indent: 1em;
+}
+
+.demand-form-page .header {
+  display: flex;
+}
+
+.demand-form-page .header .title {
+  flex: 1;
+}
+
+.demand-form-page .header .ant-btn {
+  margin-top: 14px;
+}
