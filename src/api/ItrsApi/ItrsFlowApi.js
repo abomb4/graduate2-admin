@@ -59,24 +59,6 @@ export default class ItrsFlowApi {
   }
 
   /**
-   * 分页查找当前用户发布的所有招聘需求以及其下的招聘流程们
-   * 
-   * @param {*} data 见上面请求参数(pageNo, pageSize)
-   * @param {*} success 成功回调，会塞入服务端返回的信息
-   * @param {*} fail 失败回调，会塞入axios原始错误对象
-   */
-  static getMyDemandListAllApplyFlow(data, success, fail) {
-    const promise = axios({
-      url: API_BASE_URL + '/myProfile/flow/listAllDemandApplyFlow',
-      method: 'get',
-      params: data,
-      withCredentials: true
-    });
-    handlePromise(promise, success, fail);
-    return promise;
-  }
-
-  /**
    * 查询需要面试的流程，提供给普通员工使用
    *
    * @param {Object} data 可选pageNo, pageSize
@@ -137,9 +119,9 @@ export default class ItrsFlowApi {
    * [options="header"]
    * |======
    * | 字段 | 说明 | 类型 | 备注 | 是否必填
-   * | outcome | 连线名称（通过or不通过等） | String | 连线名称（通过or不通过等） | Y
+   * | outcome | 连线名称（通过or不通过等） | String | 连线名称（通过or不通过等） | N 给出通过or不通过结果时需要
    * | nextUserId | 下一任务的完成人 | String | 除最后一个节点外，必须，且只能有一个 | N
-   * | result | 当前流程结果 | String | 流程名 + 操作名 | Y
+   * | result | 当前流程结果 | String | 流程名 + 操作名 | N 给出通过or不通过结果时需要
    * | taskId | 任务id | String | 必须 | Y
    * | id | 招聘流程id | Number | 对应applyFlowId | Y
    * |======

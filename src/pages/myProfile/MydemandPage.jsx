@@ -1,6 +1,6 @@
 import React from 'react';
 import { Spin, Table, Form, Modal, Input, Popconfirm, message, Radio } from 'antd';
-import { ItrsFlowApi, ItrsDemandApi, ItrsCandidateApi } from '../../api/ItrsApi';
+import { ItrsFlowApi, ItrsDemandApi, ItrsCandidateApi, ItrsUserApi } from '../../api/ItrsApi';
 
 class MydemandPage extends React.Component {
   state = {
@@ -112,11 +112,20 @@ class MydemandList extends React.Component {
   }.bind(this);
 
   state = {
+    /* 被推荐人详情对话框 */ 
     candidate: {},
     showCandidateDetail: false,
+    /* 录入上岗状态对话框 */ 
     InductionStateModalVisible: false,
     InductionRecord: {},       // 录用上岗状态当行对应的数据
     InductionState: '拒绝录用',
+    /* 指派面试官对话框 */ 
+    assignIntervieweeVisible: false,
+    assignIntervieweeRecord: {},  // 指派面试官当行对应的数据
+    assignInterviewee: '',  // 指派面试官id
+    userList: [],  // 对话框中显示的radio列表
+    userSearchValue: '',  // 对话框中搜索值
+    /* 通过版本号来进行更新 */
     demandFlowListVersionMap: {},
   }
 
@@ -128,6 +137,7 @@ class MydemandList extends React.Component {
       // 重建versionMap
       const newMap = {};
       // 对每一行进行version控制，通过version控制来更新数据
+      // 初始化version为1
       for (const i in nextProps.dataSource) {
         const row = nextProps.dataSource[i];
         newMap[row.id] = 1;
@@ -136,6 +146,9 @@ class MydemandList extends React.Component {
     }
   }
 
+  /**
+   * 录入上岗状态
+   */
   dealInductionState = function(record, result) {
     const { id, taskId, demandId } = record;
     const values = Object.assign({id, taskId, result});
@@ -153,14 +166,45 @@ class MydemandList extends React.Component {
           console.log("newMap:", newMap);
           this.handleInductionStateModalCancel();
         } else {
-          message.error('录入上岗状态成功失败!');
+          message.error('录入上岗状态失败!');
         }
       },
       (fail) =>  {
-        message.error('录入上岗状态成功失败!');
+        message.error('录入上岗状态失败!');
       }
     );
   }.bind(this);
+
+  /**
+   * 指派面试官
+   */
+  dealAssignInterviewee = function(record, nextUserId) {
+    const { id, taskId, demandId } = record;
+    const values = Object.assign({id, taskId, nextUserId}, {outcome: '指派'});
+    console.log(values);
+
+    // 调用流程处理API
+    ItrsFlowApi.deal(values,
+      (success) =>  {
+        if (success.success) {
+          message.success('指派面试官成功!');
+          // 重新渲染列表
+          const newMap = Object.assign({}, this.state.demandFlowListVersionMap);
+          newMap[demandId] = newMap[demandId] + 1;
+          this.setState({ demandFlowListVersionMap: newMap });
+          console.log("newMap:", newMap);
+          // 关闭对话框
+          this.handleAssignIntervieweeModalCancel();
+        } else {
+          message.error('指派面试官失败!');
+        }
+      },
+      (fail) =>  {
+        message.error('指派面试官失败!');
+      }
+    );
+  }.bind(this);
+
 
   /* 被推荐人详情框 start */ 
   // 弹出被推荐人详情框
@@ -176,6 +220,7 @@ class MydemandList extends React.Component {
     this.setState({ showCandidateDetail: false });
   }.bind(this);
   /* 被推荐人详情框 end */ 
+
 
   /* 录入上岗状态modal start */
   onInductionStateModalOpen = (record) => {
@@ -196,12 +241,67 @@ class MydemandList extends React.Component {
   }
 
   // modal中的radio变动
-  onRadioChange = (e) => {
+  onInductionStateRadioChange = (e) => {
     this.setState({
       InductionState: e.target.value,
     });
   }
   /* 录入上岗状态modal end */
+  
+
+  /* 指派面试官modal start */
+  onAssignIntervieweeModalOpen = (record) => {
+    this.setState({
+      assignIntervieweeRecord: record
+    });
+  }
+
+  handleAssignIntervieweeModalOk = (e) => {
+    // 若未指派面试官,
+    if (this.state.assignInterviewee === '') {
+      message.error('请指派某一个面试官!!');
+      return;
+    }
+    // 若指派的面试官与推荐该被推荐人的员工是同一个
+    if (this.state.assignIntervieweeRecord['recommendId'] === this.state.assignInterviewee) {
+      message.error('不得指派推荐该被推荐人的员工作为面试官!');
+      return;
+    }
+    if (this.state.assignIntervieweeRecord['publisherId'] === this.state.assignInterviewee) {
+      message.error('不得指派发布该招聘需求的员工作为面试官!');
+      return;
+    }
+    this.dealAssignInterviewee(this.state.assignIntervieweeRecord, this.state.assignInterviewee);
+  }
+
+  handleAssignIntervieweeModalCancel = (e) => {
+    this.setState({
+      assignIntervieweeRecord: {}
+    });
+  }
+
+  onAssignIntervieweeRadioChange = (e) => {
+    this.setState({
+      assignInterviewee: e.target.value,
+    });
+  }
+
+  onAssignIntervieweeSearch = (value) => {
+    console.log(value);
+    const values = Object.assign({realName: value});
+    // 调用api,按用户真实姓名模糊查找用户
+    ItrsUserApi.listUser(values,
+      (success) => {
+        this.setState({
+          userSearchValue: value,
+          userList: success.data
+        });
+      },
+      (fail) => {}
+    );
+  }
+  /* 指派面试官modal end */
+
 
   // 根据被推荐人id查其详情
   doCandidateQuery = function(candidateId) {
@@ -288,6 +388,7 @@ class MydemandList extends React.Component {
                     needUpdate={ true }
                     onCandidateDialogOpen = { this.onCandidateDialogOpen }
                     onInductionStateModalOpen = { this.onInductionStateModalOpen }
+                    onAssignIntervieweeModalOpen = { this.onAssignIntervieweeModalOpen }
                   />
                   <CandidateDetailForm
                     title="被推荐人详情"
@@ -299,8 +400,17 @@ class MydemandList extends React.Component {
                     visible={ this.state.InductionRecord.demandId === record.id }
                     handleOk={ this.handleInductionStateModalOk }
                     handleCancel={ this.handleInductionStateModalCancel }
-                    onRadioChange={ this.onRadioChange }
+                    onRadioChange={ this.onInductionStateRadioChange }
                     InductionState={ this.state.InductionState }
+                  />
+                  <AssignIntervieweeModal
+                    visible={ this.state.assignIntervieweeRecord.demandId === record.id }
+                    handleOk={ this.handleAssignIntervieweeModalOk }
+                    handleCancel={ this.handleAssignIntervieweeModalCancel }
+                    onRadioChange={ this.onAssignIntervieweeRadioChange }
+                    assignInterviewee={ this.state.assignInterviewee }
+                    onSearch={ this.onAssignIntervieweeSearch }
+                    userList={ this.state.userList }
                   />
                 </div>
               }
@@ -418,6 +528,10 @@ class MydemandFlowList extends React.Component {
       } else if (text[i] === '录入上岗状态') {
         operateRes.push(
           <a key={ 2*i } onClick={ () => this.props.onInductionStateModalOpen(record) }>{ text[i] }</a>
+        );
+      } else if (text[i] === '指派') {
+        operateRes.push(
+          <a key={ 2*i } onClick={ () => this.props.onAssignIntervieweeModalOpen(record) }>{ text[i] }</a>
         );
       } else {
         operateRes.push(
@@ -606,6 +720,64 @@ class InductionStateModal extends React.Component {
           <Radio style={ radioStyle } value={ '因故未上岗' } >因故未上岗</Radio>
         </Radio.Group>
       </Modal>
+    );
+  }
+}
+
+/**
+ * 指派面试官modal，由radio和搜索框组成
+ */
+class AssignIntervieweeModal extends React.Component {
+  componentDidMount() {
+    console.log("assignInterviewee modal did mount!");
+    if (this.props.userList.length === 0) {
+      this.props.onSearch(null);
+      // console.log('child userList',this.props.userList);
+    }
+  }
+
+  turnRadioElements(element) {
+    const radioStyle = {
+      display: 'block',
+      height: '30px',
+      lineHeight: '30px'
+    };
+    console.log('reder radio elements', element);
+
+    const radioElements = [];
+    for (var i in element) {
+      const userElement = element[i];
+      radioElements.push(
+        <Radio key={ i } style={ radioStyle } value={ userElement.id } >{ userElement.realName }</Radio>
+      );
+    }
+    return radioElements;
+  }
+
+  render() {
+
+    return (
+        <Modal
+          title="指派面试官"
+          maskClosable={ true }
+          visible={ this.props.visible }
+          onOk={ this.props.handleOk }
+          onCancel={ this.props.handleCancel }
+          okText="指派"
+          cancelText="取消"
+          width="260px"
+        >
+          <div className="assign-modal-container">
+            <Input.Search
+                placeholder="面试官姓名"
+                onSearch={ this.props.onSearch }
+                enterButton
+              />
+              <Radio.Group onChange={ this.props.onRadioChange } value={ this.props.assignInterviewee }>
+                { this.turnRadioElements(this.props.userList) }
+              </Radio.Group>
+          </div>
+        </Modal>
     );
   }
 }

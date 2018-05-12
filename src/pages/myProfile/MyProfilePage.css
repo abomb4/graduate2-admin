@@ -34,3 +34,9 @@
   text-overflow: ellipsis;
 }
 /* 职位描述列 */
+
+/* 指派面试官modal start */
+.assign-modal-container .ant-radio-group {
+  padding-left: 6px;
+  padding-top: 12px;
+}
