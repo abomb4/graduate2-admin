@@ -1,6 +1,14 @@
 import React from 'react';
-import { Spin, Table, Form, Modal, Input, Popconfirm, message, Radio } from 'antd';
-import { ItrsFlowApi, ItrsDemandApi, ItrsCandidateApi } from '../../api/ItrsApi';
+import { Route, Switch } from 'react-router';
+import { withRouter, Link } from 'react-router-dom';
+import {
+  Spin, Table, Form,
+  Modal, Input, Popconfirm,
+  message, Button, Row,
+  Col, Cascader, Select,
+  Radio
+} from 'antd';
+import { ItrsFlowApi, ItrsDemandApi, ItrsCandidateApi, ItrsDictionaryApi } from '../../api/ItrsApi';
 
 class MydemandPage extends React.Component {
   state = {
@@ -11,6 +19,11 @@ class MydemandPage extends React.Component {
     },
     requesting: false,
     datas: []
+  }
+
+  getLink(path) {
+    const currentPath = this.props.match.path;
+    return currentPath + path;
   }
 
   componentDidMount() {
@@ -71,7 +84,7 @@ class MydemandPage extends React.Component {
   confirm = function(text, record) {
     this.doDeleteDemand(record['id']);
   }.bind(this);
-  
+
   // 气泡确认框cancel
   cancel =  function(e) {
     message.error('取消停招该招聘需求!');
@@ -88,15 +101,25 @@ class MydemandPage extends React.Component {
     };
 
     return(
-      <div className="mydemand-list-container">
-        <MydemandList requesting={ this.state.requesting }
-          dataSource={ data }
-          pagination={ pagination }
-          onChange={ this.handlePageChange }
-          confirm = { this.confirm }
-          cancel = { this.cancel }
-        />
-      </div>
+      <Switch>
+        <Route key="/new" path={ this.getLink('/new') } exact>
+          <WrappedCreateDemandPage onFinish={() => this.handlePageChange(1)} />
+        </Route>
+        <Route key="/" path={ this.getLink('/') } exact>
+          <div className="mydemand-list-container">
+            <div className="button-container">
+              <Button type="primary" onClick={ this.handleAddDemand }><Link to={ this.getLink('/new') }>新增招聘需求</Link></Button>
+            </div>
+            <MydemandList requesting={ this.state.requesting }
+              dataSource={ data }
+              pagination={ pagination }
+              onChange={ this.handlePageChange }
+              confirm = { this.confirm }
+              cancel = { this.cancel }
+            />
+          </div>
+        </Route>
+      </Switch>
     );
   }
 }
@@ -150,7 +173,7 @@ class MydemandList extends React.Component {
           const newMap = Object.assign({}, this.state.demandFlowListVersionMap);
           newMap[demandId] = newMap[demandId] + 1;
           this.setState({ demandFlowListVersionMap: newMap });
-          console.log("newMap:", newMap);
+          console.log('newMap:', newMap);
           this.handleInductionStateModalCancel();
         } else {
           message.error('录入上岗状态成功失败!');
@@ -162,7 +185,7 @@ class MydemandList extends React.Component {
     );
   }.bind(this);
 
-  /* 被推荐人详情框 start */ 
+  /* 被推荐人详情框 start */
   // 弹出被推荐人详情框
   onCandidateDialogOpen = function(record, result) {
     this.doCandidateQuery(record['candidateId']);
@@ -175,7 +198,7 @@ class MydemandList extends React.Component {
   onCandidateDialogClose = function() {
     this.setState({ showCandidateDetail: false });
   }.bind(this);
-  /* 被推荐人详情框 end */ 
+  /* 被推荐人详情框 end */
 
   /* 录入上岗状态modal start */
   onInductionStateModalOpen = (record) => {
@@ -267,7 +290,7 @@ class MydemandList extends React.Component {
           key: 'action',
           render: (text, record) => (
             <span>
-              { record['status'] === 1 ? 
+              { record['status'] === 1 ?
                 <Popconfirm title="确定停招该招聘需求?" onConfirm={ () => this.props.confirm(text, record) } onCancel={ this.props.cancel } okText="确定" cancelText="取消">
                   <a>停招</a><span>&nbsp;&nbsp;&nbsp;</span>
                 </Popconfirm> : ''
@@ -276,10 +299,10 @@ class MydemandList extends React.Component {
             </span>
           ),
         }] }
-        expandedRowRender={ 
+        expandedRowRender={
           record => (
             <span>
-              { 
+              {
                 <div>
                   <MydemandFlowList
                     record={ record }
@@ -610,4 +633,180 @@ class InductionStateModal extends React.Component {
   }
 }
 
-export default MydemandPage;
+
+class CreateDemandPage extends React.Component {
+
+  state = {
+    confirmDirty: false,
+    autoCompleteResult: [],
+    positionType: [],
+  };
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.form.validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        const postParam = Object.assign({}, values);
+        // 取最后元素
+        postParam.positionType = postParam.positionType[postParam.positionType.length - 1];
+        ItrsDemandApi.publishDemand(postParam,
+          (success) => {
+            message.success('需求发布成功');
+            if (this.props.onFinish) {
+              this.props.onFinish();
+            }
+            this.props.history.push('/myProfile/mydemand');
+          },
+          (fail) => {
+            message.error('需求发布失败。' + fail.message);
+          }
+        );
+      }
+    });
+  }
+  componentWillMount() {
+    // 初始化职位类别
+    ItrsDictionaryApi.getPositions(
+      (success) => {
+        if (success.success) {
+          const data = success.data.map(p => {
+            let children;
+            if (p.subTypes) {
+              children = p.subTypes.map(sub => ({ value: sub.id, label: sub.chineseName }));
+            } else {
+              children = [];
+            }
+            return {
+              value: p.id,
+              label: p.chineseName,
+              children: children
+            };
+          });
+          this.setState({ positionType: data });
+        }
+      },
+      (fail) => {}
+    );
+  }
+
+  render() {
+    const { getFieldDecorator } = this.props.form;
+    const formItemLayout = {
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 8 },
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 16 },
+      },
+    };
+    const tailformItemLayout = {
+      wrapperCol: {
+        xs: {
+          span: 24,
+          offset: 0,
+        },
+        sm: {
+          span: 16,
+          offset: 8,
+        },
+      },
+    };
+    return (
+      <div className="demand-form-page">
+        <h2 className="title">{ this.props.isEdit ? '修改需求' : '发布新需求' }</h2>
+        <Row>
+          <Col span={18}>
+            <Form onSubmit={ this.handleSubmit }>
+              <Form.Item
+                {...formItemLayout}
+                label="职位类别"
+              >
+                {getFieldDecorator('positionType', {
+                  rules: [{
+                    required: true, message: '请选择职位类别!',
+                  }],
+                })(
+                  <Cascader options={ this.state.positionType } onChange={ (e) => console.log(e) } placeholder="请选择职位类别" />
+                )}
+              </Form.Item>
+              <Form.Item
+                {...formItemLayout}
+                label="岗位名称"
+              >
+                {getFieldDecorator('jobName', {
+                  rules: [{
+                    required: true, message: '请输入岗位名称!',
+                  }],
+                })(
+                  <Input />
+                )}
+              </Form.Item>
+              <Form.Item
+                {...formItemLayout}
+                label="招聘总人数"
+              >
+                {getFieldDecorator('total', {
+                  initialValue: 1,
+                  rules: [{
+                    required: true, message: '请输入招聘总人数!',
+                  }],
+                })(
+                  <Input type="number" />
+                )}
+              </Form.Item>
+              <Form.Item
+                {...formItemLayout}
+                label="工作地点"
+              >
+                {getFieldDecorator('workingPlace', {
+                  initialValue: '杭州',
+                  rules: [{
+                    required: true, message: '请选择工作地点!',
+                  }],
+                })(
+                  <Select>
+                    <Select.Option value="杭州">杭州</Select.Option>
+                    <Select.Option value="南昌">南昌</Select.Option>
+                    <Select.Option value="舟山">舟山</Select.Option>
+                  </Select>
+                )}
+              </Form.Item>
+              <Form.Item
+                {...formItemLayout}
+                label="最低学位要求"
+              >
+                {getFieldDecorator('degreeRequest', { initialValue: '不限' })(
+                  <Select>
+                    <Select.Option value="不限">不限</Select.Option>
+                    <Select.Option value="高中">高中</Select.Option>
+                    <Select.Option value="大专">大专</Select.Option>
+                    <Select.Option value="本科">本科</Select.Option>
+                    <Select.Option value="硕士">硕士</Select.Option>
+                    <Select.Option value="博士">博士</Select.Option>
+                  </Select>
+                )}
+              </Form.Item>
+              <Form.Item
+                {...formItemLayout}
+                label="岗位说明"
+              >
+                {getFieldDecorator('memo', {})(
+                  <Input.TextArea autosize={{ minRows: 6 }}/>
+                )}
+              </Form.Item>
+              <Form.Item {...tailformItemLayout}>
+                <Button type="primary" htmlType="submit">提交</Button>
+              </Form.Item>
+            </Form>
+          </Col>
+        </Row>
+      </div>
+    );
+  }
+}
+
+const WrappedCreateDemandPage = withRouter(Form.create()(CreateDemandPage));
+
+export default withRouter(MydemandPage);

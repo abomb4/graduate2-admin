@@ -34,3 +34,13 @@
   text-overflow: ellipsis;
 }
 /* 职位描述列 */
+
+/* MydemandPage */
+.mydemand-list-container .button-container {
+  padding-bottom: 12px;
+  text-align: right;
+}
+.demand-form-page .title {
+  line-height: 3em;
+  text-indent: 1em;
+}

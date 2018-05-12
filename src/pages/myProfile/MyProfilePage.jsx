@@ -28,14 +28,20 @@ class MyProfilePage extends Component {
     if (!this.props.loginUser) {
       loginActions.show()(this.props.dispatch);
     }
-    console.log("mount myProfile component");
+    console.log('mount myProfile component');
   }
 
   detectCurrentMenu() {
     const fullPath = this.props.location.pathname;
     const baseMatch = this.props.match.path;
     const subPath = fullPath.substring(baseMatch.length, fullPath.length);
-    return subPath;
+
+    const nextStash = subPath.substring(1, subPath.length).indexOf('/');
+    if (nextStash > 0) {
+      return subPath.substring(0, nextStash + 1);
+    } else {
+      return subPath;
+    }
   }
 
   render() {
@@ -75,7 +81,7 @@ class MyProfilePage extends Component {
               </Switch>
             </Content>
           </Layout>
-          : <div>您必须<a onClick={ () => loginActions.show()(this.props.dispatch) }>登录</a>后才能使用个人中心功能</div>
+          : <div className="page-content">您必须<a onClick={ () => loginActions.show()(this.props.dispatch) }>登录</a>后才能使用个人中心功能</div>
         }
       </div>
     );
