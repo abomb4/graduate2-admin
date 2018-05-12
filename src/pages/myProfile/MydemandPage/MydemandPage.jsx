@@ -381,15 +381,15 @@ class MydemandList extends React.Component {
           dataIndex: 'statusName',
           key: 'statusName',
         },/* {
-        title: '职位描述',
-        dataIndex: 'memo',
-        key: 'memo',
-        render: (text, record) => (
-          <span className="mydemand-list-memo">
-            { text }
-          </span>
-        ),
-      },*/ {
+          title: '职位描述',
+          dataIndex: 'memo',
+          key: 'memo',
+          render: (text, record) => (
+            <span className="mydemand-list-memo">
+              { text }
+            </span>
+          ),
+        },*/ {
           title: '发布日期',
           dataIndex: 'gmtCreate',
           key: 'gmtCreate',
@@ -661,7 +661,7 @@ class CandidateDetailForm extends React.Component {
         okText="确定"
         cancelText="关闭"
       >
-        <Form className="candidate-detail-form">
+      <Form className="candidate-detail-form">
           <Form.Item
             {...formItemLayout}
             label="姓名"
@@ -713,12 +713,12 @@ class CandidateDetailForm extends React.Component {
           <Form.Item
             {...formItemLayout}
             label="附件"
-          >
-            {
-              candidate.attachment ?
-                candidate.attachment.split(',').map(fileName => <a className="link" key={ fileName } href={ makeDownloadUrl(fileName) } target="_blank">{ fileName }</a>)
-                : null
-            }
+            >
+              {
+                candidate.attachment ?
+                  candidate.attachment.split(',').map(fileName => <a className="link" key={ fileName } href={ makeDownloadUrl(fileName) } target="_blank">{ fileName }</a>)
+                  : null
+              }
           </Form.Item>
         </Form>
       </Modal>
