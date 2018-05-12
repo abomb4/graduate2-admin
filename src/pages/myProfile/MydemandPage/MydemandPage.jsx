@@ -103,7 +103,15 @@ class MydemandPage extends React.Component {
     return(
       <Switch>
         <Route key="/new" path={ this.getLink('/new') } exact>
-          <CreateDemandPage onFinish={() => this.handlePageChange(1)} />
+          <CreateDemandPage
+            onFinish={() => this.handlePageChange(1)}
+          />
+        </Route>
+        <Route key="/edit" path={ this.getLink('/edit/:id') } exact>
+          <CreateDemandPage
+            isEdit={ true }
+            onFinish={() => this.handlePageChange(1)}
+          />
         </Route>
         <Route key="/" path={ this.getLink('/') } exact>
           <div className="mydemand-list-container">

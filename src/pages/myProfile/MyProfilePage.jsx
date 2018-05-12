@@ -24,7 +24,6 @@ class MyProfilePage extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props);
     if (!this.props.loginUser) {
       loginActions.show()(this.props.dispatch);
     }
