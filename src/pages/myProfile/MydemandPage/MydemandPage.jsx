@@ -403,7 +403,7 @@ class MydemandList extends React.Component {
                   <a>停招</a><span>&nbsp;&nbsp;&nbsp;</span>
                 </Popconfirm> : ''
               }
-              <a>修改</a><span>&nbsp;&nbsp;</span>
+              <Link to={ '/myProfile/mydemand/edit/' + record.id } >修改</Link><span>&nbsp;&nbsp;</span>
             </span>
           ),
         }] }
