@@ -6,7 +6,7 @@ import {
   Modal, Input, Popconfirm,
   message, Button, Radio
 } from 'antd';
-import { ItrsFlowApi, ItrsDemandApi, ItrsCandidateApi, ItrsUserApi } from '../../../api/ItrsApi';
+import { ItrsFlowApi, ItrsDemandApi, ItrsCandidateApi, ItrsUserApi, makeDownloadUrl } from '../../../api/ItrsApi';
 import { CreateDemandPage } from '.';
 import './MydemandPage.css';
 
@@ -661,7 +661,7 @@ class CandidateDetailForm extends React.Component {
         okText="确定"
         cancelText="关闭"
       >
-        <Form>
+        <Form className="candidate-detail-form">
           <Form.Item
             {...formItemLayout}
             label="姓名"
@@ -714,7 +714,11 @@ class CandidateDetailForm extends React.Component {
             {...formItemLayout}
             label="附件"
           >
-            <Input disabled value={ candidate.attachment } />
+            {
+              candidate.attachment ?
+                candidate.attachment.split(',').map(fileName => <a className="link" key={ fileName } href={ makeDownloadUrl(fileName) } target="_blank">{ fileName }</a>)
+                : null
+            }
           </Form.Item>
         </Form>
       </Modal>
