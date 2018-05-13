@@ -13,7 +13,6 @@ class DemandRecommendForm extends React.Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
         const request = Object.assign({}, values);
         request.graduateTime = values.graduateTime.format('YYYY-MM-DD');
         request.attachment = values.attachment 
@@ -21,7 +20,6 @@ class DemandRecommendForm extends React.Component {
           : null
         ;
         request.demandId = this.props.currentDemand.id;
-        console.log('PackagedRequest: ', request);
 
         ItrsFlowApi.recommend(request,
           (success) => {
@@ -194,7 +192,6 @@ class DemandRecommendForm extends React.Component {
                   info.file.name = info.file.originFileObj.name;
 
                   if (info.file.status !== 'uploading') {
-                    console.log(info.file, info.fileList);
                   }
                   if (info.file.status === 'done') {
                     message.success(`${info.file.name} 上传成功`);

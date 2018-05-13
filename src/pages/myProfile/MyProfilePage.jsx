@@ -22,7 +22,6 @@ class MyProfilePage extends Component {
     if (!this.props.loginUser) {
       loginActions.show()(this.props.dispatch);
     }
-    console.log('mount myProfile component');
   }
 
   detectCurrentMenu() {
@@ -39,8 +38,6 @@ class MyProfilePage extends Component {
   }
 
   render() {
-
-    // console.log(this.props);
 
     const currentMenu = this.detectCurrentMenu();
 

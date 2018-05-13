@@ -49,7 +49,6 @@ class RecommendPage extends React.Component {
   render() {
 
     const data = this.state.datas;
-    console.log(data);
 
     const pagination = {
       pageSize: this.state.pagination.pageSize,

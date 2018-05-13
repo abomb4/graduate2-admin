@@ -35,7 +35,7 @@ class DemandPage extends Component {
   componentDidMount() {
 
     this.initPositionTypes();
-    this.handleSearch();
+    this.handleInitSearch();
   }
 
   initPositionTypes() {
@@ -97,7 +97,16 @@ class DemandPage extends Component {
     );
   }.bind(this);
 
+  handleInitSearch = function() {
+    const queryData = this.props.form.getFieldsValue();
+    const { pageSize } = this.state.pagination;
+    const values = Object.assign({ pageNo: 1, pageSize }, queryData);
+
+    this.doDemandQuery(values);
+  }.bind(this);
+
   handleSearch = function() {
+    this.props.form.setFieldsValue({ id: null });
     const queryData = this.props.form.getFieldsValue();
     const { pageSize } = this.state.pagination;
     const values = Object.assign({ pageNo: 1, pageSize }, queryData);

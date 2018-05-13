@@ -34,7 +34,6 @@ class LoginForm extends Component {
           this.setState({ submitted: true });
           console.info('success');
           const values = this.props.form.getFieldsValue();
-          console.log(values);
 
           const { username, password, remember } = values;
           const { dispatch } = this.props;

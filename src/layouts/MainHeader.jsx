@@ -3,11 +3,16 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Input, Modal, Button, message, Popover } from 'antd';
 import { LoginForm } from '../components/Login';
+import { urlFunctions } from '../helpers';
 import { userActions, loginActions } from '../_actions';
 import './BaseLayout.css';
 
 class MainHeader extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.onJobNameSearch.bind(this)
+  }
   handleCancel = () => {
     const { dispatch } = this.props;
     userActions.cancel()(dispatch);
@@ -24,6 +29,11 @@ class MainHeader extends React.Component {
     const { dispatch } = this.props;
     message.success('登录成功', 2);
     loginActions.hide()(dispatch);
+  }
+
+  // 根据职位关键字进行模糊搜索
+  onJobNameSearch(value) {
+    window.location.href = urlFunctions.queryDemandUrl({ jobName: value });
   }
 
   render() {
@@ -66,7 +76,7 @@ class MainHeader extends React.Component {
         <div className="logo"><Link to="/">ｗｌｙ</Link></div>
         <div id="main-search-container">
           <div id="main-search-wrapper">
-            <Input.Search id="main-search" enterButton="搜索" placeholder="搜索职位关键字"/>
+            <Input.Search id="main-search" enterButton="搜索" placeholder="搜索职位关键字" onSearch = { this.onJobNameSearch }/>
           </div>
         </div>
         <div id="main-profile">{ currentUserElement }</div>

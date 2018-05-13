@@ -65,7 +65,10 @@ class DemandQueryForm extends React.Component {
       } else {
         // 根据当前职位类别找到根和子
         const currentPositionElement = this.props.positionTypeMap[positionType];
-        if (currentPositionElement.parentId === undefined || currentPositionElement.parentId === 0) {
+        if (!currentPositionElement) {
+          currentRootPositionId = '';
+          currentSubPositionId = currentRootPositionId;
+        } else if (currentPositionElement.parentId === undefined || currentPositionElement.parentId === 0) {
           // 无父节点，说明是根类型
           currentRootPositionId = positionType;
           currentSubPositionId = currentRootPositionId;
@@ -104,10 +107,10 @@ class DemandQueryForm extends React.Component {
 
   componentDidMount() {
     const urlParameters = LinkUtils.parseGetParameter(this.props.location.search);
-    const { positionType } = urlParameters;
+    const { positionType, id, jobName } = urlParameters;
 
     if (!this.state.inited) {
-      this.props.form.setFieldsValue({ positionType: positionType });
+      this.props.form.setFieldsValue({ positionType: positionType, id: id, jobName: jobName});
       this.setState({inited: true});
     }
   }
@@ -137,6 +140,9 @@ class DemandQueryForm extends React.Component {
       <div className='demand-query-form'>
         <div className="page-content">
           <Form className="demand-search-form" onSubmit={ this.handleSearch }>
+            { getFieldDecorator('id', {  })(
+              <Input style={{ display: 'none' }} />
+            )}
             <Row gutter={24}>
               <Col span={18}>
                 <div className="position-type radio-container">

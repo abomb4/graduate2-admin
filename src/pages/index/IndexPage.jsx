@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, Carousel } from 'antd';
-import { ItrsDictionaryApi } from '../../api/ItrsApi';
+import { ItrsDictionaryApi, ItrsDemandApi } from '../../api/ItrsApi';
 import { urlFunctions } from '../../helpers';
 import './IndexPage.css';
 
@@ -72,6 +72,7 @@ class LeftWaterfall extends Component {
     );
   }
 }
+
 class IndexPage extends Component {
   
   render() {
@@ -95,21 +96,50 @@ class IndexPage extends Component {
           <LeftWaterfall />
           <div className="right-waterfall">
             <h2>最热职位</h2>
-            <div>
-              <ul className="jobs">
-                <li className="job-description"><Link to="#">高级测试工程师 - 测试总部</Link></li>
-                <li className="job-description"><Link to="#">测试工程师 - 测试总部</Link></li>
-                <li className="job-description"><Link to="#">初级测试工程师 - 测试总部</Link></li>
-                <li className="job-description">
-                  <Link to="#" title="高级人工智能产品架构总设计师 - 人工智能特别小组">
-                    高级人工智能产品架构总设计师 - 人工智能特别小组
-                  </Link>
-                </li>
-              </ul>
-            </div>
+            <RightWaterfall/>
           </div>
         </div>
       </div>
+    );
+  }
+}
+
+class RightWaterfall extends Component {
+  state = {
+    data : []
+  }
+
+  componentDidMount() {
+    ItrsDemandApi.getNew(
+      (successResult) => {
+        if (successResult.success) {
+          const data = successResult.datas;
+          this.setState({ data: data });
+        } else {
+          console.error(successResult);
+        }
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+
+  render() {
+    const newDemandList = [];
+    const newDemandData = this.state.data;
+    for (let i in newDemandData) {
+      const newDemand = newDemandData[i];
+      const newDemandTitle = newDemand.jobName + " - " + newDemand.departmentName;
+      newDemandList.push(                
+      <li className="job-description" key={ newDemand.id }>
+        <Link to={ urlFunctions.queryDemandUrl({ positionType: newDemand.positionType, id: newDemand.id }) } title={ newDemandTitle }>{ newDemandTitle }</Link>
+      </li>)
+    }
+    return (
+      <ul className="jobs">
+        { newDemandList }
+      </ul>
     );
   }
 }
