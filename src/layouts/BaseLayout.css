@@ -94,9 +94,9 @@
 /* header end */
 
 /* 这个东西代表页面的当前宽度 */
-.page-content {
+/* .page-content {
     padding: 0 24px;
-}
+} */
 
 #main-top, #main-menu .content, .page-content {
     width: 1600px;

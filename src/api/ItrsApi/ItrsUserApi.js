@@ -28,7 +28,7 @@ class ItrsUserApi {
 
   /**
    * 根据条件查询用户,不进行分页
-   * 
+   *
    * @param {*} data UserQuery,不带分页参数
    * @param {*} success 成功回调，会塞入服务端返回的信息
    * @param {*} fail 失败回调，会塞入axios原始错误对象
@@ -46,7 +46,7 @@ class ItrsUserApi {
 
   /**
    * 根据条件分页查询用户，并进行分页
-   * 
+   *
    * @param {*} data UserQuery,带分页参数pageNo,pageSize
    * @param {*} success 成功回调，会塞入服务端返回的信息
    * @param {*} fail 失败回调，会塞入axios原始错误对象
@@ -56,6 +56,24 @@ class ItrsUserApi {
       url: API_BASE_URL + '/myProfile/user/listPage',
       method: 'get',
       params: data,
+      withCredentials: true
+    });
+    handlePromise(promise, success, fail);
+    return promise;
+  }
+
+  /**
+   * 创建新用户
+   *
+   * @param {Object} user 用户信息，需要包含userName, email, password, salt, sex, departmentId, realName
+   * @param {Function} success 成功回调，会塞入服务端返回的信息
+   * @param {Function} fail 失败回调，会塞入axios原始错误对象
+   */
+  static createUser(user, success, fail) {
+    const promise = axios({
+      url: API_BASE_URL + '/myProfile/user/new',
+      method: 'put',
+      data: objectToFormData(user),
       withCredentials: true
     });
     handlePromise(promise, success, fail);

@@ -1,0 +1,12 @@
+.user-page .operations a {
+  display: inline-block;
+  margin-right: 0.5em;
+}
+
+.user-page .user-search-form {
+  line-height: 39px;
+  margin-top: 12px;
+}
+.user-page .button-container {
+  margin-bottom: 16px;
+}

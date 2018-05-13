@@ -4,7 +4,11 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Layout, Menu } from 'antd';
 import { loginActions } from '../../_actions';
-import { RecommendPage, IntervieweePage, MydemandPage, HomePage, ScorePage, HistoryPage, ModifyPasswordPage, FollowingDemandPage } from '.';
+import {
+  RecommendPage, IntervieweePage, MydemandPage,
+  HomePage, ScorePage, HistoryPage,
+  ModifyPasswordPage, FollowingDemandPage, UserPage
+} from '.';
 import './MyProfilePage.css';
 
 const { Content, Sider } = Layout;
@@ -52,6 +56,7 @@ class MyProfilePage extends Component {
                 style={{ height: '100%' }}
               >
                 {/* <Menu.Item key="home"><Link to={ this.myProfileLinkMenu('/home') }>综合信息</Link></Menu.Item> */}
+                <Menu.Item key="/user"><Link to={ this.myProfileLinkMenu('/user')}>用户管理</Link></Menu.Item>
                 <Menu.Item key="/recommend"><Link to={ this.myProfileLinkMenu('/recommend') }>俺的推荐</Link></Menu.Item>
                 <Menu.Item key="/mydemand"><Link to={ this.myProfileLinkMenu('/mydemand') }>俺的招聘</Link></Menu.Item>
                 <Menu.Item key="/followingDemand"><Link to={ this.myProfileLinkMenu('/followingDemand') }>部门招聘</Link></Menu.Item>
@@ -63,6 +68,7 @@ class MyProfilePage extends Component {
             <Content style={{ padding: '0 24px', minHeight: 280 }}>
               <Switch>
                 <Route key={ this.myProfileLinkMenu('/home') } path={ this.myProfileLinkMenu('/home') } exact component={ HomePage } />
+                <Route key={ this.myProfileLinkMenu('/user') } path={ this.myProfileLinkMenu('/user') } exact component={ UserPage } />
                 <Route key={ this.myProfileLinkMenu('/recommend') } path={ this.myProfileLinkMenu('/recommend') } component={ RecommendPage } />
                 <Route key={ this.myProfileLinkMenu('/mydemand') } path={ this.myProfileLinkMenu('/mydemand') } component={ MydemandPage } />
                 <Route key={ this.myProfileLinkMenu('/followingDemand') } path={ this.myProfileLinkMenu('/followingDemand') } component={ FollowingDemandPage } />
