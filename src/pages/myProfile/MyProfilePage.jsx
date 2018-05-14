@@ -57,13 +57,13 @@ class MyProfilePage extends Component {
                 style={{ height: '100%' }}
               >
                 {/* <Menu.Item key="home"><Link to={ this.myProfileLinkMenu('/home') }>综合信息</Link></Menu.Item> */}
-                { (authorizationFunctions.haveRole(this.props.loginUser, 'ADMIN')) ?  <Menu.Item key="/user"><Link to={ this.myProfileLinkMenu('/user')}>用户管理</Link></Menu.Item> : null }
+                { (authorizationFunctions.haveRole(this.props.loginUser, 'ROLE_ADMIN')) ?  <Menu.Item key="/user"><Link to={ this.myProfileLinkMenu('/user')}>用户管理</Link></Menu.Item> : null }
 
-                { (authorizationFunctions.haveRole(this.props.loginUser, 'HR')) ? <Menu.Item key="/mydemand"><Link to={ this.myProfileLinkMenu('/mydemand') }>我的招聘</Link></Menu.Item> : null }
+                { (authorizationFunctions.haveRole(this.props.loginUser, 'ROLE_HR')) ? <Menu.Item key="/mydemand"><Link to={ this.myProfileLinkMenu('/mydemand') }>我的招聘</Link></Menu.Item> : null }
 
-                { (authorizationFunctions.haveRole(this.props.loginUser, 'INTERVIEWEE')) ? <Menu.Item key="/interviewee"><Link to={ this.myProfileLinkMenu('/interviewee') }>我的面试</Link></Menu.Item> : null }
+                { (authorizationFunctions.haveRole(this.props.loginUser, 'ROLE_INTERVIEWEE')) ? <Menu.Item key="/interviewee"><Link to={ this.myProfileLinkMenu('/interviewee') }>我的面试</Link></Menu.Item> : null }
 
-                { (authorizationFunctions.haveRole(this.props.loginUser, ',MANAGER')) ? <Menu.Item key="/followingDemand"><Link to={ this.myProfileLinkMenu('/followingDemand') }>部门招聘</Link></Menu.Item> : null }
+                { (authorizationFunctions.haveRole(this.props.loginUser, 'ROLE_MANAGER')) ? <Menu.Item key="/followingDemand"><Link to={ this.myProfileLinkMenu('/followingDemand') }>部门招聘</Link></Menu.Item> : null }
 
                 <Menu.Item key="/recommend"><Link to={ this.myProfileLinkMenu('/recommend') }>我的推荐</Link></Menu.Item>
                 <Menu.Item key="/score"><Link to={ this.myProfileLinkMenu('/score') }>我的积分</Link></Menu.Item>
