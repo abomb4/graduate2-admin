@@ -92,6 +92,11 @@
     padding-left: 8px;
     padding-right: 8px;
 }
+.demand-search-form .ant-radio-button-wrapper:before,
+.demand-search-form .ant-radio-button-wrapper:first-child {
+    border: 0 !important;
+    background: none !important;
+}
 .demand-search-form .ant-radio-button-wrapper-checked {
     box-shadow: none;
 }
