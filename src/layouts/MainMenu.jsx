@@ -32,7 +32,7 @@ class MainMenu extends React.Component {
           <Menu
             theme="dark"
             mode="horizontal"
-            defaultSelectedKeys={[ this.detectCurrentMenu() ]}
+            selectedKeys={[ this.detectCurrentMenu() ]}
             id="main-menu"
           >
             <Menu.Item key="index"><Link to="/">首页</Link></Menu.Item>
