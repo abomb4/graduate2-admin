@@ -594,6 +594,10 @@ class MydemandFlowList extends React.Component {
           dataIndex: 'currentFlowNode',
           key: 'currentFlowNode',
         }, {
+          title: '当前处理人',
+          dataIndex: 'currentDealer',
+          key: 'currentDealer',
+        }, {
           title: '当前流程结果',
           dataIndex: 'currentResult',
           key: 'currentResult',

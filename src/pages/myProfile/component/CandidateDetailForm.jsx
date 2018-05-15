@@ -94,7 +94,10 @@ class CandidateDetailForm extends React.Component {
           >
             {
               candidate.attachment ?
-                candidate.attachment.split(',').map(fileName => <a className="link" key={ fileName } href={ makeDownloadUrl(fileName) } target="_blank">{ fileName }</a>)
+                candidate.attachment.split(',').map(fileName => {
+                  const fileNameArr = fileName.split('?');
+                  return <a className="link" key={ fileName } href={ makeDownloadUrl(fileNameArr[1], fileNameArr[0]) } target="_blank">{ fileNameArr[0] + '.' + fileName.split('.')[1] }</a>
+                })
                 : null
             }
           </Form.Item>
