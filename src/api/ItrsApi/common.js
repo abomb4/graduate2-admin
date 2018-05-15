@@ -32,6 +32,6 @@ export function makeUrl(url) {
   }
 }
 
-export function makeDownloadUrl(fileName) {
-  return makeUrl('/upload/files/' + fileName);
+export function makeDownloadUrl(fileName, aliasFileName) {
+  return makeUrl('/upload/files/' + fileName + '/' + aliasFileName);
 }

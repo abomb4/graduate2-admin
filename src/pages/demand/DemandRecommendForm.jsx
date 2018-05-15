@@ -23,9 +23,16 @@ class DemandRecommendForm extends React.Component {
 
         ItrsFlowApi.recommend(request,
           (success) => {
-            message.success('推荐成功');
+            if (success.success) {
+              this.props.onCancel();
+              message.success('推荐成功');
+            } else {
+              this.props.onCancel();
+              message.error(success.message);
+            }
           },
           (fail) => {
+            this.props.onCancel();
             message.error('推荐提交失败，请稍后再试');
           }
         );

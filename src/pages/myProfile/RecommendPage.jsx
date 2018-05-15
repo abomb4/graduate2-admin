@@ -1,6 +1,7 @@
 import React from 'react';
 import { Spin, Table } from 'antd';
-import { ItrsFlowApi } from '../../api/ItrsApi';
+import { CandidateDetailForm } from './component';
+import { ItrsFlowApi, ItrsCandidateApi } from '../../api/ItrsApi';
 
 class RecommendPage extends React.Component {
 
@@ -11,7 +12,9 @@ class RecommendPage extends React.Component {
       total: 0
     },
     requesting: false,
-    datas: []
+    datas: [],
+    showCandidateDetail: false,
+    candidate: {}
   }
 
   componentDidMount() {
@@ -39,12 +42,39 @@ class RecommendPage extends React.Component {
     );
   }.bind(this);
 
+  // 根据被推荐人id查其详情
+  doCandidateQuery = function(candidateId) {
+    ItrsCandidateApi.getById(candidateId,
+      (success) => {
+        this.setState({
+          candidate: success.data
+        });
+      },
+      (fail) =>  {
+        console.error(fail.message);
+      }
+    );
+  }.bind(this);
+
   handlePageChange(pageNo) {
     const { pageSize } = this.state.pagination;
     const values = Object.assign({ pageNo, pageSize });
 
     this.doRecommendQuery(values);
   }
+
+  // 弹出被推荐人详情框
+  onCandidateDialogOpen = function(record) {
+    this.doCandidateQuery(record['candidateId']);
+    this.setState({
+      showCandidateDetail: true
+    });
+  }.bind(this);
+
+  // 关闭被推荐人详情框
+  onCandidateDialogClose = function() {
+    this.setState({ showCandidateDetail: false });
+  }.bind(this);
 
   render() {
 
@@ -58,11 +88,20 @@ class RecommendPage extends React.Component {
     };
 
     return (
-      <div className="recommend-list-container">
-        <RecommendList requesting={ this.state.requesting }
-          dataSource={ data }
-          pagination={ pagination }
-          onChange={ this.handlePageChange }
+      <div>
+        <div className="recommend-list-container">
+          <RecommendList requesting={ this.state.requesting }
+            onCandidateDialogOpen = { this.onCandidateDialogOpen }
+            dataSource={ data }
+            pagination={ pagination }
+            onChange={ this.handlePageChange }
+          />
+        </div>
+        <CandidateDetailForm
+          title="被推荐人详情"
+          visible={ this.state.showCandidateDetail }
+          onCancel={ this.onCandidateDialogClose }
+          candidate = { this.state.candidate }
         />
       </div>
     );
@@ -131,6 +170,15 @@ class RecommendList extends React.Component {
           title: '流程状态',
           dataIndex: 'flowStatusName',
           key: 'flowStatusName',
+        }, {
+          title: '操作',
+          dataIndex: 'operate',
+          key: 'operate',
+          render: (text, record) => (
+            <span>
+              <a onClick={ () => this.props.onCandidateDialogOpen(record) }>被推荐人详情</a>
+            </span>
+          ),
         }] }
         rowKey="id"
         dataSource={ this.props.dataSource }
