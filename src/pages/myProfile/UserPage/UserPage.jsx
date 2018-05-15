@@ -1,15 +1,10 @@
 import React from 'react';
-import { Route, Switch } from 'react-router';
-import { withRouter, Link } from 'react-router-dom';
 import {
   Form, Spin, Table,
-  Modal, Input, Popconfirm,
-  message, Button, Radio,
-  Row, Col, Select
+  Modal, Input, message,
+  Button, Row, Col
 } from 'antd';
-import { ItrsFlowApi, ItrsDemandApi, ItrsCandidateApi, ItrsUserApi } from '../../../api/ItrsApi';
-import { CreateDemandPage } from '.';
-import { CandidateDetailForm } from '../component';
+import { ItrsDictionaryApi, ItrsUserApi } from '../../../api/ItrsApi';
 import './UserPage.css';
 import UserCreateForm from './UserCreateForm';
 
@@ -23,6 +18,7 @@ class UserPage extends React.Component {
       loadingUser: false,
       showCreateModal: false,
       createFormData: {},
+      departmentList: [],
     };
     this.onFormSearch.bind(this);
     this.onPageChange.bind(this);
@@ -33,6 +29,12 @@ class UserPage extends React.Component {
   }
 
   componentDidMount() {
+    ItrsDictionaryApi.getDepartmentList(
+      (success) => {
+        this.setState({ departmentList: success.data });
+      },
+      (fail) => {}
+    );
     this.doQuery();
   }
 
@@ -124,19 +126,20 @@ class UserPage extends React.Component {
       }
     );
   }
+
   doModify(value) {
     ItrsUserApi.modifyUser(value,
       (success) => {
         if (success.success) {
-          message.success('用户创建成功');
+          message.success('用户修改成功');
           this.onCreateFormClose();
           this.doQuery(this.props.form.getFieldsValue());
         } else {
-          message.error('用户创建失败' + success.message);
+          message.error('用户修改失败' + success.message);
         }
       },
       (fail) => {
-        message.error('用户创建失败' + fail.message);
+        message.error('用户修改失败' + fail.message);
       }
     );
   }
@@ -250,7 +253,7 @@ class UserPage extends React.Component {
           onOk={ this.onCreateFormSubmit }
           onCancel={ this.onCreateFormClose }
         >
-          <UserCreateForm onChange={ this.onCreateFormChange } formData={ this.createFormData } />
+          <UserCreateForm onChange={ this.onCreateFormChange } formData={ this.state.createFormData } departmentList={ this.state.departmentList } isEdit={ this.state.isEdit }/>
         </Modal>
       </div>
     );
