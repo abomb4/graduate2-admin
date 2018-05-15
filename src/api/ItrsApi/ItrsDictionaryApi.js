@@ -6,38 +6,7 @@ import { API_BASE_URL, handlePromise } from './common.js';
 /**
  * Itrs字典数据Api封装
  */
-class ItrsDataApi {
-
-  /**
-   * 获取用户接口。
-   * 成功返回格式：
-   * {
-   *   success: true,
-   *   message: "Get success.",
-   *   data: {
-   *     id: 1,
-   *     username: "wlyyy",
-   *     email: "wlyyy@163.com",
-   *     gmtCreate: "2020-02-02",
-   *     gmtModify: "2020-03-03",
-   *     realName: "大宝宝",
-   *     departmentId: 1,
-   *     sex: 2
-   *   }
-   * }
-   *
-   * @param {Number} id id
-   * @param {Function} success 成功回调，会塞入服务端返回的信息
-   * @param {Function} fail 失败回调，会塞入axios原始错误对象
-   */
-  static getUser(id, success, fail) {
-    const promise = axios({
-      url: API_BASE_URL + '/user/' + id,
-      method: 'get'
-    });
-    handlePromise(promise, success, fail);
-    return promise;
-  }
+class ItrsDictionaryApi {
 
   /**
    * 获取用户接口。
@@ -79,6 +48,15 @@ class ItrsDataApi {
     handlePromise(promise, success, fail);
     return promise;
   }
+
+  static getDepartmentLIst(success, fail) {
+    const promise = axios({
+      url: API_BASE_URL + '/dict/departmentList',
+      method: 'get'
+    });
+    handlePromise(promise, success, fail);
+    return promise;
+  }
 }
 
-export default ItrsDataApi;
+export default ItrsDictionaryApi;
