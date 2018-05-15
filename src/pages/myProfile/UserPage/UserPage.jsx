@@ -93,7 +93,7 @@ class UserPage extends React.Component {
   }
 
   onCreateFormClose = () => {
-    this.setState({ showCreateModal: false });
+    this.setState({ isEdit: false, showCreateModal: false, createFormData: {} });
   }
 
   onCreateFormChange = (value) => {
@@ -102,6 +102,7 @@ class UserPage extends React.Component {
 
   onCreateFormSubmit = (value) => {
     if (this.state.isEdit) {
+      this.doModify(this.state.createFormData);
     } else {
       this.doCreate(this.state.createFormData);
     }
@@ -109,6 +110,22 @@ class UserPage extends React.Component {
 
   doCreate(value) {
     ItrsUserApi.createUser(value,
+      (success) => {
+        if (success.success) {
+          message.success('用户创建成功');
+          this.onCreateFormClose();
+          this.doQuery(this.props.form.getFieldsValue());
+        } else {
+          message.error('用户创建失败' + success.message);
+        }
+      },
+      (fail) => {
+        message.error('用户创建失败' + fail.message);
+      }
+    );
+  }
+  doModify(value) {
+    ItrsUserApi.modifyUser(value,
       (success) => {
         if (success.success) {
           message.success('用户创建成功');
@@ -216,7 +233,7 @@ class UserPage extends React.Component {
             render: (text, record) => (
               <span className="operations">
                 <a>重置密码</a>
-                <a>修改</a>
+                <a onClick={ () => this.setState({ isEdit: true, showCreateModal: true, createFormData: record }) }>修改</a>
                 <a>删除</a>
               </span>
             ),
@@ -233,7 +250,7 @@ class UserPage extends React.Component {
           onOk={ this.onCreateFormSubmit }
           onCancel={ this.onCreateFormClose }
         >
-          <UserCreateForm onChange={ this.onCreateFormChange } />
+          <UserCreateForm onChange={ this.onCreateFormChange } formData={ this.createFormData } />
         </Modal>
       </div>
     );

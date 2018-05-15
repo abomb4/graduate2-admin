@@ -49,7 +49,7 @@ class ItrsDictionaryApi {
     return promise;
   }
 
-  static getDepartmentLIst(success, fail) {
+  static getDepartmentList(success, fail) {
     const promise = axios({
       url: API_BASE_URL + '/dict/departmentList',
       method: 'get'

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form, Input, Select } from 'antd';
+import { ItrsDictionaryApi } from '../../../api/ItrsApi';
 
 /**
  * 用户创建表单
@@ -8,6 +9,16 @@ class UserCreateForm extends React.Component {
 
   state = {
     isEdit: false,
+    departmentList: [],
+  }
+
+  componentWillMount() {
+    ItrsDictionaryApi.getDepartmentList(
+      (success) => {
+        this.setState({ departmentList: success.data });
+      },
+      (fail) => {}
+    );
   }
 
   changeSex(text) {
@@ -86,7 +97,11 @@ class UserCreateForm extends React.Component {
               required: true, message: '请输入部门!',
             }],
           })(
-            <Input />
+            <Select>
+              {
+                this.state.departmentList.map(d => <Select.Option key={ d.id } value={ d.id }>{ d.departmentName }</Select.Option>)
+              }
+            </Select>
           )}
         </Form.Item>
         <Form.Item
