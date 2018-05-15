@@ -49,9 +49,21 @@ class ItrsDictionaryApi {
     return promise;
   }
 
+  /**
+   * 获取部门列表
+   */
   static getDepartmentList(success, fail) {
     const promise = axios({
       url: API_BASE_URL + '/dict/departmentList',
+      method: 'get'
+    });
+    handlePromise(promise, success, fail);
+    return promise;
+  }
+
+  static getProcKeyList(success, fail) {
+    const promise = axios({
+      url: API_BASE_URL + '/dict/prokey',
       method: 'get'
     });
     handlePromise(promise, success, fail);

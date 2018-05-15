@@ -11,6 +11,7 @@ class CreateDemandPage extends React.Component {
     positionType: [],
     positionTypeInited: false,
     editRecord: {},
+    procKeyList: [],
     editLoading: false,
     editInited: false,
   };
@@ -101,6 +102,17 @@ class CreateDemandPage extends React.Component {
             this.initEditForm();
           }
         }
+      },
+      (fail) => {}
+    );
+
+    // 初始化流程部署列表
+    ItrsDictionaryApi.getProcKeyList(
+      (success) => {
+        const procKeyList = success.data;
+        this.setState({
+          procKeyList: procKeyList
+        });
       },
       (fail) => {}
     );
@@ -273,6 +285,25 @@ class CreateDemandPage extends React.Component {
                       <Select.Option value="本科">本科</Select.Option>
                       <Select.Option value="硕士">硕士</Select.Option>
                       <Select.Option value="博士">博士</Select.Option>
+                    </Select>
+                  )}
+                </Form.Item>
+                <Form.Item
+                  {...formItemLayout}
+                  label="部署流程"
+                >
+                  {getFieldDecorator('procKey', { initialValue: '两轮面试' })(
+                    this.props.isEdit ? 
+                    <Select disabled>
+                    {
+                      this.state.procKeyList.map(p => <Select.Option key={ p.id } value={ p.key }>{ p.name }</Select.Option>)
+                    }
+                    </Select>
+                    :
+                    <Select>
+                    {
+                      this.state.procKeyList.map(p => <Select.Option key={ p.id } value={ p.key }>{ p.name }</Select.Option>)
+                    }
                     </Select>
                   )}
                 </Form.Item>
