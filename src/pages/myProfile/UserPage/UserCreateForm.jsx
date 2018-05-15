@@ -1,24 +1,23 @@
 import React from 'react';
 import { Form, Input, Select } from 'antd';
-import { ItrsDictionaryApi } from '../../../api/ItrsApi';
 
 /**
  * 用户创建表单
  */
 class UserCreateForm extends React.Component {
 
-  state = {
-    isEdit: false,
-    departmentList: [],
+  componentDidMount() {
+    const { id, userName, sex, realName, departmentId, email } = this.props.formData;
+    const data = { id, userName, sex: sex + '', realName, departmentId, email };
+    this.props.form.setFieldsValue(data);
   }
 
-  componentWillMount() {
-    ItrsDictionaryApi.getDepartmentList(
-      (success) => {
-        this.setState({ departmentList: success.data });
-      },
-      (fail) => {}
-    );
+  componentWillReceiveProps(nextProps) {
+    if (this.props.formData !== nextProps.formData) {
+      const { id, userName, sex, realName, departmentId, email } = nextProps.formData;
+      const data = { id, userName, sex: sex + '', realName, departmentId, email };
+      this.props.form.setFieldsValue(data);
+    }
   }
 
   changeSex(text) {
@@ -47,6 +46,9 @@ class UserCreateForm extends React.Component {
 
     return (
       <Form className="candidate-detail-form" onChange={ (e) => { if (this.props.onChange) this.props.onChange(this.props.form.getFieldsValue());} }>
+        {getFieldDecorator('id', { })(
+          <Input style={{ display: 'none' }}/>
+        )}
         <Form.Item
           {...formItemLayout}
           label="用户名"
@@ -56,7 +58,7 @@ class UserCreateForm extends React.Component {
               required: true, message: '请输入用户名!',
             }],
           })(
-            this.state.isEdit ? <Input disabled/> : <Input />
+            this.props.isEdit ? <Input disabled/> : <Input />
           )}
         </Form.Item>
         <Form.Item
@@ -92,14 +94,14 @@ class UserCreateForm extends React.Component {
           {...formItemLayout}
           label="部门"
         >
-          {getFieldDecorator('name', {
+          {getFieldDecorator('departmentId', {
             rules: [{
               required: true, message: '请输入部门!',
             }],
           })(
             <Select>
               {
-                this.state.departmentList.map(d => <Select.Option key={ d.id } value={ d.id }>{ d.departmentName }</Select.Option>)
+                this.props.departmentList.map(d => <Select.Option key={ d.id } value={ d.id }>{ d.departmentName }</Select.Option>)
               }
             </Select>
           )}

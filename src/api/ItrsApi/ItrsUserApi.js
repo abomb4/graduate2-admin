@@ -79,6 +79,28 @@ class ItrsUserApi {
     handlePromise(promise, success, fail);
     return promise;
   }
+
+  /**
+   * 修改用户信息
+   *
+   * @param {Object} user 必须包含id
+   * @param {Function} success 成功回调，会塞入服务端返回的信息
+   * @param {Function} fail 失败回调，会塞入axios原始错误对象
+   */
+  static modifyUser(user, success, fail) {
+    if (!user.id) {
+      fail({error: 'No id specified.'});
+      return;
+    }
+    const promise = axios({
+      url: API_BASE_URL + '/myProfile/user/modify',
+      method: 'post',
+      data: objectToFormData(user),
+      withCredentials: true
+    });
+    handlePromise(promise, success, fail);
+    return promise;
+  }
 }
 
 export default ItrsUserApi;
