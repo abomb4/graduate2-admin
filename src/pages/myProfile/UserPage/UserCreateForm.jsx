@@ -8,14 +8,14 @@ class UserCreateForm extends React.Component {
 
   componentDidMount() {
     const { id, userName, sex, realName, departmentId, email } = this.props.formData;
-    const data = { id, userName, sex: sex + '', realName, departmentId, email };
+    const data = { id, userName, sex: sex ? sex + '' : '1', realName, departmentId, email };
     this.props.form.setFieldsValue(data);
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.formData !== nextProps.formData) {
       const { id, userName, sex, realName, departmentId, email } = nextProps.formData;
-      const data = { id, userName, sex: sex + '', realName, departmentId, email };
+      const data = { id, userName, sex: sex ? sex + '' : '1', realName, departmentId, email };
       this.props.form.setFieldsValue(data);
     }
   }

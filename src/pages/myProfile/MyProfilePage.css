@@ -48,3 +48,9 @@
   text-align: right;
 }
 /* 招聘流程部署列表 end */
+.deploy-picture-modal {
+  text-align: center;
+}
+.deploy-picture {
+  /* max-height: 600px; */
+}

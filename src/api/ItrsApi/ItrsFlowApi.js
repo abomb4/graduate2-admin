@@ -194,4 +194,22 @@ export default class ItrsFlowApi {
     handlePromise(promise, success, fail);
     return promise;
   }
+
+  /**
+   * 查看部署流程图
+   * 
+   * @param {*} data deploymentId部署id + resourceName资源名 
+   * @param {*} success 
+   * @param {*} fail 
+   */
+  static getDeployPicture(data, success, fail) {
+    const promise = axios({
+      url: API_BASE_URL + '/myProfile/flow/deploy/getDeployPicture',
+      method: 'get',
+      params: data,
+      withCredentials: true
+    });
+    handlePromise(promise, success, fail);
+    return promise;
+  }
 }

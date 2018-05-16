@@ -2,6 +2,7 @@ import React from 'react';
 import { Spin, Table, Form, Button, Modal, Input, Upload, message, Icon } from 'antd';
 import { ItrsFlowApi } from '../../api/ItrsApi';
 import './MyProfilePage.css';
+import { API_BASE_URL } from '../../api/ItrsApi/common';
 
 class DeployPage extends React.Component {
   state = {
@@ -13,7 +14,9 @@ class DeployPage extends React.Component {
     },
     requesting: false,
     deployModalVisible: false,
-    datas: []
+    datas: [],
+    pictureVaules: {},
+    deployPictureModalVisible: false
   }
 
   componentDidMount() {
@@ -67,7 +70,23 @@ class DeployPage extends React.Component {
       deployModalVisible: false
     });
   }.bind(this);
-  /* 部署新流程对话框 end */ 
+  /* 部署新流程对话框 end */
+
+  // 查看部署流程图
+  getDeployPicture = function(record) {
+    const { id, key } = record;
+    const values = Object.assign({deploymentId: id, resourceName: key + '.png'});
+    this.setState({
+      pictureVaules: values,
+      deployPictureModalVisible: true
+    });
+  }.bind(this);
+
+  onDeployPictureCancel = function() {
+    this.setState({
+      deployPictureModalVisible: false
+    });
+  }.bind(this);
 
   render() {
     return(
@@ -78,12 +97,18 @@ class DeployPage extends React.Component {
         <DeployList requesting={ this.state.requesting }
           dataSource={ this.state.datas }
           pagination={ this.state.pagination }
+          getDeployPicture={ this.getDeployPicture }
         />
         <CreateDeployModal
           visible={ this.state.deployModalVisible }
           onCancel={ this.onCreateDeployModalCancel }
           renderDeployList={ this.renderDeployList }
           form={ this.props.form }
+        />
+        <DeployPictureModal
+          pictureVaules={ this.state.pictureVaules }
+          visible={ this.state.deployPictureModalVisible }
+          onCancel={ this.onDeployPictureCancel }
         />
       </div>
     );
@@ -111,6 +136,15 @@ class DeployList extends React.Component {
           title: '部署时间',
           dataIndex: 'deploymentTime',
           key: 'deploymentTime',
+        }, {
+          title: '操作',
+          dataIndex: 'operate',
+          key: 'operate',
+          render: (text, record) => (
+            <span>
+              <a onClick={ () => this.props.getDeployPicture(record) }>查看部署流程图</a>
+            </span>
+          ),
         }] }
         rowKey="id"
         dataSource={ this.props.dataSource }
@@ -230,6 +264,34 @@ class CreateDeployModal extends React.Component {
     </Modal>
     );
   }
+}
+
+class DeployPictureModal extends React.Component {
+
+  render() {
+    const { deploymentId, resourceName} = this.props.pictureVaules;
+
+    return(
+      <Modal
+        maskClosable={ true }
+        title='部署流程图'
+        visible={ this.props.visible }
+        onOk={ this.props.onCancel }
+        onCancel={ this.props.onCancel }
+        okText="确定"
+        cancelText="关闭"
+        width="500px"
+        className="deploy-picture-modal"
+      >
+        <img 
+          src={ API_BASE_URL  + '/myProfile/flow/deploy/getDeployPicture?deploymentId=' + deploymentId + '&resourceName=' + resourceName } 
+          alt='流程图'
+          className="deploy-picture"
+        />
+      </Modal>
+    );
+  }
+
 }
 
 export default Form.create({})(DeployPage);;
