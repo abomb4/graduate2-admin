@@ -7,7 +7,7 @@ import {
   message, Button, Radio
 } from 'antd';
 import { ItrsFlowApi, ItrsDemandApi, ItrsCandidateApi, ItrsUserApi } from '../../../api/ItrsApi';
-import { CreateDemandPage } from '.';
+import { CreateDemandPage, ViewCandidatePage } from '.';
 import { CandidateDetailForm } from '../component';
 import './MydemandPage.css';
 
@@ -113,10 +113,18 @@ class MydemandPage extends React.Component {
             onFinish={() => this.handlePageChange(1)}
           />
         </Route>
+        <Route key="/viewCandidate" path={ this.getLink('/viewCandidate') } exact>
+          <ViewCandidatePage
+            isEdit={ true }
+            onFinish={() => this.handlePageChange(1)}
+          />
+        </Route>
         <Route key="/" path={ this.getLink('/') } exact>
           <div className="mydemand-list-container">
             <div className="button-container">
               <Button type="primary" onClick={ this.handleAddDemand }><Link to={ this.getLink('/new') }>新增招聘需求</Link></Button>
+              <span>&nbsp;&nbsp;&nbsp;</span>
+              <Button type="primary" onClick={ this.searchCandidate }><Link to={ this.getLink('/viewCandidate') }>浏览人才库</Link></Button>
             </div>
             <MydemandList requesting={ this.state.requesting }
               dataSource={ data }

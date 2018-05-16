@@ -29,3 +29,8 @@
   color: #0a65d8;
   text-decoration: underline;
 }
+
+/*浏览人才库页面*/
+.candidate-page {
+  text-align: right;
+}
