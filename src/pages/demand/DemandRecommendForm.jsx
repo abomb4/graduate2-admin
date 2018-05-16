@@ -9,6 +9,7 @@ class DemandRecommendForm extends React.Component {
     confirmDirty: false,
     autoCompleteResult: [],
   };
+  
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
@@ -39,6 +40,7 @@ class DemandRecommendForm extends React.Component {
       }
     });
   }
+
   handleConfirmBlur = (e) => {
     const value = e.target.value;
     this.setState({ confirmDirty: this.state.confirmDirty || !!value });

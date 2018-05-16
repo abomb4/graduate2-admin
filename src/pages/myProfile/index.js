@@ -12,3 +12,4 @@ export { default as HistoryPage } from './HistoryPage';
 export { default as ModifyPasswordPage } from './ModifyPasswordPage';
 export { default as UserPage } from './UserPage';
 export { default as EmailLogPage } from './EmailLogPage';
+export { default as DeployPage } from './DeployPage';

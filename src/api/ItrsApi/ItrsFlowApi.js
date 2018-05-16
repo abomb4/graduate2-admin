@@ -158,4 +158,40 @@ export default class ItrsFlowApi {
     handlePromise(promise, success, fail);
     return promise;
   }
+
+  /**
+   * 分页查询部署信息
+   * 
+   * @param {*} data 请求参数 pageNo + pageSize
+   * @param {*} success 成功回调，会塞入服务端返回的信息
+   * @param {*} fail 失败回调，会塞入axios原始错误对象
+   */
+  static listDeploy(data, success, fail) {
+    const promise = axios({
+      url: API_BASE_URL + '/myProfile/flow/deploy/listDeploy',
+      method: 'get',
+      params: data,
+      withCredentials: true
+    });
+    handlePromise(promise, success, fail);
+    return promise;
+  }
+
+  /**
+   * 部署流程
+   * 
+   * @param {*} data zipName + deployName
+   * @param {*} success 成功回调，会塞入服务端返回的信息
+   * @param {*} fail 失败回调，会塞入axios原始错误对象
+   */
+  static deployZip(data, success, fail) {
+    const promise = axios({
+      url: API_BASE_URL + '/myProfile/flow/deploy/deployZip',
+      method: 'get',
+      params: data,
+      withCredentials: true
+    });
+    handlePromise(promise, success, fail);
+    return promise;
+  }
 }

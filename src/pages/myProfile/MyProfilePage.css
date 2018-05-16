@@ -40,3 +40,11 @@
   padding-left: 6px;
   padding-top: 12px;
 }
+/* 指派面试官modal end */
+
+
+/* 招聘流程部署列表 start */
+.deploy-list-container {
+  text-align: right;
+}
+/* 招聘流程部署列表 end */

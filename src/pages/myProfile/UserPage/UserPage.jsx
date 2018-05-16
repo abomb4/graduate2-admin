@@ -237,7 +237,6 @@ class UserPage extends React.Component {
               <span className="operations">
                 <a>重置密码</a>
                 <a onClick={ () => this.setState({ isEdit: true, showCreateModal: true, createFormData: record }) }>修改</a>
-                <a>删除</a>
               </span>
             ),
           }] }

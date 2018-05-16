@@ -55,7 +55,11 @@ class CreateDemandPage extends React.Component {
 
     ItrsDemandApi.updateDemand(postParam,
       (success) => {
-        message.success('需求修改成功');
+        if (success.success) {
+          message.success('需求修改成功');
+        } else {
+          message.error(success.message);
+        }
         if (this.props.onFinish) {
           this.props.onFinish();
         }
@@ -157,6 +161,7 @@ class CreateDemandPage extends React.Component {
           workingPlace: editRecord.workingPlace,
           degreeRequest: editRecord.degreeRequest,
           memo: editRecord.memo,
+          procKey: editRecord.procKey
         });
         this.setState({
           editLoading: false
@@ -176,6 +181,7 @@ class CreateDemandPage extends React.Component {
           workingPlace: editRecord.workingPlace,
           degreeRequest: editRecord.degreeRequest,
           memo: editRecord.memo,
+          procKey: editRecord.procKey
         });
         this.setState({
           editLoading: false
@@ -292,7 +298,11 @@ class CreateDemandPage extends React.Component {
                   {...formItemLayout}
                   label="部署流程"
                 >
-                  {getFieldDecorator('procKey', { initialValue: '两轮面试' })(
+                  {getFieldDecorator('procKey', {
+                    rules: [{
+                      required: true, message: '请选择招聘流程!',
+                    }],
+                  })(
                     this.props.isEdit ? 
                     <Select disabled>
                     {

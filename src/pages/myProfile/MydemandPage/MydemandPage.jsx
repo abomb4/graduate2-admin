@@ -123,8 +123,7 @@ class MydemandPage extends React.Component {
           <div className="mydemand-list-container">
             <div className="button-container">
               <Button type="primary" onClick={ this.handleAddDemand }><Link to={ this.getLink('/new') }>新增招聘需求</Link></Button>
-              <span>&nbsp;&nbsp;&nbsp;</span>
-              <Button type="primary" onClick={ this.searchCandidate }><Link to={ this.getLink('/viewCandidate') }>浏览人才库</Link></Button>
+              <Button type="primary" onClick={ this.searchCandidate } style={{ marginLeft: 8 }}><Link to={ this.getLink('/viewCandidate') }>浏览人才库</Link></Button>
             </div>
             <MydemandList requesting={ this.state.requesting }
               dataSource={ data }

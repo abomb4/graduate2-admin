@@ -45,7 +45,7 @@ class UserCreateForm extends React.Component {
     };
 
     return (
-      <Form className="candidate-detail-form" onChange={ (e) => { if (this.props.onChange) this.props.onChange(this.props.form.getFieldsValue());} }>
+      <Form className="user-detail-form" onChange={ (e) => { if (this.props.onChange) this.props.onChange(this.props.form.getFieldsValue());} }>
         {getFieldDecorator('id', { })(
           <Input style={{ display: 'none' }}/>
         )}

@@ -7,7 +7,8 @@ class EmailLogPage extends React.Component{
     pagination: {
       pageNo: 1,
       pageSize: 6,
-      total: 0
+      total: 0,
+      onChange: this.handlePageChange.bind(this)
     },
     requesting: false,
     datas: []
@@ -51,7 +52,6 @@ class EmailLogPage extends React.Component{
         <EmailLogList requesting={ this.state.requesting }
           dataSource={ this.state.datas }
           pagination={ this.state.pagination }
-          onChange={ this.handlePageChange }
         />
       </div>
     );
@@ -62,11 +62,6 @@ class EmailLogPage extends React.Component{
  * 邮件日志结果列表
  */
 class EmailLogList extends React.Component {
-  onPageChange = function(pagination) {
-    if (this.props.onPageChange) {
-      this.props.onPageChange(pagination);
-    }
-  }.bind(this);
 
   render() {
     return (
@@ -95,7 +90,6 @@ class EmailLogList extends React.Component {
       rowKey="id"
       dataSource={ this.props.dataSource }
       pagination={ this.props.pagination }
-      onChange={ this.onPageChange }
       />
   </Spin>
     );

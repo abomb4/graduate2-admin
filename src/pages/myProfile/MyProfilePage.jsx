@@ -8,7 +8,8 @@ import { loginActions } from '../../_actions';
 import {
   RecommendPage, IntervieweePage, MydemandPage,
   HomePage, ScorePage, HistoryPage, EmailLogPage,
-  ModifyPasswordPage, FollowingDemandPage, UserPage
+  ModifyPasswordPage, FollowingDemandPage, UserPage,
+  DeployPage
 } from '.';
 import './MyProfilePage.css';
 
@@ -61,6 +62,8 @@ class MyProfilePage extends Component {
 
                 { (authorizationFunctions.haveRole(this.props.loginUser, 'ROLE_ADMIN')) ?  <Menu.Item key="/emailLog"><Link to={ this.myProfileLinkMenu('/emailLog')}>查看邮件日志</Link></Menu.Item> : null }
 
+                { (authorizationFunctions.haveRole(this.props.loginUser, 'ROLE_ADMIN')) ?  <Menu.Item key="/deploy"><Link to={ this.myProfileLinkMenu('/deploy')}>招聘流程部署</Link></Menu.Item> : null }
+
                 { (authorizationFunctions.haveRole(this.props.loginUser, 'ROLE_HR')) ? <Menu.Item key="/mydemand"><Link to={ this.myProfileLinkMenu('/mydemand') }>我的招聘</Link></Menu.Item> : null }
 
                 { (authorizationFunctions.haveRole(this.props.loginUser, 'ROLE_INTERVIEWEE')) ? <Menu.Item key="/interviewee"><Link to={ this.myProfileLinkMenu('/interviewee') }>我的面试</Link></Menu.Item> : null }
@@ -77,6 +80,7 @@ class MyProfilePage extends Component {
                 <Route key={ this.myProfileLinkMenu('/home') } path={ this.myProfileLinkMenu('/home') } exact component={ HomePage } />
                 <Route key={ this.myProfileLinkMenu('/user') } path={ this.myProfileLinkMenu('/user') } exact component={ UserPage } />
                 <Route key={ this.myProfileLinkMenu('/emailLog') } path={ this.myProfileLinkMenu('/emailLog') } exact component={ EmailLogPage } />
+                <Route key={ this.myProfileLinkMenu('/deploy') } path={ this.myProfileLinkMenu('/deploy') } exact component={ DeployPage } />
                 <Route key={ this.myProfileLinkMenu('/recommend') } path={ this.myProfileLinkMenu('/recommend') } component={ RecommendPage } />
                 <Route key={ this.myProfileLinkMenu('/mydemand') } path={ this.myProfileLinkMenu('/mydemand') } component={ MydemandPage } />
                 <Route key={ this.myProfileLinkMenu('/followingDemand') } path={ this.myProfileLinkMenu('/followingDemand') } component={ FollowingDemandPage } />
