@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Form, Spin, Table,
   Modal, Input, message,
-  Button, Row, Col
+  Button, Row, Col, Popconfirm
 } from 'antd';
 import { ItrsDictionaryApi, ItrsUserApi } from '../../../api/ItrsApi';
 import './UserPage.css';
@@ -143,8 +143,36 @@ class UserPage extends React.Component {
       }
     );
   }
-
   // =--------- 新增与修改 end ----------=
+
+
+
+  /* 重置密码功能 start */
+  resetPassword(id) {
+    ItrsUserApi.resetPassword(id,
+      (success) => {
+        if (success.success) {
+          message.success('重置用户密码成功');
+          this.doQuery(this.props.form.getFieldsValue());
+        } else {
+          message.err(success.message);
+        }
+      },
+      (fail) => {
+        message.err('重置用户密码失败');
+      }
+    );
+  }
+
+  confirmResetPassword(text, record) {
+    this.resetPassword(record['id']);
+  }
+
+  cancelResetPassword() {
+    message.error('取消重置用户密码');
+  }
+  /* 重置密码功能 end */
+
 
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -235,7 +263,9 @@ class UserPage extends React.Component {
             key: 'action',
             render: (text, record) => (
               <span className="operations">
-                <a>重置密码</a>
+                <Popconfirm title="确定重置该用户密码?" onConfirm={ () => this.confirmResetPassword(text, record) } onCancel={ this.cancelResetPassword } okText="确定" cancelText="取消">
+                  <a>重置</a><span>&nbsp;&nbsp;&nbsp;</span>
+                </Popconfirm>
                 <a onClick={ () => this.setState({ isEdit: true, showCreateModal: true, createFormData: record }) }>修改</a>
               </span>
             ),

@@ -35,7 +35,7 @@ class ItrsUserApi {
    */
   static listUser(data, success, fail) {
     const promise = axios({
-      url: API_BASE_URL + '/myProfile/user/list',
+      url: API_BASE_URL + '/myProfile/userlist/list',
       method: 'get',
       params: data,
       withCredentials: true
@@ -96,6 +96,16 @@ class ItrsUserApi {
       url: API_BASE_URL + '/myProfile/user/modify',
       method: 'post',
       data: objectToFormData(user),
+      withCredentials: true
+    });
+    handlePromise(promise, success, fail);
+    return promise;
+  }
+
+  static resetPassword(id, success, fail) {
+    const promise = axios({
+      url: API_BASE_URL + '/myProfile/user/resetPassword/' + id,
+      method: 'get',
       withCredentials: true
     });
     handlePromise(promise, success, fail);
