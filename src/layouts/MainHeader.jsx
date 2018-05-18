@@ -29,6 +29,7 @@ class MainHeader extends React.Component {
     const { dispatch } = this.props;
     message.success('登录成功', 2);
     loginActions.hide()(dispatch);
+    window.location.href = '/index';
   }
 
   // 根据职位关键字进行模糊搜索
