@@ -8,3 +8,4 @@ export { default as ItrsLoginApi } from './ItrsLoginApi';
 export { default as ItrsScoreApi } from './ItrsScoreApi';
 export { default as ItrsUserApi } from './ItrsUserApi';
 export { default as ItrsEmailApi } from './ItrsEmailApi';
+export { default as ItrsRoleApi } from './ItrsRoleApi';

@@ -19,6 +19,9 @@ class UserPage extends React.Component {
       showCreateModal: false,
       createFormData: {},
       departmentList: [],
+      roleModalVisible: false,
+      roleList: [],
+      exisRoleList: []
     };
     this.onFormSearch.bind(this);
     this.onPageChange.bind(this);
@@ -35,6 +38,16 @@ class UserPage extends React.Component {
       },
       (fail) => {}
     );
+
+    /* ItrsRoleApi.listRole(
+      (success) => {
+        this.setState({
+          roleList: success.datas
+        });
+      },
+      (fail) => {}
+    );*/
+
     this.doQuery();
   }
 
@@ -174,6 +187,28 @@ class UserPage extends React.Component {
   /* 重置密码功能 end */
 
 
+  /* 分配角色功能 start */
+  // 查询该用户已有角色列表
+  /* showRoleModal = function(id) {
+    ItrsRoleApi.listExisRole(id, 
+      (success) => {
+        this.setState({
+          exisRoleList: success.data,
+          roleModalVisible: true
+        });
+      },
+      (fail) => {}
+    );
+  }.bind(this);
+
+  onRoleModalCancel = function() {
+    this.setState({
+      roleModalVisible: false
+    });
+  }.bind(this) */
+  /* 分配角色功能 end */
+
+
   render() {
     const { getFieldDecorator } = this.props.form;
 
@@ -218,7 +253,7 @@ class UserPage extends React.Component {
             </Col> */}
             <Col span={6}>
               <Button type="primary" htmlType="submit">搜索</Button>
-              <Button style={{ marginLeft: 8 }} onClick={ this.onFormReset }>重置</Button>
+              <Button style={{ marginLeft: 8 }} onClick={ this.onFormReset }>重置密码</Button>
             </Col>
           </Row>
         </Form>
